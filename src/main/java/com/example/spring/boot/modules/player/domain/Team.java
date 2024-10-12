@@ -1,18 +1,22 @@
 package com.example.spring.boot.modules.player.domain;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-public class Game {
+public class Team {
     private final Long id;
 
     private final String name;
 
     private final LocalDateTime startsAt;
 
-    private Game(Long id, String name, LocalDateTime startsAt) {
+    private final List<Player> players;
+
+    private Team(Long id, String name, LocalDateTime startsAt, List<Player> players) {
         this.id = id;
         this.name = name;
         this.startsAt = startsAt;
+        this.players = players;
     }
 
     public Long getId() {
@@ -27,6 +31,10 @@ public class Game {
         return startsAt;
     }
 
+    public List<Player> getPlayers() {
+        return players;
+    }
+
     public static GameBuilder builder() {
         return new GameBuilder();
     }
@@ -35,6 +43,7 @@ public class Game {
         private Long id;
         private String name;
         private LocalDateTime startsAt;
+        private List<Player> players;
 
         GameBuilder() {
         }
@@ -54,12 +63,13 @@ public class Game {
             return this;
         }
 
-        public Game build() {
-            return new Game(this.id, this.name, this.startsAt);
+        public GameBuilder players(List<Player> players) {
+            this.players = players;
+            return this;
         }
 
-        public String toString() {
-            return "Game.GameBuilder(id=" + this.id + ", name=" + this.name + ", startsAt=" + this.startsAt + ")";
+        public Team build() {
+            return new Team(this.id, this.name, this.startsAt, this.players);
         }
     }
 }

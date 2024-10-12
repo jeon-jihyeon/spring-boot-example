@@ -4,23 +4,26 @@ public class Player {
     private final Long id;
     private final Grade grade;
     private final FullName fullName;
+    private final Team team;
 
-    private Player(Long id, Grade grade, FullName fullName) {
+    private Player(Long id, Grade grade, FullName fullName, Team team) {
         this.id = id;
         this.grade = grade;
         this.fullName = fullName;
+        this.team = team;
     }
 
     public Long getId() {
         return id;
     }
-
     public Grade getGrade() {
         return grade;
     }
-
     public FullName getFullName() {
         return fullName;
+    }
+    public Team getTeam() {
+        return team;
     }
 
     public static PlayerBuilder builder() {
@@ -31,6 +34,7 @@ public class Player {
         private Long id;
         private Grade grade;
         private FullName fullName;
+        private Team team;
 
         PlayerBuilder() {
         }
@@ -50,12 +54,13 @@ public class Player {
             return this;
         }
 
-        public Player build() {
-            return new Player(this.id, this.grade, this.fullName);
+        public PlayerBuilder team(Team team) {
+            this.team = team;
+            return this;
         }
 
-        public String toString() {
-            return "Player.PlayerBuilder(id=" + this.id + ", grade=" + this.grade + ", fullName=" + this.fullName + ")";
+        public Player build() {
+            return new Player(this.id, this.grade, this.fullName, this.team);
         }
     }
 }
