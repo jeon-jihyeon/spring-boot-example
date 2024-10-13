@@ -1,11 +1,13 @@
 package com.example.spring.boot.modules.player.domain;
 
+import com.example.spring.boot.modules.team.domain.Team;
+
 public class Player {
     private final Long id;
     private final Grade grade;
     private final FullName fullName;
     private final Team team;
-
+    
     private Player(Long id, Grade grade, FullName fullName, Team team) {
         this.id = id;
         this.grade = grade;
@@ -13,21 +15,24 @@ public class Player {
         this.team = team;
     }
 
+    public static PlayerBuilder builder() {
+        return new PlayerBuilder();
+    }
+
     public Long getId() {
         return id;
     }
+
     public Grade getGrade() {
         return grade;
     }
+
     public FullName getFullName() {
         return fullName;
     }
+
     public Team getTeam() {
         return team;
-    }
-
-    public static PlayerBuilder builder() {
-        return new PlayerBuilder();
     }
 
     public static class PlayerBuilder {

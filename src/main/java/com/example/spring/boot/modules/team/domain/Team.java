@@ -1,4 +1,6 @@
-package com.example.spring.boot.modules.player.domain;
+package com.example.spring.boot.modules.team.domain;
+
+import com.example.spring.boot.modules.player.domain.Player;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,6 +21,10 @@ public class Team {
         this.players = players;
     }
 
+    public static GameBuilder builder() {
+        return new GameBuilder();
+    }
+
     public Long getId() {
         return id;
     }
@@ -33,10 +39,6 @@ public class Team {
 
     public List<Player> getPlayers() {
         return players;
-    }
-
-    public static GameBuilder builder() {
-        return new GameBuilder();
     }
 
     public static class GameBuilder {
