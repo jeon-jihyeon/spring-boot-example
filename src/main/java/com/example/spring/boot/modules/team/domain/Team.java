@@ -8,13 +8,13 @@ import java.util.List;
 public class Team {
     private final Long id;
 
-    private final String name;
+    private final TeamName name;
 
     private final LocalDateTime startsAt;
 
     private final List<Player> players;
 
-    private Team(Long id, String name, LocalDateTime startsAt, List<Player> players) {
+    private Team(Long id, TeamName name, LocalDateTime startsAt, List<Player> players) {
         this.id = id;
         this.name = name;
         this.startsAt = startsAt;
@@ -29,7 +29,7 @@ public class Team {
         return id;
     }
 
-    public String getName() {
+    public TeamName getName() {
         return name;
     }
 
@@ -43,7 +43,7 @@ public class Team {
 
     public static class GameBuilder {
         private Long id;
-        private String name;
+        private TeamName name;
         private LocalDateTime startsAt;
         private List<Player> players;
 
@@ -55,7 +55,7 @@ public class Team {
             return this;
         }
 
-        public GameBuilder name(String name) {
+        public GameBuilder name(TeamName name) {
             this.name = name;
             return this;
         }
