@@ -6,5 +6,5 @@ import org.springframework.data.domain.Pageable;
 public interface TeamQueryRepository {
     Page<Team> findTeams(TeamCondition condition, Pageable pageable);
 
-    Team findTeam(Long id);
+    Team findTeam(TeamId id);
 }
