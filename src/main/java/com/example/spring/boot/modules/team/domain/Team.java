@@ -20,4 +20,13 @@ public class Team {
         this.startsAt = startsAt;
         this.playerIds = playerIds;
     }
+
+    public static Team create(TeamCreate command) {
+        return new Team(
+                TeamId.newId(),
+                command.name(),
+                LocalDateTime.now(),
+                List.of()
+        );
+    }
 }
