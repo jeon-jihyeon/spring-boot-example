@@ -1,6 +1,7 @@
-package com.example.spring.boot.modules.player.domain;
+package com.example.spring.boot.modules.player.domain.model;
 
-import com.example.spring.boot.modules.team.domain.TeamId;
+import com.example.spring.boot.modules.player.domain.command.PlayerCreate;
+import com.example.spring.boot.modules.team.domain.model.TeamId;
 
 public class Player {
     private final PlayerId id;

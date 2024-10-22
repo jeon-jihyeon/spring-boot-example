@@ -1,6 +1,7 @@
 package com.example.spring.boot.modules.player.domain;
 
 import com.example.spring.boot.core.exceptions.InvalidValueException;
+import com.example.spring.boot.modules.player.domain.model.FullName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;

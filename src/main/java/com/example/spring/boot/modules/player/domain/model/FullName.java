@@ -1,4 +1,4 @@
-package com.example.spring.boot.modules.player.domain;
+package com.example.spring.boot.modules.player.domain.model;
 
 import com.example.spring.boot.core.exceptions.InvalidValueException;
 
