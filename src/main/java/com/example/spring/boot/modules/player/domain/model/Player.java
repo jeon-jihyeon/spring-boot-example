@@ -1,5 +1,6 @@
 package com.example.spring.boot.modules.player.domain.model;
 
+import com.example.spring.boot.modules.player.domain.command.PlayerChangeName;
 import com.example.spring.boot.modules.player.domain.command.PlayerCreate;
 import com.example.spring.boot.modules.team.domain.model.TeamId;
 
@@ -23,5 +24,9 @@ public class Player {
                 command.fullName(),
                 TeamId.NoTeam
         );
+    }
+
+    public Player update(PlayerChangeName command) {
+        return new Player(id, grade, command.fullName(), teamId);
     }
 }
