@@ -26,6 +26,22 @@ public class Player {
         );
     }
 
+    public PlayerId getId() {
+        return id;
+    }
+
+    public Grade getGrade() {
+        return grade;
+    }
+
+    public FullName getFullName() {
+        return fullName;
+    }
+
+    public TeamId getTeamId() {
+        return teamId;
+    }
+
     public Player update(PlayerChangeName command) {
         return new Player(id, grade, command.fullName(), teamId);
     }

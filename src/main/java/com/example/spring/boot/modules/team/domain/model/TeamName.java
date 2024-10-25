@@ -1,9 +1,10 @@
 package com.example.spring.boot.modules.team.domain.model;
 
 import com.example.spring.boot.core.exceptions.InvalidValueException;
+import org.springframework.util.StringUtils;
 
 public record TeamName(String value) {
     public TeamName {
-        if (value == null || value.length() > 30) throw new InvalidValueException();
+        if (!StringUtils.hasText(value) || value.length() > 30) throw new InvalidValueException();
     }
 }

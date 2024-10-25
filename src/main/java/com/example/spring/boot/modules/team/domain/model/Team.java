@@ -9,11 +9,8 @@ import java.util.List;
 
 public class Team {
     private final TeamId id;
-
     private final TeamName name;
-
     private final LocalDateTime startsAt;
-
     private final List<PlayerId> playerIds;
 
     private Team(TeamId id, TeamName name, LocalDateTime startsAt, List<PlayerId> playerIds) {
@@ -30,6 +27,22 @@ public class Team {
                 LocalDateTime.now(),
                 List.of()
         );
+    }
+
+    public TeamId getId() {
+        return id;
+    }
+
+    public TeamName getName() {
+        return name;
+    }
+
+    public LocalDateTime getStartsAt() {
+        return startsAt;
+    }
+
+    public List<PlayerId> getPlayerIds() {
+        return playerIds;
     }
 
     public Team update(TeamChangeName command) {
