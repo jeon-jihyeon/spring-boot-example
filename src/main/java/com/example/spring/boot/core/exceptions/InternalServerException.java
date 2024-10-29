@@ -3,31 +3,10 @@ package com.example.spring.boot.core.exceptions;
 import org.springframework.boot.logging.LogLevel;
 import org.springframework.http.HttpStatus;
 
-public class InternalServerException extends RuntimeException implements ApiException {
-    private final Object data;
+public class InternalServerException extends ApiException {
+    private static final String DEFAULT_MESSAGE = "An internal error occurred.";
 
     public InternalServerException() {
-        super("An internal error occurred. Try again later.");
-        this.data = null;
-    }
-
-    public InternalServerException(Object data) {
-        super("An internal error occurred. Try again later.");
-        this.data = data;
-    }
-
-    @Override
-    public HttpStatus getStatus() {
-        return HttpStatus.INTERNAL_SERVER_ERROR;
-    }
-
-    @Override
-    public LogLevel getLogLevel() {
-        return LogLevel.ERROR;
-    }
-
-    @Override
-    public Object getData() {
-        return data;
+        super(DEFAULT_MESSAGE, HttpStatus.INTERNAL_SERVER_ERROR, LogLevel.ERROR, null);
     }
 }
