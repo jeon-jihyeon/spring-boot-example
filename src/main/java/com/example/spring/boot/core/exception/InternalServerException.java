@@ -1,4 +1,4 @@
-package com.example.spring.boot.core.exceptions;
+package com.example.spring.boot.core.exception;
 
 import org.springframework.boot.logging.LogLevel;
 import org.springframework.http.HttpStatus;

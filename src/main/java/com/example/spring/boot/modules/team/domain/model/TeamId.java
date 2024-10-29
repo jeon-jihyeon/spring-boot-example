@@ -1,7 +1,7 @@
 package com.example.spring.boot.modules.team.domain.model;
 
 import com.example.spring.boot.core.IdGenerator;
-import com.example.spring.boot.core.exceptions.InvalidValueException;
+import com.example.spring.boot.core.exception.InvalidValueException;
 
 public record TeamId(Long value) {
     public static final TeamId NoTeam = new TeamId(0L);

@@ -1,6 +1,6 @@
 package com.example.spring.boot.modules.player.domain.model;
 
-import com.example.spring.boot.core.exceptions.InvalidValueException;
+import com.example.spring.boot.core.exception.InvalidValueException;
 import org.springframework.util.StringUtils;
 
 public record FullName(String firstName, String lastName) {

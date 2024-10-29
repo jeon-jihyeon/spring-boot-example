@@ -1,6 +1,6 @@
 package com.example.spring.boot.modules.team.domain.model;
 
-import com.example.spring.boot.core.exceptions.InvalidValueException;
+import com.example.spring.boot.core.exception.InvalidValueException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
