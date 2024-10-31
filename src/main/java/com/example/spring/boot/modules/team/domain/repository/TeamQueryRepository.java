@@ -1,13 +1,14 @@
 package com.example.spring.boot.modules.team.domain.repository;
 
-import com.example.spring.boot.modules.team.domain.TeamCondition;
-import com.example.spring.boot.modules.team.domain.model.Team;
+import com.example.spring.boot.modules.team.domain.condition.TeamCondition;
 import com.example.spring.boot.modules.team.domain.model.TeamId;
+import com.example.spring.boot.modules.team.domain.query.TeamListQuery;
+import com.example.spring.boot.modules.team.domain.query.TeamQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface TeamQueryRepository {
-    Page<Team> findTeams(TeamCondition condition, Pageable pageable);
+    Page<TeamListQuery> findTeams(TeamCondition condition, Pageable pageable);
 
-    Team findTeam(TeamId id);
+    TeamQuery findTeam(TeamId id);
 }

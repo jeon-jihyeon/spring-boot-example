@@ -1,13 +1,14 @@
 package com.example.spring.boot.modules.player.domain.repository;
 
-import com.example.spring.boot.modules.player.domain.PlayerCondition;
-import com.example.spring.boot.modules.player.domain.model.Player;
+import com.example.spring.boot.modules.player.domain.condition.PlayerCondition;
 import com.example.spring.boot.modules.player.domain.model.PlayerId;
+import com.example.spring.boot.modules.player.domain.query.PlayerListQuery;
+import com.example.spring.boot.modules.player.domain.query.PlayerQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface PlayerQueryRepository {
-    Page<Player> findPlayers(PlayerCondition condition, Pageable pageable);
+    Page<PlayerListQuery> findPlayers(PlayerCondition condition, Pageable pageable);
 
-    Player findPlayer(PlayerId id);
+    PlayerQuery findPlayer(PlayerId id);
 }
