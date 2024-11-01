@@ -6,7 +6,7 @@ import com.example.spring.boot.modules.team.domain.model.TeamId;
 public interface TeamCommandRepository {
     Team findById(TeamId id);
 
-    Long save(Team team);
+    TeamId save(Team team);
 
     void deleteById(TeamId id);
 }

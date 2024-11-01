@@ -1,6 +1,6 @@
 package com.example.spring.boot.modules.team.domain.model;
 
-import com.example.spring.boot.modules.team.domain.command.CreateTeamCommand;
+import com.example.spring.boot.modules.team.domain.command.TeamCreateCommand;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -11,7 +11,7 @@ class TeamTest {
     @ParameterizedTest
     @ValueSource(strings = {"name"})
     void create(String name) {
-        final Team model = Team.create(new CreateTeamCommand(new TeamName(name)));
+        final Team model = Team.create(new TeamCreateCommand(new TeamName(name)));
         assertThat(model.getId()).isNotNull();
         assertThat(model.getId().value()).isGreaterThan(0L);
         assertThat(model.getName().value()).isEqualTo(name);

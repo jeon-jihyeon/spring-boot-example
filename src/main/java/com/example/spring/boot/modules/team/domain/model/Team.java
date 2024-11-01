@@ -1,7 +1,7 @@
 package com.example.spring.boot.modules.team.domain.model;
 
 import com.example.spring.boot.modules.player.domain.model.PlayerId;
-import com.example.spring.boot.modules.team.domain.command.CreateTeamCommand;
+import com.example.spring.boot.modules.team.domain.command.TeamCreateCommand;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,7 +19,7 @@ public class Team {
         this.playerIds = playerIds;
     }
 
-    public static Team create(CreateTeamCommand command) {
+    public static Team create(TeamCreateCommand command) {
         return new Team(
                 TeamId.newId(),
                 command.name(),

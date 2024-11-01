@@ -1,6 +1,6 @@
 package com.example.spring.boot.modules.player.domain.model;
 
-import com.example.spring.boot.modules.player.domain.command.CreatePlayerCommand;
+import com.example.spring.boot.modules.player.domain.command.PlayerCreateCommand;
 import com.example.spring.boot.modules.team.domain.model.TeamId;
 
 public class Player {
@@ -16,7 +16,7 @@ public class Player {
         this.teamId = teamId;
     }
 
-    public static Player create(CreatePlayerCommand command) {
+    public static Player create(PlayerCreateCommand command) {
         return new Player(
                 PlayerId.newId(),
                 Grade.NOVICE,

@@ -6,7 +6,7 @@ import com.example.spring.boot.modules.player.domain.model.PlayerId;
 public interface PlayerCommandRepository {
     Player findById(PlayerId id);
 
-    Long save(Player player);
+    PlayerId save(Player player);
 
     void deleteById(PlayerId id);
 }
