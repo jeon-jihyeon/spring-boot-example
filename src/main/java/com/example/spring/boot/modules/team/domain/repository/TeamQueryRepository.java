@@ -4,11 +4,11 @@ import com.example.spring.boot.modules.team.domain.condition.TeamCondition;
 import com.example.spring.boot.modules.team.domain.model.TeamId;
 import com.example.spring.boot.modules.team.domain.query.TeamListQuery;
 import com.example.spring.boot.modules.team.domain.query.TeamQuery;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 public interface TeamQueryRepository {
-    Page<TeamListQuery> findTeams(TeamCondition condition, Pageable pageable);
+    List<TeamListQuery> findTeams(TeamCondition condition);
 
     TeamQuery findTeam(TeamId id);
 }
