@@ -1,6 +1,6 @@
 package com.example.spring.boot.modules.player.api.response;
 
-import com.example.spring.boot.modules.player.domain.query.PlayerListQuery;
+import com.example.spring.boot.modules.player.domain.repository.query.PlayerListQuery;
 
 public record PlayerListResponse(Long id, String grade, String firstName, String lastName, Boolean hasTeam) {
     public static PlayerListResponse from(PlayerListQuery query) {

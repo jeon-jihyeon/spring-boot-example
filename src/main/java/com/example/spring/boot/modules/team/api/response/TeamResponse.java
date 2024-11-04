@@ -1,7 +1,7 @@
 package com.example.spring.boot.modules.team.api.response;
 
 import com.example.spring.boot.modules.player.domain.model.PlayerId;
-import com.example.spring.boot.modules.team.domain.query.TeamQuery;
+import com.example.spring.boot.modules.team.domain.repository.query.TeamQuery;
 
 import java.time.LocalDateTime;
 import java.util.List;

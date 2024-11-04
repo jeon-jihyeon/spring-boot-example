@@ -1,11 +1,11 @@
 package com.example.spring.boot.modules.player.domain;
 
-import com.example.spring.boot.modules.player.domain.command.PlayerCreateCommand;
 import com.example.spring.boot.modules.player.domain.model.Player;
 import com.example.spring.boot.modules.player.domain.model.PlayerId;
-import com.example.spring.boot.modules.player.domain.query.PlayerQuery;
 import com.example.spring.boot.modules.player.domain.repository.PlayerCommandRepository;
 import com.example.spring.boot.modules.player.domain.repository.PlayerQueryRepository;
+import com.example.spring.boot.modules.player.domain.repository.command.PlayerCreateCommand;
+import com.example.spring.boot.modules.player.domain.repository.query.PlayerQuery;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

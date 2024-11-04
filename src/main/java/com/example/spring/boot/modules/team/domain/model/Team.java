@@ -1,7 +1,7 @@
 package com.example.spring.boot.modules.team.domain.model;
 
 import com.example.spring.boot.modules.player.domain.model.PlayerId;
-import com.example.spring.boot.modules.team.domain.command.TeamCreateCommand;
+import com.example.spring.boot.modules.team.domain.repository.command.TeamCreateCommand;
 
 import java.time.LocalDateTime;
 import java.util.List;

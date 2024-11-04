@@ -1,11 +1,11 @@
 package com.example.spring.boot.modules.team.domain;
 
-import com.example.spring.boot.modules.team.domain.command.TeamCreateCommand;
 import com.example.spring.boot.modules.team.domain.model.Team;
 import com.example.spring.boot.modules.team.domain.model.TeamId;
-import com.example.spring.boot.modules.team.domain.query.TeamQuery;
 import com.example.spring.boot.modules.team.domain.repository.TeamCommandRepository;
 import com.example.spring.boot.modules.team.domain.repository.TeamQueryRepository;
+import com.example.spring.boot.modules.team.domain.repository.command.TeamCreateCommand;
+import com.example.spring.boot.modules.team.domain.repository.query.TeamQuery;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

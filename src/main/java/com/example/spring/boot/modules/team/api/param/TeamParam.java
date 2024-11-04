@@ -1,7 +1,7 @@
 package com.example.spring.boot.modules.team.api.param;
 
-import com.example.spring.boot.modules.team.domain.condition.TeamCondition;
 import com.example.spring.boot.modules.team.domain.model.TeamName;
+import com.example.spring.boot.modules.team.domain.repository.condition.TeamCondition;
 
 import java.time.LocalDateTime;
 

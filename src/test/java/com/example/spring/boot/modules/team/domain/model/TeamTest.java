@@ -1,6 +1,6 @@
 package com.example.spring.boot.modules.team.domain.model;
 
-import com.example.spring.boot.modules.team.domain.command.TeamCreateCommand;
+import com.example.spring.boot.modules.team.domain.repository.command.TeamCreateCommand;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 

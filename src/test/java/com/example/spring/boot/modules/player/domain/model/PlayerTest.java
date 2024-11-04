@@ -1,6 +1,6 @@
 package com.example.spring.boot.modules.player.domain.model;
 
-import com.example.spring.boot.modules.player.domain.command.PlayerCreateCommand;
+import com.example.spring.boot.modules.player.domain.repository.command.PlayerCreateCommand;
 import com.example.spring.boot.modules.team.domain.model.TeamId;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

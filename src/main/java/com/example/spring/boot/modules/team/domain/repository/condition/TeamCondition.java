@@ -1,4 +1,4 @@
-package com.example.spring.boot.modules.team.domain.condition;
+package com.example.spring.boot.modules.team.domain.repository.condition;
 
 import com.example.spring.boot.modules.team.domain.model.TeamName;
 

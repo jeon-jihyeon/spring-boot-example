@@ -1,4 +1,4 @@
-package com.example.spring.boot.modules.team.domain.query;
+package com.example.spring.boot.modules.team.domain.repository.query;
 
 import com.example.spring.boot.modules.team.domain.model.TeamId;
 import com.example.spring.boot.modules.team.domain.model.TeamName;

@@ -1,4 +1,4 @@
-package com.example.spring.boot.modules.player.domain.condition;
+package com.example.spring.boot.modules.player.domain.repository.condition;
 
 import com.example.spring.boot.modules.player.domain.model.FullName;
 import com.example.spring.boot.modules.player.domain.model.Grade;

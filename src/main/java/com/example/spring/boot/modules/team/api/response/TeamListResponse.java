@@ -1,6 +1,6 @@
 package com.example.spring.boot.modules.team.api.response;
 
-import com.example.spring.boot.modules.team.domain.query.TeamListQuery;
+import com.example.spring.boot.modules.team.domain.repository.query.TeamListQuery;
 
 import java.time.LocalDateTime;
 
