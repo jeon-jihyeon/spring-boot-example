@@ -2,6 +2,7 @@ package com.example.spring.boot.modules.player.domain.model;
 
 import com.example.spring.boot.modules.player.domain.repository.command.PlayerCreateCommand;
 import com.example.spring.boot.modules.team.domain.model.TeamId;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -11,6 +12,7 @@ class PlayerTest {
 
     @ParameterizedTest
     @CsvSource(value = {"first,last"})
+    @DisplayName("Player 모델 초기화 검증")
     void create(String first, String last) {
         final Player model = Player.create(new PlayerCreateCommand(new FullName(first, last)));
         assertThat(model.getId()).isNotNull();
