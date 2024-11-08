@@ -13,7 +13,7 @@ class FullNameTest {
     @ParameterizedTest
     @NullAndEmptySource
     @ValueSource(strings = {"1234567890123456789012345678901"})
-    @DisplayName("FullName 유효성 검증")
+    @DisplayName("FullName 유효성 검증 테스트")
     void test_validation(String errorValue) {
         assertThrows(InvalidValueException.class, () -> new FullName("first", errorValue));
         assertThrows(InvalidValueException.class, () -> new FullName(errorValue, "last"));

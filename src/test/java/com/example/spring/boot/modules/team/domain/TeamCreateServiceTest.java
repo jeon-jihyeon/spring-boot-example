@@ -28,7 +28,7 @@ class TeamCreateServiceTest {
     private TeamCreateService service;
 
     @Test
-    @DisplayName("Team 생성 서비스 검증")
+    @DisplayName("Team 생성 서비스 테스트")
     void test_invoke() {
         final TeamCreateCommand command = new TeamCreateCommand(new TeamName("name"));
         final Team model = Team.create(command);

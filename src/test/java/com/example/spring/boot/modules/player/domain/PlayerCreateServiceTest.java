@@ -28,7 +28,7 @@ class PlayerCreateServiceTest {
     private PlayerCreateService service;
 
     @Test
-    @DisplayName("Player 생성 서비스 검증")
+    @DisplayName("Player 생성 서비스 테스트")
     void test_invoke() {
         final PlayerCreateCommand command = new PlayerCreateCommand(new FullName("first", "last"));
         final Player model = Player.create(command);

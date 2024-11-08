@@ -11,7 +11,7 @@ class TeamTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"name"})
-    @DisplayName("Team 모델 초기화 검증")
+    @DisplayName("Team 모델 초기화 테스트")
     void create(String name) {
         final Team model = Team.create(new TeamCreateCommand(new TeamName(name)));
         assertThat(model.getId()).isNotNull();

@@ -15,13 +15,13 @@ class TeamIdTest {
     @ParameterizedTest
     @NullSource
     @ValueSource(longs = {-1L})
-    @DisplayName("TeamId 유효성 검증")
+    @DisplayName("TeamId 유효성 검증 테스트")
     void test_validation(Long errorValue) {
         assertThrows(InvalidValueException.class, () -> new TeamId(errorValue));
     }
 
     @Test
-    @DisplayName("TeamId 객체 초기화 검증")
+    @DisplayName("TeamId 객체 초기화 테스트")
     void test_newId_should_generate_id() {
         final Long id = TeamId.newId().value();
         assertThat(id).isNotNull();
@@ -29,6 +29,7 @@ class TeamIdTest {
     }
 
     @Test
+    @DisplayName("NoTeam 테스트")
     void test_noTeam_is_a_value_of_zero() {
         assertThat(TeamId.NoTeam).isEqualTo(new TeamId(0L));
         assertThat(TeamId.NoTeam.value()).isEqualTo(0L);
