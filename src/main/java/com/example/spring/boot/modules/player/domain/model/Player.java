@@ -16,6 +16,10 @@ public class Player {
         this.teamId = teamId;
     }
 
+    public static Player of(Long id, Grade grade, String firstName, String lastName, Long teamId) {
+        return new Player(new PlayerId(id), grade, new FullName(firstName, lastName), new TeamId(teamId));
+    }
+
     public static Player create(PlayerCreateCommand command) {
         return new Player(
                 PlayerId.newId(),

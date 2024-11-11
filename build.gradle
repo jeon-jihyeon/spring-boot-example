@@ -35,10 +35,6 @@ dependencies {
     // RDB
     runtimeOnly 'com.h2database:h2'
 
-    // Lombok
-    // compileOnly 'org.projectlombok:lombok'
-    // annotationProcessor 'org.projectlombok:lombok'
-
     // Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.mockito:mockito-core:5.2.0'
