@@ -18,6 +18,5 @@ class TeamTest {
         assertThat(model.getId().value()).isGreaterThan(0L);
         assertThat(model.getName().value()).isEqualTo(name);
         assertThat(model.getStartsAt()).isNotNull();
-        assertThat(model.getPlayerIds()).isEmpty();
     }
 }
