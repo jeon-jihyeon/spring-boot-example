@@ -5,7 +5,7 @@ import com.example.spring.boot.persistence.EntityMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TeamMapper implements EntityMapper<Team, TeamEntity> {
+public class TeamCommandMapper implements EntityMapper<Team, TeamEntity> {
     @Override
     public Team toDomain(TeamEntity entity) {
         return Team.of(

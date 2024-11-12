@@ -5,7 +5,7 @@ import com.example.spring.boot.persistence.EntityMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PlayerMapper implements EntityMapper<Player, PlayerEntity> {
+public class PlayerCommandMapper implements EntityMapper<Player, PlayerEntity> {
     @Override
     public Player toDomain(PlayerEntity entity) {
         return Player.of(

@@ -2,9 +2,7 @@ package com.example.spring.boot.modules.player.api;
 
 import com.example.spring.boot.core.response.ResponseModel;
 import com.example.spring.boot.modules.player.api.response.PlayerListResponse;
-import com.example.spring.boot.modules.player.domain.model.FullName;
 import com.example.spring.boot.modules.player.domain.model.Grade;
-import com.example.spring.boot.modules.player.domain.model.PlayerId;
 import com.example.spring.boot.modules.player.domain.repository.PlayerQueryRepository;
 import com.example.spring.boot.modules.player.domain.repository.condition.PlayerCondition;
 import com.example.spring.boot.modules.player.domain.repository.query.PlayerListQuery;
@@ -45,7 +43,7 @@ class PlayerListControllerTest {
     @Test
     @DisplayName("Player 목록 API 테스트")
     void test_invoke() throws Exception {
-        final List<PlayerListQuery> query = List.of(new PlayerListQuery(new PlayerId(1L), Grade.NOVICE, new FullName("first", "last"), false));
+        final List<PlayerListQuery> query = List.of(new PlayerListQuery(1L, Grade.NOVICE, "first", "last", 1L));
         when(repository.findPlayers(any(PlayerCondition.class))).thenReturn(query);
 
         // then

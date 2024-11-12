@@ -1,15 +1,16 @@
 package com.example.spring.boot.modules.player.api.response;
 
+import com.example.spring.boot.modules.player.domain.model.Grade;
 import com.example.spring.boot.modules.player.domain.repository.query.PlayerListQuery;
 
-public record PlayerListResponse(Long id, String grade, String firstName, String lastName, Boolean hasTeam) {
+public record PlayerListResponse(Long id, Grade grade, String firstName, String lastName, Long teamId) {
     public static PlayerListResponse from(PlayerListQuery query) {
         return new PlayerListResponse(
-                query.id().value(),
-                query.grade().name(),
-                query.fullName().firstName(),
-                query.fullName().lastName(),
-                query.hasTeam()
+                query.id(),
+                query.grade(),
+                query.firstName(),
+                query.lastName(),
+                query.teamId()
         );
     }
 }

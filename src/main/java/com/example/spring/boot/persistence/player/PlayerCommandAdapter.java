@@ -8,26 +8,26 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PlayerCommandAdapter implements PlayerCommandRepository {
-    private final PlayerJpaRepository jpaRepository;
-    private final PlayerMapper mapper;
+    private final PlayerJpaRepository repository;
+    private final PlayerCommandMapper mapper;
 
-    public PlayerCommandAdapter(PlayerJpaRepository jpaRepository, PlayerMapper mapper) {
-        this.jpaRepository = jpaRepository;
+    public PlayerCommandAdapter(PlayerJpaRepository repository, PlayerCommandMapper mapper) {
+        this.repository = repository;
         this.mapper = mapper;
     }
 
     @Override
     public PlayerId save(Player player) {
-        return new PlayerId(jpaRepository.save(mapper.toEntity(player)).getId());
+        return new PlayerId(repository.save(mapper.toEntity(player)).getId());
     }
 
     @Override
     public Player findById(PlayerId id) {
-        return mapper.toDomain(jpaRepository.findById(id.value()).orElseThrow(EntityNotFoundException::new));
+        return mapper.toDomain(repository.findById(id.value()).orElseThrow(EntityNotFoundException::new));
     }
 
     @Override
     public void deleteById(PlayerId id) {
-        jpaRepository.deleteById(id.value());
+        repository.deleteById(id.value());
     }
 }
