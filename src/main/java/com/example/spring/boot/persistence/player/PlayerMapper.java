@@ -2,7 +2,9 @@ package com.example.spring.boot.persistence.player;
 
 import com.example.spring.boot.modules.player.domain.model.Player;
 import com.example.spring.boot.persistence.EntityMapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PlayerMapper implements EntityMapper<Player, PlayerEntity> {
     @Override
     public Player toDomain(PlayerEntity entity) {

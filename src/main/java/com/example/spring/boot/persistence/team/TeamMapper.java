@@ -2,7 +2,9 @@ package com.example.spring.boot.persistence.team;
 
 import com.example.spring.boot.modules.team.domain.model.Team;
 import com.example.spring.boot.persistence.EntityMapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TeamMapper implements EntityMapper<Team, TeamEntity> {
     @Override
     public Team toDomain(TeamEntity entity) {
