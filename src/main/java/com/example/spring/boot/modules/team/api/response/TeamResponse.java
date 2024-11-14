@@ -6,6 +6,6 @@ import java.time.LocalDateTime;
 
 public record TeamResponse(Long id, String name, LocalDateTime startsAt) {
     public static TeamResponse from(TeamQuery query) {
-        return new TeamResponse(query.id().value(), query.name().value(), query.startsAt());
+        return new TeamResponse(query.id(), query.name(), query.startsAt());
     }
 }
