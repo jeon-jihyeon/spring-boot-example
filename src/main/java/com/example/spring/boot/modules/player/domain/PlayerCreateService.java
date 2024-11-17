@@ -7,7 +7,6 @@ import com.example.spring.boot.modules.player.domain.repository.PlayerQueryRepos
 import com.example.spring.boot.modules.player.domain.repository.command.PlayerCreateCommand;
 import com.example.spring.boot.modules.player.domain.repository.query.PlayerQuery;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PlayerCreateService {
@@ -19,7 +18,6 @@ public class PlayerCreateService {
         this.queryRepository = queryRepository;
     }
 
-    @Transactional
     public PlayerQuery invoke(PlayerCreateCommand command) {
         final PlayerId id = commandRepository.save(Player.create(command));
         return queryRepository.findPlayer(id);
