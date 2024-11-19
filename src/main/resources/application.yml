@@ -1,0 +1,7 @@
+spring:
+  application.name: boot
+  profiles.active: local
+  web.resources.add-mappings: false
+
+---
+spring.config.activate.on-profile: local
