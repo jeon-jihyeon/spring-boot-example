@@ -4,4 +4,7 @@ spring:
   web.resources.add-mappings: false
 
 ---
-spring.config.activate.on-profile: local
+spring.config:
+  activate.on-profile: local
+  import:
+    - classpath:db/local.yml
