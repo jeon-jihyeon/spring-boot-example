@@ -13,7 +13,7 @@ class PlayerTest {
     @ParameterizedTest
     @CsvSource(value = {"first,last"})
     @DisplayName("Player 모델 초기화 테스트")
-    void create(String first, String last) {
+    void shouldInitializePlayerModel(String first, String last) {
         final Player model = Player.create(new PlayerCreateCommand(new FullName(first, last)));
         assertThat(model.getId()).isNotNull();
         assertThat(model.getId().value()).isGreaterThan(0L);

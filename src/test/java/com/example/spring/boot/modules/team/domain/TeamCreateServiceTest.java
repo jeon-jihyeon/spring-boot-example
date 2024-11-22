@@ -29,7 +29,7 @@ class TeamCreateServiceTest {
 
     @Test
     @DisplayName("Team 생성 서비스 테스트")
-    void test_invoke() {
+    void shouldCreateTeamAndReturnValidResponse() {
         final TeamCreateCommand command = new TeamCreateCommand(new TeamName("name"));
         final Team model = Team.create(command);
         final TeamQuery query = TeamQuery.from(model);

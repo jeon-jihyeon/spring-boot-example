@@ -42,7 +42,7 @@ class PlayerCreateControllerTest {
 
     @Test
     @DisplayName("Player 생성 API 테스트")
-    void test_invoke() throws Exception {
+    void shouldReturnValidResponseForPlayerCreation() throws Exception {
         final PlayerCreateRequest data = new PlayerCreateRequest("first", "last");
         final PlayerQuery query = PlayerQuery.from(Player.create(data.toCommand()));
 

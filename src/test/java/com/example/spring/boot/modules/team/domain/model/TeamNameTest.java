@@ -14,7 +14,7 @@ class TeamNameTest {
     @NullAndEmptySource
     @ValueSource(strings = {"1234567890123456789012345678901"})
     @DisplayName("TeamName 유효성 검증 테스트")
-    void test_validation(String errorValue) {
+    void shouldThrowExceptionForInvalidValue(String errorValue) {
         assertThrows(InvalidValueException.class, () -> new TeamName(errorValue));
     }
 }

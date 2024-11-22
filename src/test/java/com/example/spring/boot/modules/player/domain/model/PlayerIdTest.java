@@ -16,13 +16,13 @@ class PlayerIdTest {
     @NullSource
     @ValueSource(longs = {-1L})
     @DisplayName("PlayerId 유효성 검증 테스트")
-    void test_validation(Long errorValue) {
+    void shouldThrowExceptionForInvalidValue(Long errorValue) {
         assertThrows(InvalidValueException.class, () -> new PlayerId(errorValue));
     }
 
     @Test
     @DisplayName("PlayerId 객체 초기화 테스트")
-    void test_newId_should_generate_id() {
+    void shouldGenerateValueForNewId() {
         final Long id = PlayerId.newId().value();
         assertThat(id).isNotNull();
         assertThat(id).isGreaterThan(0);

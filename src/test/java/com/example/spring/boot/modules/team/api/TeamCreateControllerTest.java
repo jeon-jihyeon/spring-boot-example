@@ -43,7 +43,7 @@ class TeamCreateControllerTest {
 
     @Test
     @DisplayName("Team 생성 API 테스트")
-    void test_invoke() throws Exception {
+    void shouldReturnValidResponseForTeamCreation() throws Exception {
         final TeamCreateRequest data = new TeamCreateRequest("name");
         final TeamQuery query = TeamQuery.from(Team.create(data.toCommand()));
 

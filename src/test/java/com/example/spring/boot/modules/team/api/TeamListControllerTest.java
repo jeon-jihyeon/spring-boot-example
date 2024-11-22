@@ -43,7 +43,7 @@ class TeamListControllerTest {
 
     @Test
     @DisplayName("Team 목록 API 테스트")
-    void test_invoke() throws Exception {
+    void shouldReturnValidResponseForTeamList() throws Exception {
         final List<TeamListQuery> query = List.of(new TeamListQuery(1L, "name", LocalDateTime.now(), 0));
         when(repository.findTeams(any(TeamCondition.class))).thenReturn(query);
 

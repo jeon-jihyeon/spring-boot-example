@@ -42,7 +42,7 @@ class PlayerListControllerTest {
 
     @Test
     @DisplayName("Player 목록 API 테스트")
-    void test_invoke() throws Exception {
+    void shouldReturnValidResponseForPlayerList() throws Exception {
         final List<PlayerListQuery> query = List.of(new PlayerListQuery(1L, Grade.NOVICE, "first", "last", 1L));
         when(repository.findPlayers(any(PlayerCondition.class))).thenReturn(query);
 

@@ -29,7 +29,7 @@ class PlayerCreateServiceTest {
 
     @Test
     @DisplayName("Player 생성 서비스 테스트")
-    void test_invoke() {
+    void shouldCreatePlayerAndReturnValidResponse() {
         final PlayerCreateCommand command = new PlayerCreateCommand(new FullName("first", "last"));
         final Player model = Player.create(command);
         final PlayerQuery query = PlayerQuery.from(model);

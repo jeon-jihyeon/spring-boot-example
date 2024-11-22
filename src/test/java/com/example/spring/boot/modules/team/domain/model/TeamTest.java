@@ -12,7 +12,7 @@ class TeamTest {
     @ParameterizedTest
     @ValueSource(strings = {"name"})
     @DisplayName("Team 모델 초기화 테스트")
-    void create(String name) {
+    void shouldInitializeTeamModel(String name) {
         final Team model = Team.create(new TeamCreateCommand(new TeamName(name)));
         assertThat(model.getId()).isNotNull();
         assertThat(model.getId().value()).isGreaterThan(0L);
