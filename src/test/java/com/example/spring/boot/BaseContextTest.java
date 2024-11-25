@@ -5,7 +5,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestConstructor;
 
 @SpringBootTest
-@ActiveProfiles("local")
+@ActiveProfiles("test")
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 public abstract class BaseContextTest {
 }
