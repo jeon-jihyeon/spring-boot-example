@@ -5,7 +5,6 @@ import com.example.spring.boot.modules.team.domain.model.Team;
 import com.example.spring.boot.modules.team.domain.model.TeamId;
 import com.example.spring.boot.modules.team.domain.repository.TeamCommandRepository;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class TeamCommandAdapter implements TeamCommandRepository {
@@ -18,7 +17,6 @@ public class TeamCommandAdapter implements TeamCommandRepository {
     }
 
     @Override
-    @Transactional
     public TeamId save(Team team) {
         return new TeamId(repository.save(mapper.toEntity(team)).getId());
     }
@@ -29,7 +27,6 @@ public class TeamCommandAdapter implements TeamCommandRepository {
     }
 
     @Override
-    @Transactional
     public void deleteById(TeamId id) {
         repository.deleteById(id.value());
     }

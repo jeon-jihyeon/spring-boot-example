@@ -1,4 +1,4 @@
-package com.example.spring.boot.modules.team.api.response;
+package com.example.spring.boot.modules.team.api.data;
 
 import com.example.spring.boot.modules.team.domain.repository.query.TeamQuery;
 

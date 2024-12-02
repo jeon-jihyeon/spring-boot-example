@@ -1,8 +1,8 @@
 package com.example.spring.boot.modules.team.api;
 
 import com.example.spring.boot.core.response.ResponseModel;
-import com.example.spring.boot.modules.team.api.param.TeamParam;
-import com.example.spring.boot.modules.team.api.response.TeamListResponse;
+import com.example.spring.boot.modules.team.api.data.TeamListResponse;
+import com.example.spring.boot.modules.team.api.data.TeamParam;
 import com.example.spring.boot.modules.team.domain.repository.TeamQueryRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -7,6 +7,7 @@ import com.example.spring.boot.modules.team.domain.repository.TeamQueryRepositor
 import com.example.spring.boot.modules.team.domain.repository.command.TeamCreateCommand;
 import com.example.spring.boot.modules.team.domain.repository.query.TeamQuery;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TeamCreateService {
@@ -21,6 +22,7 @@ public class TeamCreateService {
         this.queryRepository = queryRepository;
     }
 
+    @Transactional
     public TeamQuery invoke(TeamCreateCommand command) {
         final TeamId id = commandRepository.save(Team.create(command));
         return queryRepository.findTeam(id);

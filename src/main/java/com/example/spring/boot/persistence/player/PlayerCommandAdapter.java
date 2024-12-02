@@ -5,7 +5,6 @@ import com.example.spring.boot.modules.player.domain.model.Player;
 import com.example.spring.boot.modules.player.domain.model.PlayerId;
 import com.example.spring.boot.modules.player.domain.repository.PlayerCommandRepository;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class PlayerCommandAdapter implements PlayerCommandRepository {
@@ -18,7 +17,6 @@ public class PlayerCommandAdapter implements PlayerCommandRepository {
     }
 
     @Override
-    @Transactional
     public PlayerId save(Player player) {
         return new PlayerId(repository.save(mapper.toEntity(player)).getId());
     }
@@ -29,7 +27,6 @@ public class PlayerCommandAdapter implements PlayerCommandRepository {
     }
 
     @Override
-    @Transactional
     public void deleteById(PlayerId id) {
         repository.deleteById(id.value());
     }

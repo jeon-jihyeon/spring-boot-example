@@ -1,8 +1,8 @@
 package com.example.spring.boot.modules.player.api;
 
 import com.example.spring.boot.core.response.ResponseModel;
-import com.example.spring.boot.modules.player.api.request.PlayerCreateRequest;
-import com.example.spring.boot.modules.player.api.response.PlayerResponse;
+import com.example.spring.boot.modules.player.api.data.PlayerCreateRequest;
+import com.example.spring.boot.modules.player.api.data.PlayerResponse;
 import com.example.spring.boot.modules.player.domain.PlayerCreateService;
 import com.example.spring.boot.modules.player.domain.model.Player;
 import com.example.spring.boot.modules.player.domain.repository.command.PlayerCreateCommand;

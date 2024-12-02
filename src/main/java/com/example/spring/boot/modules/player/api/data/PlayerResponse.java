@@ -1,4 +1,4 @@
-package com.example.spring.boot.modules.player.api.response;
+package com.example.spring.boot.modules.player.api.data;
 
 import com.example.spring.boot.modules.player.domain.model.Grade;
 import com.example.spring.boot.modules.player.domain.repository.query.PlayerQuery;

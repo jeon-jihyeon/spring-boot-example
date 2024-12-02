@@ -1,7 +1,7 @@
 package com.example.spring.boot.modules.player.api;
 
 import com.example.spring.boot.core.response.ResponseModel;
-import com.example.spring.boot.modules.player.api.response.PlayerListResponse;
+import com.example.spring.boot.modules.player.api.data.PlayerListResponse;
 import com.example.spring.boot.modules.player.domain.model.Grade;
 import com.example.spring.boot.modules.player.domain.repository.PlayerQueryRepository;
 import com.example.spring.boot.modules.player.domain.repository.condition.PlayerCondition;

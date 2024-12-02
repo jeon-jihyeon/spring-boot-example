@@ -1,4 +1,4 @@
-package com.example.spring.boot.modules.player.api.request;
+package com.example.spring.boot.modules.player.api.data;
 
 import com.example.spring.boot.modules.player.domain.model.FullName;
 import com.example.spring.boot.modules.player.domain.repository.command.PlayerCreateCommand;

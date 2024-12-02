@@ -1,7 +1,7 @@
 package com.example.spring.boot.modules.team.api;
 
 import com.example.spring.boot.core.response.ResponseModel;
-import com.example.spring.boot.modules.team.api.response.TeamListResponse;
+import com.example.spring.boot.modules.team.api.data.TeamListResponse;
 import com.example.spring.boot.modules.team.domain.repository.TeamQueryRepository;
 import com.example.spring.boot.modules.team.domain.repository.condition.TeamCondition;
 import com.example.spring.boot.modules.team.domain.repository.query.TeamListQuery;

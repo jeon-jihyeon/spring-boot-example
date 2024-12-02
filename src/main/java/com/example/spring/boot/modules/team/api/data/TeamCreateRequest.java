@@ -1,4 +1,4 @@
-package com.example.spring.boot.modules.team.api.request;
+package com.example.spring.boot.modules.team.api.data;
 
 import com.example.spring.boot.modules.team.domain.model.TeamName;
 import com.example.spring.boot.modules.team.domain.repository.command.TeamCreateCommand;
