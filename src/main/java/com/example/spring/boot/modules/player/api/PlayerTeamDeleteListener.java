@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionalEventListener;
 
 @Component
-public class PlayerTeamDeletionListener {
+public class PlayerTeamDeleteListener {
     private final PlayerBulkUpdateTeamService service;
 
-    public PlayerTeamDeletionListener(PlayerBulkUpdateTeamService service) {
+    public PlayerTeamDeleteListener(PlayerBulkUpdateTeamService service) {
         this.service = service;
     }
 
