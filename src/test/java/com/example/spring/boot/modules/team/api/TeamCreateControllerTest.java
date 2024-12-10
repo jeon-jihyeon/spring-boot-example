@@ -22,6 +22,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.List;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -44,7 +46,7 @@ class TeamCreateControllerTest {
     @Test
     @DisplayName("Team 생성 API 테스트")
     void shouldReturnValidResponseForTeamCreation() throws Exception {
-        final TeamCreateRequest data = new TeamCreateRequest("name");
+        final TeamCreateRequest data = new TeamCreateRequest("name", List.of(1L));
         final TeamQuery query = TeamQuery.from(Team.create(data.toCommand()));
 
         when(service.invoke(any(TeamCreateCommand.class))).thenReturn(query);

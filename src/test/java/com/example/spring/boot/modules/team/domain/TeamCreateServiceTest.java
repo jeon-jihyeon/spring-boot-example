@@ -13,6 +13,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.ApplicationEventPublisher;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -24,13 +27,15 @@ class TeamCreateServiceTest {
     private TeamCommandRepository commandRepository;
     @Mock
     private TeamQueryRepository queryRepository;
+    @Mock
+    private ApplicationEventPublisher publisher;
     @InjectMocks
     private TeamCreateService service;
 
     @Test
     @DisplayName("Team 생성 서비스 테스트")
     void shouldCreateTeamAndReturnValidResponse() {
-        final TeamCreateCommand command = new TeamCreateCommand(new TeamName("name"));
+        final TeamCreateCommand command = new TeamCreateCommand(new TeamName("name"), List.of(1L));
         final Team model = Team.create(command);
         final TeamQuery query = TeamQuery.from(model);
         when(commandRepository.save(any(Team.class))).thenReturn(model.getId());

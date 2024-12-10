@@ -6,6 +6,8 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 import static com.example.spring.boot.persistence.player.QPlayerEntity.playerEntity;
 
 @Component
@@ -19,10 +21,20 @@ public class PlayerBulkCommandAdapter implements PlayerBulkCommandRepository {
     }
 
     @Override
-    public void updateAllTeam(TeamId teamId, TeamId newId) {
+    public void updateAll(TeamId teamId, TeamId newId) {
         jpaQueryFactory.update(playerEntity)
                 .where(playerEntity.teamId.eq(teamId.value()))
                 .set(playerEntity.teamId, newId.value())
+                .execute();
+        em.flush();
+        em.clear();
+    }
+
+    @Override
+    public void updateAll(TeamId teamId, List<Long> playerIds) {
+        jpaQueryFactory.update(playerEntity)
+                .where(playerEntity.id.in(playerIds))
+                .set(playerEntity.teamId, teamId.value())
                 .execute();
         em.flush();
         em.clear();

@@ -1,24 +1,25 @@
 package com.example.spring.boot.modules.player.api;
 
-import com.example.spring.boot.modules.player.domain.PlayerBulkUpdateTeamService;
-import com.example.spring.boot.modules.player.domain.repository.command.PlayerBulkUpdateTeamCommand;
-import com.example.spring.boot.modules.team.domain.event.TeamDeleteEvent;
+import com.example.spring.boot.modules.player.domain.PlayersRegisterTeamService;
+import com.example.spring.boot.modules.player.domain.repository.command.PlayersRegisterTeamCommand;
+import com.example.spring.boot.modules.team.domain.event.TeamCreateEvent;
 import com.example.spring.boot.modules.team.domain.model.TeamId;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 
 @Component
 public class PlayerTeamDeleteListener {
-    private final PlayerBulkUpdateTeamService service;
+    private final PlayersRegisterTeamService service;
 
-    public PlayerTeamDeleteListener(PlayerBulkUpdateTeamService service) {
+    public PlayerTeamDeleteListener(PlayersRegisterTeamService service) {
         this.service = service;
     }
 
     @Async
-    @TransactionalEventListener
-    public void handle(TeamDeleteEvent event) {
-        service.invoke(new PlayerBulkUpdateTeamCommand(new TeamId(event.teamId()), TeamId.NoTeam));
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+    public void handle(TeamCreateEvent event) {
+        service.invoke(new PlayersRegisterTeamCommand(new TeamId(event.teamId()), event.playerIds()));
     }
 }
