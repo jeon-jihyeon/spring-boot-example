@@ -1,4 +1,4 @@
-package com.example.spring.boot.core.advice;
+package com.example.spring.boot.core;
 
 import com.example.spring.boot.core.exception.ApiException;
 import com.example.spring.boot.core.response.ResponseModel;
