@@ -6,12 +6,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.lang.NonNull;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
-import java.lang.reflect.Method;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -19,6 +17,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 @Configuration
 public class ThreadPoolTaskConfig implements AsyncConfigurer {
     private final ThreadPoolProperties properties;
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     public ThreadPoolTaskConfig(ThreadPoolProperties properties) {
         this.properties = properties;
@@ -41,14 +40,7 @@ public class ThreadPoolTaskConfig implements AsyncConfigurer {
 
     @Override
     public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
-        return new ThreadPoolTaskExceptionHandler();
-    }
-
-    public static final class ThreadPoolTaskExceptionHandler implements AsyncUncaughtExceptionHandler {
-        private final Logger log = LoggerFactory.getLogger(getClass());
-
-        @Override
-        public void handleUncaughtException(@NonNull Throwable e, @NonNull Method method, @NonNull Object... params) {
+        return (e, m, p) -> {
             if (e instanceof ApiException) {
                 switch (((ApiException) e).getLogLevel()) {
                     case ERROR -> log.error("ApiException : {}", e.getMessage(), e);
@@ -58,8 +50,7 @@ public class ThreadPoolTaskConfig implements AsyncConfigurer {
             } else {
                 log.error("Exception : {}", e.getMessage(), e);
             }
-        }
-
+        };
     }
 
     @ConfigurationProperties(prefix = "spring.task.execution.pool")
