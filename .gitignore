@@ -36,6 +36,7 @@ build/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
+backup/
 
 # IntelliJ
 .idea
