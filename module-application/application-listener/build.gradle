@@ -1,10 +1,8 @@
-bootJar.enabled = true
-jar.enabled = false
-
 dependencies {
     implementation project(":module-domain")
     implementation project(":module-infrastructure:db-command-mysql")
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
     implementation 'org.springframework:spring-tx:5.3.24'
 }

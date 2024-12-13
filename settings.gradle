@@ -2,4 +2,4 @@ rootProject.name = 'spring-boot-example'
 include 'module-infrastructure:db-command-mysql'
 include 'module-domain'
 include 'module-application:application-api'
-
+include 'module-application:application-listener'

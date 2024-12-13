@@ -1,0 +1,26 @@
+spring:
+  application.name: application-api
+  profiles.active: local
+  web.resources.add-mappings: false
+  config:
+    import:
+      - db-command.yml
+  task.execution.pool:
+    core-size: 10
+    max-size: 10
+    queue-capacity: 1000
+server:
+  tomcat:
+    threads:
+      max: 200
+      min-spare: 100
+    max-connections: 10000
+    accept-count: 100
+    connection-timeout: 20000
+  port: 8080
+
+---
+spring.config.activate.on-profile: test
+
+---
+spring.config.activate.on-profile: local
