@@ -1,0 +1,4 @@
+spring:
+  application.name: application-listener-test
+  config.import:
+    - db-command.yml

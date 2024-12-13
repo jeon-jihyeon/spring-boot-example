@@ -1,13 +1,9 @@
 package com.example.spring.application.api.player;
 
-import com.example.spring.application.api.player.PlayerCreateService;
 import com.example.spring.domain.player.FullName;
 import com.example.spring.domain.player.Player;
-import com.example.spring.domain.player.PlayerId;
 import com.example.spring.domain.player.repository.PlayerCommandRepository;
-import com.example.spring.domain.player.repository.PlayerQueryRepository;
 import com.example.spring.domain.player.repository.command.PlayerCreateCommand;
-import com.example.spring.domain.player.repository.query.PlayerQuery;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,8 +19,6 @@ import static org.mockito.Mockito.when;
 class PlayerCreateServiceTest {
     @Mock
     private PlayerCommandRepository commandRepository;
-    @Mock
-    private PlayerQueryRepository queryRepository;
     @InjectMocks
     private PlayerCreateService service;
 
@@ -33,11 +27,9 @@ class PlayerCreateServiceTest {
     void shouldCreatePlayerAndReturnValidResponse() {
         final PlayerCreateCommand command = new PlayerCreateCommand(new FullName("first", "last"));
         final Player model = Player.create(command);
-        final PlayerQuery query = PlayerQuery.from(model);
         when(commandRepository.save(any(Player.class))).thenReturn(model.getId());
-        when(queryRepository.findPlayer(any(PlayerId.class))).thenReturn(query);
 
         // then
-        assertThat(service.invoke(command)).isEqualTo(query);
+        assertThat(service.invoke(command)).isEqualTo(model.getId());
     }
 }

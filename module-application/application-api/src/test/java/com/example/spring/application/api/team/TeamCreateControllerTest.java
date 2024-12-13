@@ -1,15 +1,13 @@
 package com.example.spring.application.api.team;
 
-import com.example.spring.application.api.team.TeamCreateController;
-import com.example.spring.application.api.team.TeamCreateService;
-import com.example.spring.domain.team.Team;
-import com.example.spring.domain.team.repository.command.TeamCreateCommand;
-import com.example.spring.domain.team.repository.query.TeamQuery;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.example.spring.application.api.core.response.ResponseModel;
 import com.example.spring.application.api.team.data.TeamCreateRequest;
-import com.example.spring.application.api.team.data.TeamResponse;
+import com.example.spring.application.api.team.data.TeamCreateResponse;
+import com.example.spring.domain.team.Team;
+import com.example.spring.domain.team.TeamId;
+import com.example.spring.domain.team.repository.command.TeamCreateCommand;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -48,9 +46,9 @@ class TeamCreateControllerTest {
     @DisplayName("Team 생성 API 테스트")
     void shouldReturnValidResponseForTeamCreation() throws Exception {
         final TeamCreateRequest data = new TeamCreateRequest("name", List.of(1L));
-        final TeamQuery query = TeamQuery.from(Team.create(data.toCommand()));
+        final TeamId id = Team.create(data.toCommand()).getId();
 
-        when(service.invoke(any(TeamCreateCommand.class))).thenReturn(query);
+        when(service.invoke(any(TeamCreateCommand.class))).thenReturn(id);
 
         // then
         mvc.perform(MockMvcRequestBuilders.post("/api/teams")
@@ -59,6 +57,6 @@ class TeamCreateControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content()
-                        .string(objectMapper.writeValueAsString(ResponseModel.ok(TeamResponse.from(query)))));
+                        .string(objectMapper.writeValueAsString(ResponseModel.ok(TeamCreateResponse.from(id)))));
     }
 }

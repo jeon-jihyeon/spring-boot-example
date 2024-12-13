@@ -1,8 +1,8 @@
 package com.example.spring.application.api.team;
 
-import com.example.spring.application.api.team.data.TeamResponse;
 import com.example.spring.application.api.core.response.ResponseModel;
 import com.example.spring.application.api.team.data.TeamCreateRequest;
+import com.example.spring.application.api.team.data.TeamCreateResponse;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +16,7 @@ public class TeamCreateController {
     }
 
     @PostMapping("/api/teams")
-    public ResponseModel<TeamResponse> create(final @RequestBody TeamCreateRequest data) {
-        return ResponseModel.ok(TeamResponse.from(service.invoke(data.toCommand())));
+    public ResponseModel<TeamCreateResponse> create(final @RequestBody TeamCreateRequest data) {
+        return ResponseModel.ok(TeamCreateResponse.from(service.invoke(data.toCommand())));
     }
 }

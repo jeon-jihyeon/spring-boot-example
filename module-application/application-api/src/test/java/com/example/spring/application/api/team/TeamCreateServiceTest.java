@@ -1,13 +1,9 @@
 package com.example.spring.application.api.team;
 
-import com.example.spring.application.api.team.TeamCreateService;
 import com.example.spring.domain.team.Team;
-import com.example.spring.domain.team.TeamId;
 import com.example.spring.domain.team.TeamName;
 import com.example.spring.domain.team.repository.TeamCommandRepository;
-import com.example.spring.domain.team.repository.TeamQueryRepository;
 import com.example.spring.domain.team.repository.command.TeamCreateCommand;
-import com.example.spring.domain.team.repository.query.TeamQuery;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,8 +23,6 @@ class TeamCreateServiceTest {
     @Mock
     private TeamCommandRepository commandRepository;
     @Mock
-    private TeamQueryRepository queryRepository;
-    @Mock
     private ApplicationEventPublisher publisher;
     @InjectMocks
     private TeamCreateService service;
@@ -38,10 +32,8 @@ class TeamCreateServiceTest {
     void shouldCreateTeamAndReturnValidResponse() {
         final TeamCreateCommand command = new TeamCreateCommand(new TeamName("name"), List.of(1L));
         final Team model = Team.create(command);
-        final TeamQuery query = TeamQuery.from(model);
         when(commandRepository.save(any(Team.class))).thenReturn(model.getId());
-        when(queryRepository.findTeam(any(TeamId.class))).thenReturn(query);
 
-        assertThat(service.invoke(command)).isEqualTo(query);
+        assertThat(service.invoke(command)).isEqualTo(model.getId());
     }
 }

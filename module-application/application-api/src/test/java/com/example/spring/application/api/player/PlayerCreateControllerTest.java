@@ -1,14 +1,12 @@
 package com.example.spring.application.api.player;
 
-import com.example.spring.application.api.player.PlayerCreateController;
-import com.example.spring.application.api.player.PlayerCreateService;
-import com.example.spring.domain.player.Player;
-import com.example.spring.domain.player.repository.command.PlayerCreateCommand;
-import com.example.spring.domain.player.repository.query.PlayerQuery;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.example.spring.application.api.core.response.ResponseModel;
 import com.example.spring.application.api.player.data.PlayerCreateRequest;
-import com.example.spring.application.api.player.data.PlayerResponse;
+import com.example.spring.application.api.player.data.PlayerCreateResponse;
+import com.example.spring.domain.player.Player;
+import com.example.spring.domain.player.PlayerId;
+import com.example.spring.domain.player.repository.command.PlayerCreateCommand;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,9 +43,9 @@ class PlayerCreateControllerTest {
     @DisplayName("Player 생성 API 테스트")
     void shouldReturnValidResponseForPlayerCreation() throws Exception {
         final PlayerCreateRequest data = new PlayerCreateRequest("first", "last");
-        final PlayerQuery query = PlayerQuery.from(Player.create(data.toCommand()));
+        final PlayerId id = Player.create(data.toCommand()).getId();
 
-        when(service.invoke(any(PlayerCreateCommand.class))).thenReturn(query);
+        when(service.invoke(any(PlayerCreateCommand.class))).thenReturn(id);
 
         // then
         mvc.perform(MockMvcRequestBuilders.post("/api/players")
@@ -56,6 +54,6 @@ class PlayerCreateControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content()
-                        .string(objectMapper.writeValueAsString(ResponseModel.ok(PlayerResponse.from(query)))));
+                        .string(objectMapper.writeValueAsString(ResponseModel.ok(PlayerCreateResponse.from(id)))));
     }
 }
