@@ -5,7 +5,7 @@ import com.example.spring.domain.player.repository.PlayerQueryRepository;
 import com.example.spring.domain.player.repository.condition.PlayerCondition;
 import com.example.spring.domain.player.repository.query.PlayerListQuery;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.spring.application.api.common.ResponseModel;
+import org.example.spring.application.api.core.response.ResponseModel;
 import org.example.spring.application.api.player.data.PlayerListResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

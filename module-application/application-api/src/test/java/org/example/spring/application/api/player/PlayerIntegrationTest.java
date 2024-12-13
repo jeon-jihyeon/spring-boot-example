@@ -4,7 +4,7 @@ import com.example.spring.domain.player.Grade;
 import com.example.spring.domain.team.TeamId;
 import com.fasterxml.jackson.databind.JavaType;
 import org.example.spring.application.api.BaseIntegrationTest;
-import org.example.spring.application.api.common.ResponseModel;
+import org.example.spring.application.api.core.response.ResponseModel;
 import org.example.spring.application.api.player.data.PlayerCreateRequest;
 import org.example.spring.application.api.player.data.PlayerListResponse;
 import org.example.spring.application.api.team.data.TeamCreateRequest;

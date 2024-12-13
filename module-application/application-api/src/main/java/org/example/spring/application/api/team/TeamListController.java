@@ -1,7 +1,7 @@
 package org.example.spring.application.api.team;
 
 import com.example.spring.domain.team.repository.TeamQueryRepository;
-import org.example.spring.application.api.common.ResponseModel;
+import org.example.spring.application.api.core.response.ResponseModel;
 import org.example.spring.application.api.team.data.TeamListResponse;
 import org.example.spring.application.api.team.data.TeamParam;
 import org.springframework.web.bind.annotation.GetMapping;

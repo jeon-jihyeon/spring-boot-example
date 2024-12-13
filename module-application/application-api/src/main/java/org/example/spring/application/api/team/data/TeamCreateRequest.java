@@ -2,7 +2,7 @@ package org.example.spring.application.api.team.data;
 
 import com.example.spring.domain.team.TeamName;
 import com.example.spring.domain.team.repository.command.TeamCreateCommand;
-import org.example.spring.application.api.common.exception.InvalidValueException;
+import org.example.spring.application.api.core.exception.InvalidValueException;
 import org.springframework.util.StringUtils;
 
 import java.util.List;

@@ -5,7 +5,7 @@ import com.example.spring.domain.team.repository.command.TeamCreateCommand;
 import com.example.spring.domain.team.repository.query.TeamQuery;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.example.spring.application.api.common.ResponseModel;
+import org.example.spring.application.api.core.response.ResponseModel;
 import org.example.spring.application.api.team.data.TeamCreateRequest;
 import org.example.spring.application.api.team.data.TeamResponse;
 import org.junit.jupiter.api.BeforeEach;

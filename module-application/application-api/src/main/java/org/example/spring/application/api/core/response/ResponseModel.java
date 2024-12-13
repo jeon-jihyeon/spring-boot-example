@@ -1,6 +1,6 @@
-package org.example.spring.application.api.common;
+package org.example.spring.application.api.core.response;
 
-import org.example.spring.application.api.common.exception.ApiException;
+import org.example.spring.application.api.core.exception.ApiException;
 
 public record ResponseModel<T>(T data, ResponseError error) {
     public static ResponseModel<?> ok() {

@@ -1,6 +1,6 @@
 package org.example.spring.application.api.player;
 
-import org.example.spring.application.api.common.ResponseModel;
+import org.example.spring.application.api.core.response.ResponseModel;
 import org.example.spring.application.api.player.data.PlayerCreateRequest;
 import org.example.spring.application.api.player.data.PlayerResponse;
 import org.springframework.web.bind.annotation.PostMapping;

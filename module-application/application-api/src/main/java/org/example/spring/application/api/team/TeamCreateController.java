@@ -1,6 +1,6 @@
 package org.example.spring.application.api.team;
 
-import org.example.spring.application.api.common.ResponseModel;
+import org.example.spring.application.api.core.response.ResponseModel;
 import org.example.spring.application.api.team.data.TeamCreateRequest;
 import org.example.spring.application.api.team.data.TeamResponse;
 import org.springframework.web.bind.annotation.PostMapping;

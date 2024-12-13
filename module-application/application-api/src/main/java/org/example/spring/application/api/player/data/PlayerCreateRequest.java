@@ -2,7 +2,7 @@ package org.example.spring.application.api.player.data;
 
 import com.example.spring.domain.player.FullName;
 import com.example.spring.domain.player.repository.command.PlayerCreateCommand;
-import org.example.spring.application.api.common.exception.InvalidValueException;
+import org.example.spring.application.api.core.exception.InvalidValueException;
 import org.springframework.util.StringUtils;
 
 public record PlayerCreateRequest(String firstName, String lastName) {

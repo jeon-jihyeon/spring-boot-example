@@ -4,7 +4,7 @@ import com.example.spring.domain.player.Player;
 import com.example.spring.domain.player.repository.command.PlayerCreateCommand;
 import com.example.spring.domain.player.repository.query.PlayerQuery;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.spring.application.api.common.ResponseModel;
+import org.example.spring.application.api.core.response.ResponseModel;
 import org.example.spring.application.api.player.data.PlayerCreateRequest;
 import org.example.spring.application.api.player.data.PlayerResponse;
 import org.junit.jupiter.api.BeforeEach;
