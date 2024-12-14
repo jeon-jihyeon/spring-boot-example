@@ -13,14 +13,20 @@ import java.util.Objects;
 public class BaseCommandEntity {
     @Id
     protected Long id;
-
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-
+    protected LocalDateTime createdAt;
     @UpdateTimestamp
     @Column(nullable = false)
     private LocalDateTime updatedAt;
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
 
     public Long getId() {
         return id;

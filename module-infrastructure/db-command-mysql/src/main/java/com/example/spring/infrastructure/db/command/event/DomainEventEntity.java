@@ -1,20 +1,31 @@
-package com.example.spring.domain.event;
+package com.example.spring.infrastructure.db.command.event;
 
-import com.example.spring.domain.IdGenerator;
+import com.example.spring.domain.event.DomainEventType;
+import com.example.spring.infrastructure.db.command.BaseCommandEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 import java.time.LocalDateTime;
 
-public final class DomainEvent {
-    private final Long id;
-    private final String model;
-    private final Long modelId;
-    private final DomainEventType type;
-    private final String data;
-    private final LocalDateTime createdAt;
-    private final Boolean published;
-    private final LocalDateTime publishedAt;
+@Entity(name = "domain_events")
+public class DomainEventEntity extends BaseCommandEntity {
+    @Column(length = 64, nullable = false)
+    private String model;
+    @Column(nullable = false)
+    private Long modelId;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 6)
+    private DomainEventType type;
+    @Column(length = 512)
+    private String data;
+    @Column(nullable = false)
+    private Boolean published;
+    @Column(nullable = false)
+    private LocalDateTime publishedAt;
 
-    public DomainEvent(
+    public DomainEventEntity(
             Long id,
             String model,
             Long modelId,
@@ -34,13 +45,7 @@ public final class DomainEvent {
         this.publishedAt = publishedAt;
     }
 
-    public static DomainEvent of(String model, Long modelId, DomainEventType type, String data) {
-        LocalDateTime now = LocalDateTime.now();
-        return new DomainEvent(IdGenerator.newId(), model, modelId, type, data, now, false, now);
-    }
-
-    public Long getId() {
-        return id;
+    public DomainEventEntity() {
     }
 
     public String getModel() {
@@ -59,10 +64,6 @@ public final class DomainEvent {
         return data;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
     public Boolean getPublished() {
         return published;
     }
@@ -70,4 +71,5 @@ public final class DomainEvent {
     public LocalDateTime getPublishedAt() {
         return publishedAt;
     }
+
 }
