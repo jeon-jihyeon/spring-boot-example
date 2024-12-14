@@ -1,10 +1,10 @@
 package com.example.spring.application.api.team;
 
+import com.example.spring.domain.event.TeamCreateEvent;
 import com.example.spring.domain.team.Team;
 import com.example.spring.domain.team.TeamId;
-import com.example.spring.domain.team.event.TeamCreateEvent;
+import com.example.spring.domain.team.command.TeamCreateCommand;
 import com.example.spring.domain.team.repository.TeamCommandRepository;
-import com.example.spring.domain.team.repository.command.TeamCreateCommand;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,6 +1,6 @@
 package com.example.spring.domain.player;
 
-import com.example.spring.domain.player.repository.command.PlayerCreateCommand;
+import com.example.spring.domain.player.command.PlayerCreateCommand;
 import com.example.spring.domain.team.TeamId;
 
 public class Player {

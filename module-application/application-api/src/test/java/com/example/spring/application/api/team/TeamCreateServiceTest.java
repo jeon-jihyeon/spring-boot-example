@@ -2,8 +2,8 @@ package com.example.spring.application.api.team;
 
 import com.example.spring.domain.team.Team;
 import com.example.spring.domain.team.TeamName;
+import com.example.spring.domain.team.command.TeamCreateCommand;
 import com.example.spring.domain.team.repository.TeamCommandRepository;
-import com.example.spring.domain.team.repository.command.TeamCreateCommand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

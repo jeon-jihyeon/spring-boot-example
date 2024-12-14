@@ -1,6 +1,6 @@
 package com.example.spring.domain.player;
 
-import com.example.spring.domain.player.repository.command.PlayerCreateCommand;
+import com.example.spring.domain.player.command.PlayerCreateCommand;
 import com.example.spring.domain.team.TeamId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

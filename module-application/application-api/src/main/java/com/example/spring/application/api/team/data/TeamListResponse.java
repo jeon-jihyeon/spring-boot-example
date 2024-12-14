@@ -1,6 +1,6 @@
 package com.example.spring.application.api.team.data;
 
-import com.example.spring.domain.team.repository.query.TeamListQuery;
+import com.example.spring.domain.team.query.TeamListQuery;
 
 import java.time.LocalDateTime;
 

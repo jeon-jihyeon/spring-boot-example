@@ -2,8 +2,8 @@ package com.example.spring.application.api.player;
 
 import com.example.spring.domain.player.Player;
 import com.example.spring.domain.player.PlayerId;
+import com.example.spring.domain.player.command.PlayerCreateCommand;
 import com.example.spring.domain.player.repository.PlayerCommandRepository;
-import com.example.spring.domain.player.repository.command.PlayerCreateCommand;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
