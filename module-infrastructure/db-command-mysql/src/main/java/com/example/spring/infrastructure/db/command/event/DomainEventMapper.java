@@ -12,8 +12,6 @@ public class DomainEventMapper implements CommandMapper<DomainEvent, DomainEvent
                 entity.getId(),
                 entity.getModel(),
                 entity.getModelId(),
-                entity.getType(),
-                entity.getData(),
                 entity.getCreatedAt(),
                 entity.getPublished(),
                 entity.getPublishedAt()
@@ -23,14 +21,12 @@ public class DomainEventMapper implements CommandMapper<DomainEvent, DomainEvent
     @Override
     public DomainEventEntity toEntity(DomainEvent event) {
         return new DomainEventEntity(
-                event.getId(),
-                event.getModel(),
-                event.getModelId(),
-                event.getType(),
-                event.getData(),
-                event.getCreatedAt(),
-                event.getPublished(),
-                event.getPublishedAt()
+                event.id(),
+                event.model(),
+                event.modelId(),
+                event.createdAt(),
+                event.published(),
+                event.publishedAt()
         );
     }
 }

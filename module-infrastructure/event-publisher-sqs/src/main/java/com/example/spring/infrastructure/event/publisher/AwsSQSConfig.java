@@ -10,9 +10,7 @@ import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.sqs.SqsAsyncClient;
 
 @Configuration
-public class AwsSQSConfig {
-    @Value("spring.cloud.aws.stack.auto")
-    private boolean STACK_AUTO;
+public class AwsSqsConfig {
     @Value("spring.cloud.aws.region.static")
     private String REGION;
     @Value("spring.cloud.aws.credentials.access-key")
@@ -33,9 +31,10 @@ public class AwsSQSConfig {
 
     @Bean
     public SqsTemplate sqsTemplate() {
-        return SqsTemplate.builder().sqsAsyncClient(sqsAsyncClient()).configure(sqsTemplateOptions -> {
-            sqsTemplateOptions.defaultQueue(QUEUE_NAME);
-        }).build();
+        return SqsTemplate.builder()
+                .sqsAsyncClient(sqsAsyncClient())
+                .configure(sqsTemplateOptions -> sqsTemplateOptions.defaultQueue(QUEUE_NAME))
+                .build();
     }
 
     private record AwsCredentialsValue(String accessKey, String secretKey) implements AwsCredentials {

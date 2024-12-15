@@ -6,10 +6,10 @@ import io.awspring.cloud.sqs.operations.SqsTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AwsSQSDomainEventPublisher implements DomainEventPublisher {
+public class AwsSqsEventPublisher implements DomainEventPublisher {
     private final SqsTemplate sqsTemplate;
 
-    public AwsSQSDomainEventPublisher(SqsTemplate sqsTemplate) {
+    public AwsSqsEventPublisher(SqsTemplate sqsTemplate) {
         this.sqsTemplate = sqsTemplate;
     }
 
