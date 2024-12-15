@@ -4,6 +4,7 @@ jar.enabled = false
 dependencies {
     implementation project(":module-domain")
     implementation project(":module-infrastructure:db-command-mysql")
+    implementation project(":module-infrastructure:event-publisher-sqs")
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-aop'

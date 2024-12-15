@@ -5,6 +5,7 @@ spring:
   config:
     import:
       - db-command.yml
+      - publisher-sqs.yml
   task.execution.pool:
     core-size: 10
     max-size: 10

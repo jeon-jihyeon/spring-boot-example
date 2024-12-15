@@ -1,0 +1,9 @@
+spring.cloud.aws:
+  stack.auto: false
+  region.static: ${AWS_SQS_DEFAULT_REGION}
+  credentials:
+    access-key: ${AWS_SQS_ACCESS_KEY_ID}
+    secret-key: ${AWS_SQS_SECRET_ACCESS_KEY}
+  end-point.uri: http://localhost:4566
+  queue.name: ${AWS_SQS_QUEUE_NAME}
+  group.id: ${AWS_SQS_GROUP_ID}

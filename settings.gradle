@@ -1,6 +1,8 @@
 rootProject.name = 'spring-boot-example'
-include 'module-infrastructure:db-command-mysql'
+
 include 'module-domain'
 include 'module-application:application-api'
 include 'module-application:application-listener'
+include 'module-infrastructure:db-command-mysql'
 include 'module-infrastructure:db-query-mongodb'
+include 'module-infrastructure:event-publisher-sqs'

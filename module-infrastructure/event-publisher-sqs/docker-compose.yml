@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  aws:
+    image: 'localstack/localstack'
+    container_name: 'localstack'
+    command: awslocal sqs create-queue --queue-name ${AWS_SQS_QUEUE_NAME} --attributes FifoQueue=true
+    environment:
+      - DEBUG=${DEBUG:-0}
+      - AWS_ACCESS_KEY_ID=${AWS_SQS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SQS_SECRET_ACCESS_KEY}
+      - AWS_DEFAULT_REGION=${AWS_SQS_DEFAULT_REGION}
+    ports:
+      - '4566:4566'

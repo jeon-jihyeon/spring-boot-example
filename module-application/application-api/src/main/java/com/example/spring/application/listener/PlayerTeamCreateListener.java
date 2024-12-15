@@ -15,7 +15,11 @@ public class PlayerTeamCreateListener {
     private final DomainEventRepository repository;
     private final ObjectMapper objectMapper;
 
-    public PlayerTeamCreateListener(DomainEventPublisher publisher, DomainEventRepository repository, ObjectMapper objectMapper) {
+    public PlayerTeamCreateListener(
+            DomainEventPublisher publisher,
+            DomainEventRepository repository,
+            ObjectMapper objectMapper
+    ) {
         this.publisher = publisher;
         this.repository = repository;
         this.objectMapper = objectMapper;
