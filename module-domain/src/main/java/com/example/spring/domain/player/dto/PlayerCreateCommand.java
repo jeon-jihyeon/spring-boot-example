@@ -1,4 +1,4 @@
-package com.example.spring.domain.player.command;
+package com.example.spring.domain.player.dto;
 
 import com.example.spring.domain.player.FullName;
 

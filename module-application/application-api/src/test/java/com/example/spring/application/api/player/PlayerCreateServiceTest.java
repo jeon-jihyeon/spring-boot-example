@@ -2,7 +2,8 @@ package com.example.spring.application.api.player;
 
 import com.example.spring.domain.player.FullName;
 import com.example.spring.domain.player.Player;
-import com.example.spring.domain.player.command.PlayerCreateCommand;
+import com.example.spring.domain.player.dto.PlayerCreateCommand;
+import com.example.spring.domain.player.dto.PlayerData;
 import com.example.spring.domain.player.repository.PlayerCommandRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,9 +28,9 @@ class PlayerCreateServiceTest {
     void shouldCreatePlayerAndReturnValidResponse() {
         final PlayerCreateCommand command = new PlayerCreateCommand(new FullName("first", "last"));
         final Player model = Player.create(command);
-        when(commandRepository.save(any(Player.class))).thenReturn(model.getId());
+        when(commandRepository.save(any(Player.class))).thenReturn(model);
 
         // then
-        assertThat(service.invoke(command)).isEqualTo(model.getId());
+        assertThat(service.invoke(command)).isEqualTo(PlayerData.from(model));
     }
 }

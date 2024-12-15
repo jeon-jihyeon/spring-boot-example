@@ -2,7 +2,8 @@ package com.example.spring.application.api.team;
 
 import com.example.spring.domain.team.Team;
 import com.example.spring.domain.team.TeamName;
-import com.example.spring.domain.team.command.TeamCreateCommand;
+import com.example.spring.domain.team.dto.TeamCreateCommand;
+import com.example.spring.domain.team.dto.TeamData;
 import com.example.spring.domain.team.repository.TeamCommandRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,8 +33,8 @@ class TeamCreateServiceTest {
     void shouldCreateTeamAndReturnValidResponse() {
         final TeamCreateCommand command = new TeamCreateCommand(new TeamName("name"), List.of(1L));
         final Team model = Team.create(command);
-        when(commandRepository.save(any(Team.class))).thenReturn(model.getId());
+        when(commandRepository.save(any(Team.class))).thenReturn(model);
 
-        assertThat(service.invoke(command)).isEqualTo(model.getId());
+        assertThat(service.invoke(command)).isEqualTo(TeamData.from(model));
     }
 }

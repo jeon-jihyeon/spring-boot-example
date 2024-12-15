@@ -3,7 +3,7 @@ package com.example.spring.infrastructure.db.command.player;
 import com.example.spring.domain.player.FullName;
 import com.example.spring.domain.player.Player;
 import com.example.spring.domain.player.PlayerId;
-import com.example.spring.domain.player.command.PlayerCreateCommand;
+import com.example.spring.domain.player.dto.PlayerCreateCommand;
 import com.example.spring.domain.team.TeamId;
 import com.example.spring.infrastructure.db.command.BaseContextTest;
 import org.junit.jupiter.api.DisplayName;

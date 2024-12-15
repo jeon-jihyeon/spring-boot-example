@@ -3,7 +3,7 @@ package com.example.spring.application.api.player;
 import com.example.spring.application.api.BaseIntegrationTest;
 import com.example.spring.application.api.core.response.ResponseModel;
 import com.example.spring.application.api.player.data.PlayerCreateRequest;
-import com.example.spring.application.api.player.data.PlayerListResponse;
+import com.example.spring.application.api.player.data.PlayerResponse;
 import com.example.spring.domain.player.Grade;
 import com.example.spring.domain.team.TeamId;
 import com.fasterxml.jackson.databind.JavaType;
@@ -21,8 +21,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PlayerIntegrationTest extends BaseIntegrationTest {
     private final PlayerCreateRequest PLAYER_REQUEST = new PlayerCreateRequest("first", "last");
 
-    ResponseModel<List<PlayerListResponse>> getPlayerResponse(MvcResult result) throws Exception {
-        JavaType lt = objectMapper.getTypeFactory().constructParametricType(List.class, PlayerListResponse.class);
+    ResponseModel<PlayerResponse> getPlayerResponse(MvcResult result) throws Exception {
+        JavaType lt = objectMapper.getTypeFactory().constructParametricType(List.class, PlayerResponse.class);
         JavaType t = objectMapper.getTypeFactory().constructParametricType(ResponseModel.class, lt);
         return objectMapper.readValue(result.getResponse().getContentAsString(), t);
     }
@@ -35,11 +35,12 @@ public class PlayerIntegrationTest extends BaseIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isOk());
 
+        // TODO:
         MvcResult result = mvc.perform(MockMvcRequestBuilders.get("/api/players"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
-        PlayerListResponse data = getPlayerResponse(result).data().get(0);
+        PlayerResponse data = getPlayerResponse(result).data();
         assertThat(data.id()).isNotNull();
         assertThat(data.grade()).isEqualTo(Grade.NOVICE);
         assertThat(data.teamId()).isEqualTo(TeamId.NoTeam.value());

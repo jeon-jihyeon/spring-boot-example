@@ -17,8 +17,8 @@ public class TeamCommandAdapter implements TeamCommandRepository {
     }
 
     @Override
-    public TeamId save(Team team) {
-        return new TeamId(repository.save(mapper.toEntity(team)).getId());
+    public Team save(Team team) {
+        return mapper.toDomain(repository.save(mapper.toEntity(team)));
     }
 
     @Override

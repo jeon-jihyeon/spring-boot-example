@@ -17,8 +17,8 @@ public class PlayerCommandAdapter implements PlayerCommandRepository {
     }
 
     @Override
-    public PlayerId save(Player player) {
-        return new PlayerId(repository.save(mapper.toEntity(player)).getId());
+    public Player save(Player player) {
+        return mapper.toDomain(repository.save(mapper.toEntity(player)));
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.example.spring.domain.team;
 
-import com.example.spring.domain.team.command.TeamCreateCommand;
+import com.example.spring.domain.team.dto.TeamCreateCommand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;

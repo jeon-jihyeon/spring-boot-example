@@ -1,4 +1,4 @@
-package com.example.spring.domain.team.command;
+package com.example.spring.domain.team.dto;
 
 import com.example.spring.domain.team.TeamName;
 

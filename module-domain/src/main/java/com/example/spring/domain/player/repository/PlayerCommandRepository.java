@@ -4,7 +4,7 @@ import com.example.spring.domain.player.Player;
 import com.example.spring.domain.player.PlayerId;
 
 public interface PlayerCommandRepository {
-    PlayerId save(Player player);
+    Player save(Player player);
 
     Player findById(PlayerId id);
 

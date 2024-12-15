@@ -1,11 +1,11 @@
 package com.example.spring.application.api.player;
 
 import com.example.spring.application.api.core.response.ResponseModel;
-import com.example.spring.application.api.player.data.PlayerListResponse;
-import com.example.spring.domain.player.Grade;
-import com.example.spring.domain.player.query.PlayerListQuery;
-import com.example.spring.domain.player.repository.PlayerQueryRepository;
-import com.example.spring.domain.player.repository.condition.PlayerCondition;
+import com.example.spring.application.api.player.data.PlayerCreateRequest;
+import com.example.spring.application.api.player.data.PlayerResponse;
+import com.example.spring.domain.player.Player;
+import com.example.spring.domain.player.dto.PlayerCreateCommand;
+import com.example.spring.domain.player.dto.PlayerData;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,24 +15,23 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.List;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class PlayerListControllerTest {
+class PlayerControllerTest {
     @Mock
-    private PlayerQueryRepository repository;
+    private PlayerCreateService service;
     @Spy
     private ObjectMapper objectMapper;
     @InjectMocks
-    private PlayerListController controller;
+    private PlayerController controller;
     private MockMvc mvc;
 
     @BeforeEach
@@ -41,15 +40,20 @@ class PlayerListControllerTest {
     }
 
     @Test
-    @DisplayName("Player 목록 API 테스트")
-    void shouldReturnValidResponseForPlayerList() throws Exception {
-        final List<PlayerListQuery> query = List.of(new PlayerListQuery(1L, Grade.NOVICE, "first", "last", 1L));
-        when(repository.findPlayers(any(PlayerCondition.class))).thenReturn(query);
+    @DisplayName("Player 생성 API 테스트")
+    void shouldReturnValidResponseForPlayerCreation() throws Exception {
+        final PlayerCreateRequest request = new PlayerCreateRequest("first", "last");
+        final PlayerData data = PlayerData.from(Player.create(request.toCommand()));
+
+        when(service.invoke(any(PlayerCreateCommand.class))).thenReturn(data);
 
         // then
-        mvc.perform(MockMvcRequestBuilders.get("/api/players"))
+        mvc.perform(MockMvcRequestBuilders.post("/api/players")
+                        .content(objectMapper.writeValueAsString(data))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content()
-                        .string(objectMapper.writeValueAsString(ResponseModel.ok(query.stream().map(PlayerListResponse::from).toList()))));
+                        .string(objectMapper.writeValueAsString(ResponseModel.ok(PlayerResponse.from(data)))));
     }
 }
