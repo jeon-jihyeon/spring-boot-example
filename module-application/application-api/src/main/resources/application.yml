@@ -20,6 +20,9 @@ server:
     connection-timeout: 20000
   port: 8080
 
+logging:
+  level:
+    org.springframework.boot.autoconfigure: warn
 ---
 spring.config.activate.on-profile: test
 

@@ -1,8 +1,11 @@
 package com.example.spring.infrastructure.db.command.team;
 
+import com.example.spring.domain.player.PlayerId;
 import com.example.spring.domain.team.Team;
 import com.example.spring.infrastructure.db.command.CommandMapper;
 import org.springframework.stereotype.Component;
+
+import java.util.stream.Collectors;
 
 @Component
 public class TeamCommandMapper implements CommandMapper<Team, TeamEntity> {
@@ -11,7 +14,8 @@ public class TeamCommandMapper implements CommandMapper<Team, TeamEntity> {
         return Team.of(
                 entity.getId(),
                 entity.getName(),
-                entity.getStartsAt()
+                entity.getStartsAt(),
+                entity.getPlayerIds().stream().map(PlayerId::new).toList()
         );
     }
 
@@ -20,7 +24,8 @@ public class TeamCommandMapper implements CommandMapper<Team, TeamEntity> {
         return new TeamEntity(
                 domain.getId().value(),
                 domain.getName().value(),
-                domain.getStartsAt()
+                domain.getStartsAt(),
+                domain.getPlayerIds().stream().map(PlayerId::value).collect(Collectors.toSet())
         );
     }
 }

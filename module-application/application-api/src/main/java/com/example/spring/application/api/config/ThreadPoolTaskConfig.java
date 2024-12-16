@@ -1,5 +1,6 @@
 package com.example.spring.application.api.config;
 
+import com.example.spring.application.api.core.exception.ApiException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
@@ -39,8 +40,17 @@ public class ThreadPoolTaskConfig implements AsyncConfigurer {
 
     @Override
     public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
-        return (e, m, p) -> log.error("Exception : {}", e.getMessage(), e);
-
+        return (e, m, p) -> {
+            if (e instanceof ApiException) {
+                switch (((ApiException) e).getLogLevel()) {
+                    case ERROR -> log.error("ApiException: {}", e.getMessage(), e);
+                    case WARN -> log.warn("ApiException: {}", e.getMessage(), e);
+                    default -> log.info("ApiException: {}", e.getMessage(), e);
+                }
+            } else {
+                log.error("{}: {}", e.getClass().getSimpleName(), e.getMessage(), e);
+            }
+        };
     }
 
     @ConfigurationProperties(prefix = "spring.task.execution.pool")

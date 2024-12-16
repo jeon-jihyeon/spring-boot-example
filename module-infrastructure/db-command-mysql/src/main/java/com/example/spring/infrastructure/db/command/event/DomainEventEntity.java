@@ -14,7 +14,7 @@ public class DomainEventEntity extends BaseCommandEntity {
     private Long modelId;
     @Column(nullable = false)
     private Boolean published;
-    @Column(nullable = false)
+    @Column
     private LocalDateTime publishedAt;
 
     public DomainEventEntity(

@@ -1,6 +1,6 @@
 package com.example.spring.application.api.team;
 
-import com.example.spring.domain.event.TeamCreateEvent;
+import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.team.Team;
 import com.example.spring.domain.team.dto.TeamCreateCommand;
 import com.example.spring.domain.team.dto.TeamData;
@@ -22,7 +22,7 @@ public class TeamCreateService {
     @Transactional
     public TeamData invoke(TeamCreateCommand command) {
         final TeamData team = TeamData.from(repository.save(Team.create(command)));
-        publisher.publishEvent(new TeamCreateEvent(team.id(), command.playerIds()));
+        publisher.publishEvent(DomainEvent.of(Team.class.getSimpleName(), team.id()));
         return team;
     }
 }

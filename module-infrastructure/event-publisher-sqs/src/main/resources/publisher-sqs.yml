@@ -4,5 +4,5 @@ spring.cloud.aws:
   credentials:
     access-key: ${AWS_SQS_ACCESS_KEY_ID}
     secret-key: ${AWS_SQS_SECRET_ACCESS_KEY}
-  end-point.uri: ${AWS_SQS_ENDPOINT_URL}
-  queue.name: ${AWS_SQS_QUEUE_NAME}
+  end-point.url: ${AWS_SQS_ENDPOINT_URL}
+  sqs.queue.name: ${AWS_SQS_QUEUE_NAME}
