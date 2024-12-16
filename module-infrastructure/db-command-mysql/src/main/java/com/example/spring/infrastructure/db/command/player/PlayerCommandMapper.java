@@ -1,11 +1,11 @@
 package com.example.spring.infrastructure.db.command.player;
 
 import com.example.spring.domain.player.Player;
-import com.example.spring.infrastructure.db.command.CommandMapper;
+import com.example.spring.infrastructure.db.command.base.BaseCommandMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PlayerCommandMapper implements CommandMapper<Player, PlayerEntity> {
+public class PlayerCommandMapper implements BaseCommandMapper<Player, PlayerEntity> {
     @Override
     public Player toDomain(PlayerEntity entity) {
         return Player.of(

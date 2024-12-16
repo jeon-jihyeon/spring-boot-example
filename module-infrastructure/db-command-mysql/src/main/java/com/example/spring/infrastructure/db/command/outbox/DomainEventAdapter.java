@@ -1,4 +1,4 @@
-package com.example.spring.infrastructure.db.command.event;
+package com.example.spring.infrastructure.db.command.outbox;
 
 import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.DomainEventOutbox;

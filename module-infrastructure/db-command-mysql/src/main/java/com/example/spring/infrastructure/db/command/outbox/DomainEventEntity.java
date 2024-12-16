@@ -1,6 +1,6 @@
-package com.example.spring.infrastructure.db.command.event;
+package com.example.spring.infrastructure.db.command.outbox;
 
-import com.example.spring.infrastructure.db.command.BaseCommandEntity;
+import com.example.spring.infrastructure.db.command.base.BaseCommandEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
@@ -51,5 +51,4 @@ public class DomainEventEntity extends BaseCommandEntity {
     public LocalDateTime getPublishedAt() {
         return publishedAt;
     }
-
 }

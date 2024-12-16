@@ -8,15 +8,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-class HikariDatasourceConfig {
+class HikariCommandConfig {
     @Bean
-    @ConfigurationProperties(prefix = "spring.datasource.hikari")
-    public HikariConfig config() {
+    @ConfigurationProperties(prefix = "spring.datasource.command")
+    public HikariConfig commandHikariConfig() {
         return new HikariConfig();
     }
 
     @Bean
-    public HikariDataSource dataSource(@Qualifier("config") HikariConfig config) {
+    public HikariDataSource commandDataSource(@Qualifier("commandHikariConfig") HikariConfig config) {
         return new HikariDataSource(config);
     }
 }

@@ -1,11 +1,11 @@
-package com.example.spring.infrastructure.db.command.event;
+package com.example.spring.infrastructure.db.command.outbox;
 
 import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.infrastructure.db.command.CommandMapper;
+import com.example.spring.infrastructure.db.command.base.BaseCommandMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DomainEventMapper implements CommandMapper<DomainEvent, DomainEventEntity> {
+public class DomainEventMapper implements BaseCommandMapper<DomainEvent, DomainEventEntity> {
     @Override
     public DomainEvent toDomain(DomainEventEntity entity) {
         return new DomainEvent(

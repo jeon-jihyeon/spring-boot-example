@@ -1,8 +1,8 @@
 spring.cloud.aws:
   stack.auto: false
-  region.static: ${AWS_SQS_DEFAULT_REGION}
+  end-point.url: ${SQS_ENDPOINT_URL}
+  region.static: ${SQS_DEFAULT_REGION}
   credentials:
-    access-key: ${AWS_SQS_ACCESS_KEY_ID}
-    secret-key: ${AWS_SQS_SECRET_ACCESS_KEY}
-  end-point.url: ${AWS_SQS_ENDPOINT_URL}
-  sqs.queue.name: ${AWS_SQS_QUEUE_NAME}
+    access-key: ${SQS_ACCESS_KEY_ID}
+    secret-key: ${SQS_SECRET_ACCESS_KEY}
+  sqs.queue.name: ${SQS_QUEUE_NAME}

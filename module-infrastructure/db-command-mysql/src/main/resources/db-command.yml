@@ -17,11 +17,11 @@ spring:
         show_sql: true
   h2.console.enabled: true
   datasource:
-    hikari:
+    command:
       driver-class-name: org.h2.Driver
-      jdbc-url: jdbc:h2:mem:local;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+      jdbc-url: jdbc:h2:mem:command;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
       username: admin
-      pool-name: hikari-db-pool
+      pool-name: hikari-command-pool
 
 ---
 spring:
@@ -31,11 +31,11 @@ spring:
     highlight_sql: true
     show_sql: true
   datasource:
-    hikari:
+    command:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://${ENV_DB_MYSQL_URL}
-      username: ${ENV_DB_MYSQL_USERNAME}
-      password: ${ENV_DB_MYSQL_PASSWORD}
+      jdbc-url: jdbc:mysql://${COMMAND_DB_URL}
+      username: ${COMMAND_DB_USERNAME}
+      password: ${COMMAND_DB_PASSWORD}
       pool-name: hikari-db-pool
       maximum-pool-size: 5
       validation-timeout: 1000

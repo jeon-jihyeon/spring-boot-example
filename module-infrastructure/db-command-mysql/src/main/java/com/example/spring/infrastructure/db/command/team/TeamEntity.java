@@ -1,6 +1,6 @@
 package com.example.spring.infrastructure.db.command.team;
 
-import com.example.spring.infrastructure.db.command.BaseCommandEntity;
+import com.example.spring.infrastructure.db.command.base.BaseCommandEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;

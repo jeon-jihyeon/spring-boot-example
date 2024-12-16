@@ -1,4 +1,4 @@
-package com.example.spring.infrastructure.db.command.event;
+package com.example.spring.infrastructure.db.command.outbox;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
