@@ -26,6 +26,7 @@ replay_pid*
 # mac
 .DS_Store
 *.env
+/volumes
 
 # build
 .gradle

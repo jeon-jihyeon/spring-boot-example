@@ -1,5 +1,5 @@
 dependencies {
-    implementation project(":module-domain")
+    compileOnly project(":module-domain")
     implementation 'org.springframework:spring-context'
 
     implementation platform("io.awspring.cloud:spring-cloud-aws-dependencies:${springCloudAwsVersion}")

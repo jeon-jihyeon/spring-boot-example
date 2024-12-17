@@ -3,9 +3,9 @@ services:
   aws:
     image: "localstack/localstack"
     container_name: "localstack"
-    env_file: "localstack.env"
+    env_file: "${SQS_VOLUME_BASE}/localstack.env"
     command: "chmod +x /etc/localstack/init/ready.d/init-aws.sh"
     volumes:
-      - "./localstack.sh:/etc/localstack/init/ready.d/init-aws.sh"
+      - "${SQS_VOLUME_BASE}/localstack.sh:/etc/localstack/init/ready.d/init-aws.sh"
     ports:
-      - "4566:4566"
+      - "${SQS_PORT}:${SQS_PORT}"
