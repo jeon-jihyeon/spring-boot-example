@@ -1,7 +1,8 @@
-package com.example.spring.infrastructure.db.command.outbox;
+package com.example.spring.infrastructure.db.outbox;
 
 import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.DomainEventOutbox;
+import com.example.spring.infrastructure.db.EntityNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,5 +20,10 @@ public class DomainEventAdapter implements DomainEventOutbox {
     @Transactional
     public void save(DomainEvent event) {
         repository.save(mapper.toEntity(event));
+    }
+
+    @Override
+    public DomainEvent findById(Long id) {
+        return mapper.toDomain(repository.findById(id).orElseThrow(EntityNotFoundException::new));
     }
 }

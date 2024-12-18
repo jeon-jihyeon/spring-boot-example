@@ -1,4 +1,4 @@
-package com.example.spring.infrastructure.db.command.base;
+package com.example.spring.infrastructure.db.base;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;

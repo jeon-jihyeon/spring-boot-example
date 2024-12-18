@@ -1,4 +1,4 @@
-package com.example.spring.infrastructure.db.command.base;
+package com.example.spring.infrastructure.db.base;
 
 public interface BaseCommandMapper<D, P> {
     D toDomain(P entity);

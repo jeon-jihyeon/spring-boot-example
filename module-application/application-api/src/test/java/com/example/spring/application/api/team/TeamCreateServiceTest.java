@@ -1,5 +1,6 @@
 package com.example.spring.application.api.team;
 
+import com.example.spring.domain.player.PlayerId;
 import com.example.spring.domain.team.Team;
 import com.example.spring.domain.team.TeamName;
 import com.example.spring.domain.team.dto.TeamCreateCommand;
@@ -31,7 +32,7 @@ class TeamCreateServiceTest {
     @Test
     @DisplayName("Team 생성 서비스 테스트")
     void shouldCreateTeamAndReturnValidResponse() {
-        final TeamCreateCommand command = new TeamCreateCommand(new TeamName("name"), List.of(1L));
+        final TeamCreateCommand command = new TeamCreateCommand(new TeamName("name"), List.of(new PlayerId(1L)));
         final Team model = Team.create(command);
         when(commandRepository.save(any(Team.class))).thenReturn(model);
 

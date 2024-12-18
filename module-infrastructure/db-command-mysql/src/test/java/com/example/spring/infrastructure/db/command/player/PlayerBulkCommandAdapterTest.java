@@ -5,7 +5,7 @@ import com.example.spring.domain.player.Player;
 import com.example.spring.domain.player.PlayerId;
 import com.example.spring.domain.player.dto.PlayerCreateCommand;
 import com.example.spring.domain.team.TeamId;
-import com.example.spring.infrastructure.db.command.BaseContextTest;
+import com.example.spring.infrastructure.db.BaseContextTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,11 +28,9 @@ class PlayerBulkCommandAdapterTest extends BaseContextTest {
     @Test
     @DisplayName("Player DB 팀 단위 일괄 수정 테스트")
     void updateAll() {
-        final Player model = Player.create(new PlayerCreateCommand(new FullName("first", "last")));
-        final PlayerId saved = commandAdapter.save(model);
-
+        final Player saved = commandAdapter.save(Player.create(new PlayerCreateCommand(new FullName("first", "last"))));
         adapter.updateAll(new TeamId(0L), new TeamId(1L));
-        final Player found = commandAdapter.findById(saved);
+        final Player found = commandAdapter.findById(saved.getId());
 
         assertThat(found.getTeamId().value()).isEqualTo(1L);
     }
@@ -42,12 +40,12 @@ class PlayerBulkCommandAdapterTest extends BaseContextTest {
     void testUpdateAll() {
         final List<Long> playerIds = new ArrayList<>();
         final Player model = Player.create(new PlayerCreateCommand(new FullName("first", "last")));
-        playerIds.add(commandAdapter.save(model).value());
-        playerIds.add(commandAdapter.save(model).value());
 
+        playerIds.add(commandAdapter.save(model).getId().value());
+        playerIds.add(commandAdapter.save(model).getId().value());
         adapter.updateAll(new TeamId(1L), playerIds);
-        final Player found = commandAdapter.findById(new PlayerId(playerIds.get(0)));
 
+        final Player found = commandAdapter.findById(new PlayerId(playerIds.get(0)));
         assertThat(found.getTeamId().value()).isEqualTo(1L);
     }
 }

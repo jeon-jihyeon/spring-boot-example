@@ -1,4 +1,4 @@
-package com.example.spring.infrastructure.db.command;
+package com.example.spring.infrastructure.db;
 
 import org.junit.jupiter.api.Tag;
 import org.springframework.boot.test.context.SpringBootTest;

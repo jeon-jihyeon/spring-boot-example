@@ -1,4 +1,4 @@
-package com.example.spring.infrastructure.db.command.config;
+package com.example.spring.infrastructure.db.command;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

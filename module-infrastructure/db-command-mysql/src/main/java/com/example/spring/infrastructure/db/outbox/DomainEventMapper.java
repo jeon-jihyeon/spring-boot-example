@@ -1,7 +1,7 @@
-package com.example.spring.infrastructure.db.command.outbox;
+package com.example.spring.infrastructure.db.outbox;
 
 import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.infrastructure.db.command.base.BaseCommandMapper;
+import com.example.spring.infrastructure.db.base.BaseCommandMapper;
 import org.springframework.stereotype.Component;
 
 @Component

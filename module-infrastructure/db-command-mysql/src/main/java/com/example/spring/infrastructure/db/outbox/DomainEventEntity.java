@@ -1,6 +1,6 @@
-package com.example.spring.infrastructure.db.command.outbox;
+package com.example.spring.infrastructure.db.outbox;
 
-import com.example.spring.infrastructure.db.command.base.BaseCommandEntity;
+import com.example.spring.infrastructure.db.base.BaseCommandEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 

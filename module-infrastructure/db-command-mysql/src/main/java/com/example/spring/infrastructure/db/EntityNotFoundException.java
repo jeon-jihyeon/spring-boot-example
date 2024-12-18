@@ -1,4 +1,4 @@
-package com.example.spring.infrastructure.db.command;
+package com.example.spring.infrastructure.db;
 
 import com.example.spring.domain.BaseException;
 import com.example.spring.domain.ErrorCode;

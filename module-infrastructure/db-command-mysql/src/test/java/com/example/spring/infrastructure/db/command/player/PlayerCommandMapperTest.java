@@ -2,7 +2,7 @@ package com.example.spring.infrastructure.db.command.player;
 
 import com.example.spring.domain.player.Grade;
 import com.example.spring.domain.player.Player;
-import com.example.spring.infrastructure.db.command.BaseContextTest;
+import com.example.spring.infrastructure.db.BaseContextTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,8 +18,7 @@ class PlayerCommandMapperTest extends BaseContextTest {
     @Test
     @DisplayName("PlayerEntity 엔티티-모델 맵핑 테스트")
     void shouldMapPlayerEntityToDomainModel() {
-        final PlayerEntity entity = new PlayerEntity(11L, Grade.NOVICE, "first", "last", 22L);
-        final Player model = mapper.toDomain(entity);
+        final Player model = mapper.toDomain(new PlayerEntity(11L, Grade.NOVICE, "first", "last", 22L));
         assertThat(model.getId().value()).isEqualTo(11L);
         assertThat(model.getGrade()).isEqualTo(Grade.NOVICE);
         assertThat(model.getFullName().firstName()).isEqualTo("first");
@@ -30,8 +29,7 @@ class PlayerCommandMapperTest extends BaseContextTest {
     @Test
     @DisplayName("Player 모델-엔티티 맵핑 테스트")
     void shouldMapPlayerModelToEntity() {
-        final Player model = Player.of(11L, Grade.NOVICE, "first", "last", 22L);
-        final PlayerEntity entity = mapper.toEntity(model);
+        final PlayerEntity entity = mapper.toEntity(Player.of(11L, Grade.NOVICE, "first", "last", 22L));
         assertThat(entity.getId()).isEqualTo(11L);
         assertThat(entity.getGrade()).isEqualTo(Grade.NOVICE);
         assertThat(entity.getFirstName()).isEqualTo("first");

@@ -3,7 +3,7 @@ package com.example.spring.infrastructure.db.command.team;
 import com.example.spring.domain.team.Team;
 import com.example.spring.domain.team.TeamId;
 import com.example.spring.domain.team.repository.TeamCommandRepository;
-import com.example.spring.infrastructure.db.command.EntityNotFoundException;
+import com.example.spring.infrastructure.db.EntityNotFoundException;
 import org.springframework.stereotype.Component;
 
 @Component
