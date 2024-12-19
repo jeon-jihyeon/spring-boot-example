@@ -1,4 +1,5 @@
 spring:
+  datasource.initialize: false
   jpa:
     open-in-view: false
     hibernate.ddl-auto: none
@@ -9,10 +10,9 @@ spring:
   config.activate.on-profile: test
   jpa:
     hibernate.ddl-auto: create
-    properties:
-      hibernate:
-        highlight_sql: true
-        show_sql: true
+    properties.hibernate:
+      highlight_sql: true
+      show_sql: true
   h2.console.enabled: true
   datasource:
     command:
@@ -36,7 +36,7 @@ spring:
       show_sql: true
   datasource:
     command:
-      driver-class-name: com.mysql.cj.jdbc.Driver
+      driver-class-name: ${COMMAND_DB_DRIVER}
       jdbc-url: jdbc:mysql://${COMMAND_DB_URL}
       username: ${COMMAND_DB_USERNAME}
       password: ${COMMAND_DB_PASSWORD}
@@ -58,7 +58,7 @@ spring:
         maintainTimeStats: false
         rewriteBatchedStatements: true
     outbox:
-      driver-class-name: com.mysql.cj.jdbc.Driver
+      driver-class-name: ${OUTBOX_DB_DRIVER}
       jdbc-url: jdbc:mysql://${OUTBOX_DB_URL}
       username: ${OUTBOX_DB_USERNAME}
       password: ${OUTBOX_DB_PASSWORD}

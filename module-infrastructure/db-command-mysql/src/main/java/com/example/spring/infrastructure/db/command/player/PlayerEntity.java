@@ -1,7 +1,7 @@
 package com.example.spring.infrastructure.db.command.player;
 
 import com.example.spring.domain.player.Grade;
-import com.example.spring.infrastructure.db.base.BaseCommandEntity;
+import com.example.spring.infrastructure.db.command.BaseCommandEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

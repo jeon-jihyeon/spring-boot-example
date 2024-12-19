@@ -1,13 +1,21 @@
 package com.example.spring.infrastructure.db.outbox;
 
-import com.example.spring.infrastructure.db.base.BaseCommandEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity(name = "domain_events")
-public class DomainEventEntity extends BaseCommandEntity {
+public class DomainEventEntity {
+    @Id
+    private Long id;
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
     @Column(length = 64, nullable = false)
     private String model;
     @Column(nullable = false)
@@ -16,6 +24,9 @@ public class DomainEventEntity extends BaseCommandEntity {
     private Boolean published;
     @Column
     private LocalDateTime publishedAt;
+    @UpdateTimestamp
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
 
     public DomainEventEntity(
             Long id,
@@ -36,6 +47,10 @@ public class DomainEventEntity extends BaseCommandEntity {
     public DomainEventEntity() {
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getModel() {
         return model;
     }
@@ -50,5 +65,29 @@ public class DomainEventEntity extends BaseCommandEntity {
 
     public LocalDateTime getPublishedAt() {
         return publishedAt;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        return Objects.equals(id, ((DomainEventEntity) o).getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

@@ -4,9 +4,9 @@ import com.example.spring.domain.player.Player;
 import com.example.spring.domain.player.PlayerId;
 import com.example.spring.domain.player.repository.PlayerCommandRepository;
 import com.example.spring.infrastructure.db.EntityNotFoundException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component
+@Repository
 public class PlayerCommandAdapter implements PlayerCommandRepository {
     private final PlayerJpaRepository repository;
     private final PlayerCommandMapper mapper;

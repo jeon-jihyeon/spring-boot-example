@@ -1,7 +1,7 @@
 package com.example.spring.infrastructure.db.command.player;
 
 import com.example.spring.domain.player.Player;
-import com.example.spring.infrastructure.db.base.BaseCommandMapper;
+import com.example.spring.infrastructure.db.command.BaseCommandMapper;
 import org.springframework.stereotype.Component;
 
 @Component

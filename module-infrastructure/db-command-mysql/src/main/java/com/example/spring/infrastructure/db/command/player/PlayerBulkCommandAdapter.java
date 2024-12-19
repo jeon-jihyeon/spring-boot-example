@@ -4,6 +4,7 @@ import com.example.spring.domain.player.repository.PlayerBulkCommandRepository;
 import com.example.spring.domain.team.TeamId;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public class PlayerBulkCommandAdapter implements PlayerBulkCommandRepository {
     private final EntityManager em;
     private final JPAQueryFactory jpaQueryFactory;
 
-    public PlayerBulkCommandAdapter(EntityManager em, JPAQueryFactory jpaQueryFactory) {
+    public PlayerBulkCommandAdapter(@Qualifier("commandEntityManager") EntityManager em, JPAQueryFactory jpaQueryFactory) {
         this.em = em;
         this.jpaQueryFactory = jpaQueryFactory;
     }

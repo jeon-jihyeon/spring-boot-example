@@ -3,10 +3,10 @@ package com.example.spring.infrastructure.db.outbox;
 import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.DomainEventOutbox;
 import com.example.spring.infrastructure.db.EntityNotFoundException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-@Component
+@Repository
 public class DomainEventAdapter implements DomainEventOutbox {
     private final DomainEventJpaRepository repository;
     private final DomainEventMapper mapper;

@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 class JPAQueryFactoryConfig {
-    @PersistenceContext
+    @PersistenceContext(unitName = "commandUnit")
     private EntityManager entityManager;
 
     @Bean

@@ -1,8 +1,0 @@
-spring.cloud.aws:
-  stack.auto: false
-  end-point.url: ${SQS_ENDPOINT_URL}
-  region.static: ${SQS_DEFAULT_REGION}
-  credentials:
-    access-key: ${SQS_ACCESS_KEY_ID}
-    secret-key: ${SQS_SECRET_ACCESS_KEY}
-  sqs.queue.name: ${SQS_QUEUE_NAME}
