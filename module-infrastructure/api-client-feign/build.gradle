@@ -1,5 +1,8 @@
 dependencies {
-    compileOnly project(":module-domain")
+    implementation project(":module-domain")
+    implementation project(":module-application:application-common")
 
+    implementation 'org.springframework:spring-context'
+    implementation platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 }

@@ -1,8 +1,8 @@
 package com.example.spring.application.api.team;
 
-import com.example.spring.application.api.core.response.ResponseModel;
 import com.example.spring.application.api.team.data.TeamCreateRequest;
 import com.example.spring.application.api.team.data.TeamResponse;
+import com.example.spring.application.common.ResponseModel;
 import com.example.spring.domain.team.TeamId;
 import org.springframework.web.bind.annotation.*;
 

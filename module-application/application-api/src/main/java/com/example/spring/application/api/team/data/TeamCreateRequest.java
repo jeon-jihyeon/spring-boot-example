@@ -1,6 +1,6 @@
 package com.example.spring.application.api.team.data;
 
-import com.example.spring.application.api.core.exception.InvalidValueException;
+import com.example.spring.application.common.InvalidValueException;
 import com.example.spring.domain.player.PlayerId;
 import com.example.spring.domain.team.TeamName;
 import com.example.spring.domain.team.dto.TeamCreateCommand;

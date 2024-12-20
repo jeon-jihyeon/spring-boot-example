@@ -1,8 +1,8 @@
 package com.example.spring.application.api.player;
 
-import com.example.spring.application.api.core.response.ResponseModel;
 import com.example.spring.application.api.player.data.PlayerCreateRequest;
 import com.example.spring.application.api.player.data.PlayerResponse;
+import com.example.spring.application.common.ResponseModel;
 import com.example.spring.domain.player.Player;
 import com.example.spring.domain.player.dto.PlayerCreateCommand;
 import com.example.spring.domain.player.dto.PlayerData;

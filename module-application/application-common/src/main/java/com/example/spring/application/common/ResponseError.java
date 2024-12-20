@@ -1,7 +1,6 @@
-package com.example.spring.application.api.core.response;
+package com.example.spring.application.common;
 
 import com.example.spring.domain.ErrorCode;
-import com.example.spring.application.api.core.exception.ApiException;
 
 public record ResponseError(ErrorCode code, String message, Object data) {
     public static ResponseError from(ApiException e) {

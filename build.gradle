@@ -23,12 +23,6 @@ subprojects {
         useJUnitPlatform()
     }
 
-    dependencyManagement {
-        imports {
-            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudAwsVersion}"
-        }
-    }
-
     dependencies {
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
     }

@@ -1,4 +1,4 @@
-package com.example.spring.application.api.core.exception;
+package com.example.spring.application.common;
 
 import com.example.spring.domain.BaseException;
 import com.example.spring.domain.ErrorCode;

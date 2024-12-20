@@ -1,6 +1,6 @@
 package com.example.spring.application.api.player.data;
 
-import com.example.spring.application.api.core.exception.InvalidValueException;
+import com.example.spring.application.common.InvalidValueException;
 import com.example.spring.domain.player.FullName;
 import com.example.spring.domain.player.dto.PlayerCreateCommand;
 import org.springframework.util.StringUtils;

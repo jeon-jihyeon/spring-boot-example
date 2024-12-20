@@ -8,6 +8,6 @@ import java.util.List;
 
 public record TeamResponse(Long id, String name, LocalDateTime startsAt, List<Long> playerIds) {
     public static TeamResponse from(TeamData data) {
-        return new TeamResponse(data.id(), data.name(), data.startsAt(), data.playerIds().stream().map(PlayerId::value).toList());
+        return new TeamResponse(data.id().value(), data.name().value(), data.startsAt(), data.playerIds().stream().map(PlayerId::value).toList());
     }
 }

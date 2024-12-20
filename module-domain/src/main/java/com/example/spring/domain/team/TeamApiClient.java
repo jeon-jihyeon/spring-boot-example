@@ -1,5 +1,7 @@
 package com.example.spring.domain.team;
 
+import com.example.spring.domain.team.dto.TeamData;
+
 public interface TeamApiClient {
-    Team findById(TeamId id);
+    TeamData findById(TeamId id);
 }

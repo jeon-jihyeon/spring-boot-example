@@ -37,7 +37,5 @@ public class PlayerBulkCommandAdapter implements PlayerBulkCommandRepository {
                 .where(playerEntity.id.in(playerIds))
                 .set(playerEntity.teamId, teamId.value())
                 .execute();
-        em.flush();
-        em.clear();
     }
 }

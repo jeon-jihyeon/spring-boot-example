@@ -1,6 +1,6 @@
 package com.example.spring.application.api.config;
 
-import com.example.spring.application.api.core.exception.ApiException;
+import com.example.spring.application.common.ApiException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
