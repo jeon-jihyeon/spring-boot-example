@@ -8,11 +8,11 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PlayerTeamCreateListener {
+public class PlayerTeamCreateEventHandler {
     private final PlayerBulkCommandRepository repository;
     private final TeamApiClient client;
 
-    public PlayerTeamCreateListener(PlayerBulkCommandRepository repository, TeamApiClient client) {
+    public PlayerTeamCreateEventHandler(PlayerBulkCommandRepository repository, TeamApiClient client) {
         this.repository = repository;
         this.client = client;
     }
