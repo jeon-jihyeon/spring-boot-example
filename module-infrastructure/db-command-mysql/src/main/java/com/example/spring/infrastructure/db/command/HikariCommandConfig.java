@@ -18,6 +18,8 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import java.util.Properties;
+
 @Configuration
 @EnableTransactionManagement
 @EntityScan(basePackages = "com.example.spring.infrastructure.db.command")
@@ -45,7 +47,11 @@ class HikariCommandConfig {
     @Bean(name = "commandEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier("commandDataSource") HikariDataSource dataSource) {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setGenerateDdl(true);
+        vendorAdapter.setGenerateDdl(false);
+        vendorAdapter.setShowSql(true);
+
+        Properties properties = new Properties();
+        properties.put("hibernate.physical_naming_strategy", "org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy");
 
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource);
@@ -53,6 +59,7 @@ class HikariCommandConfig {
         em.setPersistenceUnitName("commandUnit");
         em.setPersistenceProvider(new HibernatePersistenceProvider());
         em.setJpaVendorAdapter(vendorAdapter);
+        em.setJpaProperties(properties);
         return em;
     }
 

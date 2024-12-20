@@ -1,6 +1,6 @@
 package com.example.spring.infrastructure.db.command.player;
 
-import com.example.spring.domain.player.repository.PlayerBulkCommandRepository;
+import com.example.spring.domain.player.PlayerBulkCommandRepository;
 import com.example.spring.domain.team.TeamId;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

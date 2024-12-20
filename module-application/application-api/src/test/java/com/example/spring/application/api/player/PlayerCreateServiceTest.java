@@ -2,9 +2,9 @@ package com.example.spring.application.api.player;
 
 import com.example.spring.domain.player.FullName;
 import com.example.spring.domain.player.Player;
+import com.example.spring.domain.player.PlayerCommandRepository;
 import com.example.spring.domain.player.dto.PlayerCreateCommand;
 import com.example.spring.domain.player.dto.PlayerData;
-import com.example.spring.domain.player.repository.PlayerCommandRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

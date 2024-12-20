@@ -1,8 +1,8 @@
 package com.example.spring.application.api.player;
 
+import com.example.spring.domain.player.PlayerCommandRepository;
 import com.example.spring.domain.player.PlayerId;
 import com.example.spring.domain.player.dto.PlayerData;
-import com.example.spring.domain.player.repository.PlayerCommandRepository;
 import org.springframework.stereotype.Service;
 
 @Service

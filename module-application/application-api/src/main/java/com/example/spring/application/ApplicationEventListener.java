@@ -2,7 +2,7 @@ package com.example.spring.application;
 
 import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.DomainEventOutbox;
-import com.example.spring.domain.event.DomainEventPublisher;
+import com.example.spring.domain.event.DomainEventQueue;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
@@ -12,11 +12,11 @@ import org.springframework.transaction.event.TransactionalEventListener;
 
 @Component
 public class ApplicationEventListener {
-    private final DomainEventPublisher publisher;
+    private final DomainEventQueue queue;
     private final DomainEventOutbox outbox;
 
-    public ApplicationEventListener(DomainEventPublisher publisher, DomainEventOutbox outbox) {
-        this.publisher = publisher;
+    public ApplicationEventListener(DomainEventQueue queue, DomainEventOutbox outbox) {
+        this.queue = queue;
         this.outbox = outbox;
     }
 
@@ -24,7 +24,8 @@ public class ApplicationEventListener {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void handle(DomainEvent event) {
-        outbox.save(event);
-        publisher.publish(event);
+        final DomainEvent published = event.publish();
+        queue.push(published);
+        outbox.save(published);
     }
 }

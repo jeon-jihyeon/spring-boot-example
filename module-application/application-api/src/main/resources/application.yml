@@ -4,6 +4,7 @@ spring:
   web.resources.add-mappings: false
   config:
     import:
+      - api-client.yml
       - db-command.yml
       - sqs-pub.yml
   task.execution.pool:
@@ -23,7 +24,7 @@ server:
 logging:
   level:
     org.springframework.boot.autoconfigure: warn
-    
+
 ---
 spring.config.activate.on-profile: test
 

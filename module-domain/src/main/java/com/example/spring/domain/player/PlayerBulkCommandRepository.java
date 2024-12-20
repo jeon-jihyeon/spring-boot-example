@@ -1,4 +1,4 @@
-package com.example.spring.domain.player.repository;
+package com.example.spring.domain.player;
 
 import com.example.spring.domain.team.TeamId;
 

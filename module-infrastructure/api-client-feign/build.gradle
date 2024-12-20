@@ -1,0 +1,5 @@
+dependencies {
+    compileOnly project(":module-domain")
+
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+}

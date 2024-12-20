@@ -1,8 +1,8 @@
 package com.example.spring.infrastructure.db.command.player;
 
 import com.example.spring.domain.player.Player;
+import com.example.spring.domain.player.PlayerCommandRepository;
 import com.example.spring.domain.player.PlayerId;
-import com.example.spring.domain.player.repository.PlayerCommandRepository;
 import com.example.spring.infrastructure.db.EntityNotFoundException;
 import org.springframework.stereotype.Repository;
 

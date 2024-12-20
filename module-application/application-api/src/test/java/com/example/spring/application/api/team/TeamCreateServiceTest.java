@@ -2,10 +2,10 @@ package com.example.spring.application.api.team;
 
 import com.example.spring.domain.player.PlayerId;
 import com.example.spring.domain.team.Team;
+import com.example.spring.domain.team.TeamCommandRepository;
 import com.example.spring.domain.team.TeamName;
 import com.example.spring.domain.team.dto.TeamCreateCommand;
 import com.example.spring.domain.team.dto.TeamData;
-import com.example.spring.domain.team.repository.TeamCommandRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

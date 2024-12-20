@@ -1,8 +1,8 @@
 package com.example.spring.application.api.team;
 
+import com.example.spring.domain.team.TeamCommandRepository;
 import com.example.spring.domain.team.TeamId;
 import com.example.spring.domain.team.dto.TeamData;
-import com.example.spring.domain.team.repository.TeamCommandRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

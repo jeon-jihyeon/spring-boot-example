@@ -17,6 +17,8 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import java.util.Properties;
+
 @Configuration
 @EntityScan(basePackages = "com.example.spring.infrastructure.db.outbox")
 @EnableJpaRepositories(
@@ -40,7 +42,11 @@ class HikariOutboxConfig {
     @Bean(name = "outboxEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier("outboxDataSource") HikariDataSource dataSource) {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setGenerateDdl(true);
+        vendorAdapter.setGenerateDdl(false);
+        vendorAdapter.setShowSql(true);
+
+        Properties properties = new Properties();
+        properties.put("hibernate.physical_naming_strategy", "org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy");
 
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource);
@@ -48,6 +54,7 @@ class HikariOutboxConfig {
         em.setPersistenceUnitName("outboxUnit");
         em.setPersistenceProvider(new HibernatePersistenceProvider());
         em.setJpaVendorAdapter(vendorAdapter);
+        em.setJpaProperties(properties);
         return em;
     }
 
