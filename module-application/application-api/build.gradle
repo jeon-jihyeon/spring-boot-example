@@ -3,7 +3,7 @@ jar.enabled = false
 
 dependencies {
     implementation project(":module-domain")
-
+    implementation project(":module-application:application-batch")
     implementation project(":module-application:application-common")
 
     implementation project(":module-infrastructure:api-client-feign")

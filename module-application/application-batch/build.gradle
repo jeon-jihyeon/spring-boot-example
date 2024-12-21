@@ -1,5 +1,7 @@
 dependencies {
     implementation project(":module-domain")
+    implementation project(":module-infrastructure:db-command-mysql")
 
-//    implementation 'org.springframework.boot:spring-boot-starter-batch'
+    implementation 'org.springframework.boot:spring-boot-starter-batch'
+    implementation 'org.springframework:spring-web'
 }

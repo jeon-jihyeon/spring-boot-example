@@ -4,6 +4,7 @@ spring:
   web.resources.add-mappings: false
   config:
     import:
+      - batch.yml
       - api-client.yml
       - db-command.yml
       - sqs-pub.yml
