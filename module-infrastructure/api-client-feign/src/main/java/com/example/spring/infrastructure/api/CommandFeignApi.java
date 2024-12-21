@@ -6,7 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(value = "command-api")
+@FeignClient(value = "command-api", configuration = FeignExceptionConfig.class)
 public interface CommandFeignApi {
     @GetMapping(value = "/teams/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseModel<TeamResponse> getTeam(@PathVariable Long id);

@@ -1,5 +1,6 @@
 package com.example.spring.application.batch;
 
+import com.example.spring.domain.event.DomainEventBatchService;
 import com.example.spring.infrastructure.db.outbox.DomainEventEntity;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -8,13 +9,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
+import org.springframework.batch.core.configuration.annotation.JobScope;
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JdbcPagingItemReader;
 import org.springframework.batch.item.database.Order;
-import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
 import org.springframework.batch.item.database.builder.JdbcPagingItemReaderBuilder;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +28,9 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -33,14 +38,16 @@ import java.util.concurrent.ThreadPoolExecutor;
 @EnableBatchProcessing(dataSourceRef = "metaDataSource", transactionManagerRef = "outboxTransactionManager")
 public class OutboxBatchConfig {
     private final Logger log = LoggerFactory.getLogger(getClass());
-    private final BatchThreadPoolProperties threadPoolProperties;
+    private final BatchThreadPoolProperties properties;
+    private final DomainEventBatchService<DomainEventEntity> service;
     @Value("${spring.batch.job.name}")
     private String jobName;
     @Value("${spring.batch.chunk-size}")
     private Integer chunkSize;
 
-    public OutboxBatchConfig(BatchThreadPoolProperties threadPoolProperties) {
-        this.threadPoolProperties = threadPoolProperties;
+    public OutboxBatchConfig(BatchThreadPoolProperties properties, DomainEventBatchService<DomainEventEntity> service) {
+        this.properties = properties;
+        this.service = service;
     }
 
     @Bean(name = "metaHikariConfig")
@@ -55,13 +62,13 @@ public class OutboxBatchConfig {
     }
 
     @Bean
-    public TaskExecutor getBatchAsyncExecutor(BatchThreadPoolProperties properties) {
+    public TaskExecutor getBatchAsyncExecutor() {
         final ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setThreadNamePrefix("batch-async-");
         executor.setThreadGroupName("batch-async-group");
-        executor.setCorePoolSize(properties.coreSize / 2);
-        executor.setMaxPoolSize(properties.maxSize / 2);
-        executor.setQueueCapacity(properties.queueCapacity / 2);
+        executor.setCorePoolSize(properties.coreSize);
+        executor.setMaxPoolSize(properties.maxSize);
+        executor.setQueueCapacity(properties.queueCapacity);
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         executor.setWaitForTasksToCompleteOnShutdown(true);
         executor.setAwaitTerminationSeconds(10);
@@ -75,28 +82,29 @@ public class OutboxBatchConfig {
     }
 
     @Bean
+    @JobScope
     public Step outboxBatchStep(
             JobRepository jobRepository,
-            BatchThreadPoolProperties properties,
-            @Qualifier("outboxDataSource") HikariDataSource dataSource,
+            ItemWriter<DomainEventEntity> outboxItemWriter,
+            JdbcPagingItemReader<DomainEventEntity> outboxPagingItemReader,
             @Qualifier("outboxTransactionManager") PlatformTransactionManager transactionManager
     ) {
         return new StepBuilder("step", jobRepository)
                 .<DomainEventEntity, DomainEventEntity>chunk(chunkSize, transactionManager)
-                .reader(pagingItemReader(dataSource))
-                .writer(batchItemWriter(dataSource))
-                .taskExecutor(getBatchAsyncExecutor(properties))
+                .reader(outboxPagingItemReader)
+                .writer(outboxItemWriter)
+                .taskExecutor(getBatchAsyncExecutor())
                 .build();
     }
 
     @Bean
-    public JdbcPagingItemReader<DomainEventEntity> pagingItemReader(HikariDataSource dataSource) {
+    public JdbcPagingItemReader<DomainEventEntity> outboxPagingItemReader(@Qualifier("outboxDataSource") HikariDataSource dataSource) {
         return new JdbcPagingItemReaderBuilder<DomainEventEntity>()
                 .name("jdbcPagingItemReader")
                 .fetchSize(chunkSize)
                 .dataSource(dataSource)
                 .selectClause("*")
-                .fromClause("from domain_events")
+                .fromClause("from outbox.domain_events")
                 .whereClause("where published = :published")
                 .rowMapper(new BeanPropertyRowMapper<>(DomainEventEntity.class))
                 .parameterValues(Map.of("published", false))
@@ -105,13 +113,13 @@ public class OutboxBatchConfig {
     }
 
     @Bean
-    public ItemWriter<DomainEventEntity> batchItemWriter(HikariDataSource dataSource) {
-        // TODO: send message
-        return new JdbcBatchItemWriterBuilder<DomainEventEntity>()
-                .dataSource(dataSource)
-                .sql("update domain_events set published = :published, published_at = :published_at where id = :id")
-                .beanMapped()
-                .build();
+    @StepScope
+    public ItemWriter<DomainEventEntity> outboxItemWriter(@Value("#{jobParameters['now']}") LocalDateTime now) {
+        return chunk -> {
+            final List<DomainEventEntity> entities = new ArrayList<>();
+            for (DomainEventEntity e : chunk) entities.add(e);
+            service.invoke(entities, now);
+        };
     }
 
     @ConfigurationProperties(prefix = "spring.batch.task.execution.pool")

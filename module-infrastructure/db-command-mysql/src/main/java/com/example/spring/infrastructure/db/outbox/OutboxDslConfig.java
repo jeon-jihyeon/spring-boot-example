@@ -1,4 +1,4 @@
-package com.example.spring.infrastructure.db.command;
+package com.example.spring.infrastructure.db.outbox;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
@@ -7,12 +7,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-class JPAQueryFactoryConfig {
-    @PersistenceContext(unitName = "commandUnit")
+class OutboxDslConfig {
+    @PersistenceContext(unitName = "outboxUnit")
     private EntityManager entityManager;
 
     @Bean
-    public JPAQueryFactory jpaQueryFactory() {
+    public JPAQueryFactory outboxJPAQueryFactory() {
         return new JPAQueryFactory(entityManager);
     }
 }

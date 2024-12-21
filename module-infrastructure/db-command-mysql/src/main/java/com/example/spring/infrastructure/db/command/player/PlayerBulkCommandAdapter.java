@@ -14,16 +14,16 @@ import static com.example.spring.infrastructure.db.command.player.QPlayerEntity.
 @Component
 public class PlayerBulkCommandAdapter implements PlayerBulkCommandRepository {
     private final EntityManager em;
-    private final JPAQueryFactory jpaQueryFactory;
+    private final JPAQueryFactory commandQueryFactory;
 
-    public PlayerBulkCommandAdapter(@Qualifier("commandEntityManager") EntityManager em, JPAQueryFactory jpaQueryFactory) {
+    public PlayerBulkCommandAdapter(@Qualifier("commandEntityManager") EntityManager em, JPAQueryFactory commandQueryFactory) {
         this.em = em;
-        this.jpaQueryFactory = jpaQueryFactory;
+        this.commandQueryFactory = commandQueryFactory;
     }
 
     @Override
     public void updateAll(TeamId teamId, TeamId newId) {
-        jpaQueryFactory.update(playerEntity)
+        commandQueryFactory.update(playerEntity)
                 .where(playerEntity.teamId.eq(teamId.value()))
                 .set(playerEntity.teamId, newId.value())
                 .execute();
@@ -33,7 +33,7 @@ public class PlayerBulkCommandAdapter implements PlayerBulkCommandRepository {
 
     @Override
     public void updateAll(TeamId teamId, List<Long> playerIds) {
-        jpaQueryFactory.update(playerEntity)
+        commandQueryFactory.update(playerEntity)
                 .where(playerEntity.id.in(playerIds))
                 .set(playerEntity.teamId, teamId.value())
                 .execute();

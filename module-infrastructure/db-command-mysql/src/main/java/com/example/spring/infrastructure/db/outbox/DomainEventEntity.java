@@ -51,28 +51,56 @@ public class DomainEventEntity {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getModel() {
         return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
     }
 
     public Long getModelId() {
         return modelId;
     }
 
+    public void setModelId(Long modelId) {
+        this.modelId = modelId;
+    }
+
     public Boolean getPublished() {
         return published;
+    }
+
+    public void setPublished(Boolean published) {
+        this.published = published;
     }
 
     public LocalDateTime getPublishedAt() {
         return publishedAt;
     }
 
+    public void setPublishedAt(LocalDateTime publishedAt) {
+        this.publishedAt = publishedAt;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @Override
@@ -89,5 +117,11 @@ public class DomainEventEntity {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("DomainEventEntity[id=%s, model=%s, modelId=%s, createdAt=%s, published=%s, publishedAt=%s]",
+                id, model, modelId, createdAt, published, publishedAt);
     }
 }

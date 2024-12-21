@@ -9,10 +9,10 @@ import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class DomainEventMapperTest extends BaseContextTest {
-    private final DomainEventMapper mapper;
+class DomainEventJpaMapperTest extends BaseContextTest {
+    private final DomainEventJpaMapper mapper;
 
-    public DomainEventMapperTest(DomainEventMapper mapper) {
+    public DomainEventJpaMapperTest(DomainEventJpaMapper mapper) {
         this.mapper = mapper;
     }
 

@@ -21,24 +21,11 @@ public abstract class ApiException extends BaseException {
         this.logLevel = logLevel;
     }
 
-    protected ApiException(ErrorCode code, Object data) {
-        super(code, data);
-        this.httpStatus = toHttpStatus(code);
-        this.logLevel = toLogLevel(code);
-    }
-
-    public static LogLevel toLogLevel(ErrorCode code) {
-        return switch (code) {
-            case NOT_FOUND, INVALID_VALUE -> LogLevel.WARN;
-            case INTERNAL_SERVER -> LogLevel.ERROR;
-        };
-    }
-
-    public static HttpStatus toHttpStatus(ErrorCode code) {
-        return switch (code) {
-            case NOT_FOUND -> HttpStatus.NOT_FOUND;
-            case INVALID_VALUE -> HttpStatus.BAD_REQUEST;
-            case INTERNAL_SERVER -> HttpStatus.INTERNAL_SERVER_ERROR;
+    public static ApiException from(BaseException base) {
+        return switch (base.getCode()) {
+            case NOT_FOUND -> new EntityNotFoundException(base.getData());
+            case INVALID_VALUE -> new InvalidValueException(base.getData());
+            case INTERNAL_SERVER -> new InternalServerException(base.getData());
         };
     }
 
