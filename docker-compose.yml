@@ -20,15 +20,6 @@ services:
       - "${COMMAND_VOLUME_BASE}/rdb-command-init.sql:/docker-entrypoint-initdb.d/init-rdb.sql"
   rdb-2:
     image: "${RDB_IMAGE}"
-    container_name: "outbox"
-    env_file: "${OUTBOX_VOLUME_BASE}/rdb-outbox.env"
-    command: "${RDB_OPTION}"
-    ports:
-      - "${OUTBOX_DB_PORT}:3306"
-    volumes:
-      - "${OUTBOX_VOLUME_BASE}/rdb-outbox-init.sql:/docker-entrypoint-initdb.d/init-rdb.sql"
-  rdb-3:
-    image: "${RDB_IMAGE}"
     container_name: "batch"
     env_file: "${BATCH_VOLUME_BASE}/rdb-batch.env"
     command: "${RDB_OPTION}"
@@ -36,3 +27,21 @@ services:
       - "${BATCH_DB_PORT}:3306"
     volumes:
       - "${BATCH_VOLUME_BASE}/rdb-batch-init.sql:/docker-entrypoint-initdb.d/init-rdb.sql"
+  rdb-3:
+    image: "${RDB_IMAGE}"
+    container_name: "inbox"
+    env_file: "${INBOX_VOLUME_BASE}/rdb-inbox.env"
+    command: "${RDB_OPTION}"
+    ports:
+      - "${INBOX_DB_PORT}:3306"
+    volumes:
+      - "${INBOX_VOLUME_BASE}/rdb-inbox-init.sql:/docker-entrypoint-initdb.d/init-rdb.sql"
+  rdb-4:
+    image: "${RDB_IMAGE}"
+    container_name: "outbox"
+    env_file: "${OUTBOX_VOLUME_BASE}/rdb-outbox.env"
+    command: "${RDB_OPTION}"
+    ports:
+      - "${OUTBOX_DB_PORT}:3306"
+    volumes:
+      - "${OUTBOX_VOLUME_BASE}/rdb-outbox-init.sql:/docker-entrypoint-initdb.d/init-rdb.sql"

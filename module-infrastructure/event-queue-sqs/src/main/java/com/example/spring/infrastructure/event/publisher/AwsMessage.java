@@ -24,6 +24,6 @@ public record AwsMessage(
         LocalDateTime publishedAt
 ) {
     public static AwsMessage from(DomainEvent e) {
-        return new AwsMessage(e.id(), e.modelName(), e.modelId(), e.createdAt(), e.published(), e.publishedAt());
+        return new AwsMessage(e.id(), e.modelName(), e.modelId(), e.createdAt(), e.completed(), e.completedAt());
     }
 }

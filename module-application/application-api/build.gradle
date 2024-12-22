@@ -8,6 +8,7 @@ dependencies {
 
     implementation project(":module-infrastructure:api-client-feign")
     implementation project(":module-infrastructure:db-command-mysql")
+    implementation project(":module-infrastructure:db-event-mysql")
     implementation project(":module-infrastructure:event-queue-sqs")
 
     implementation 'org.springframework.boot:spring-boot-starter-web'

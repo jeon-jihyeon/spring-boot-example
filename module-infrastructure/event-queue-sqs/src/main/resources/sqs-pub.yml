@@ -7,10 +7,6 @@ spring:
       credentials:
         access-key: ${MESSAGE_ACCESS_KEY_ID}
         secret-key: ${MESSAGE_SECRET_ACCESS_KEY}
-      sns:
-        topic.name:
-          team: ${TEAM_TOPIC}
-          player: ${PLAYER_TOPIC}
       sqs:
         queue.name:
           team-create: ${TEAM_CREATE_QUEUE_NAME}

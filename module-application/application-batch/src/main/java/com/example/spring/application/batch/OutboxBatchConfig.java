@@ -1,7 +1,7 @@
 package com.example.spring.application.batch;
 
 import com.example.spring.domain.event.DomainEventBatchService;
-import com.example.spring.infrastructure.db.outbox.DomainEventEntity;
+import com.example.spring.infrastructure.db.outbox.OutboxEventEntity;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
@@ -39,13 +39,13 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class OutboxBatchConfig {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final BatchThreadPoolProperties properties;
-    private final DomainEventBatchService<DomainEventEntity> service;
+    private final DomainEventBatchService<OutboxEventEntity> service;
     @Value("${spring.batch.job.name}")
     private String jobName;
     @Value("${spring.batch.chunk-size}")
     private Integer chunkSize;
 
-    public OutboxBatchConfig(BatchThreadPoolProperties properties, DomainEventBatchService<DomainEventEntity> service) {
+    public OutboxBatchConfig(BatchThreadPoolProperties properties, DomainEventBatchService<OutboxEventEntity> service) {
         this.properties = properties;
         this.service = service;
     }
@@ -85,12 +85,12 @@ public class OutboxBatchConfig {
     @JobScope
     public Step outboxBatchStep(
             JobRepository jobRepository,
-            ItemWriter<DomainEventEntity> outboxItemWriter,
-            JdbcPagingItemReader<DomainEventEntity> outboxPagingItemReader,
+            ItemWriter<OutboxEventEntity> outboxItemWriter,
+            JdbcPagingItemReader<OutboxEventEntity> outboxPagingItemReader,
             @Qualifier("outboxTransactionManager") PlatformTransactionManager transactionManager
     ) {
         return new StepBuilder("step", jobRepository)
-                .<DomainEventEntity, DomainEventEntity>chunk(chunkSize, transactionManager)
+                .<OutboxEventEntity, OutboxEventEntity>chunk(chunkSize, transactionManager)
                 .reader(outboxPagingItemReader)
                 .writer(outboxItemWriter)
                 .taskExecutor(getBatchAsyncExecutor())
@@ -98,26 +98,26 @@ public class OutboxBatchConfig {
     }
 
     @Bean
-    public JdbcPagingItemReader<DomainEventEntity> outboxPagingItemReader(@Qualifier("outboxDataSource") HikariDataSource dataSource) {
-        return new JdbcPagingItemReaderBuilder<DomainEventEntity>()
+    public JdbcPagingItemReader<OutboxEventEntity> outboxPagingItemReader(@Qualifier("outboxDataSource") HikariDataSource dataSource) {
+        return new JdbcPagingItemReaderBuilder<OutboxEventEntity>()
                 .name("jdbcPagingItemReader")
                 .fetchSize(chunkSize)
                 .dataSource(dataSource)
                 .selectClause("*")
                 .fromClause("from outbox.domain_events")
-                .whereClause("where published = :published")
-                .rowMapper(new BeanPropertyRowMapper<>(DomainEventEntity.class))
-                .parameterValues(Map.of("published", false))
+                .whereClause("where completed = :completed")
+                .rowMapper(new BeanPropertyRowMapper<>(OutboxEventEntity.class))
+                .parameterValues(Map.of("completed", false))
                 .sortKeys(Map.of("created_at", Order.DESCENDING))
                 .build();
     }
 
     @Bean
     @StepScope
-    public ItemWriter<DomainEventEntity> outboxItemWriter(@Value("#{jobParameters['now']}") LocalDateTime now) {
+    public ItemWriter<OutboxEventEntity> outboxItemWriter(@Value("#{jobParameters['now']}") LocalDateTime now) {
         return chunk -> {
-            final List<DomainEventEntity> entities = new ArrayList<>();
-            for (DomainEventEntity e : chunk) entities.add(e);
+            final List<OutboxEventEntity> entities = new ArrayList<>();
+            for (OutboxEventEntity e : chunk) entities.add(e);
             service.invoke(entities, now);
         };
     }

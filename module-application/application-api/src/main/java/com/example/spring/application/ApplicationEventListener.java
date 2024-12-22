@@ -24,8 +24,8 @@ public class ApplicationEventListener {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void handle(DomainEvent event) {
-        final DomainEvent published = event.publish();
-        queue.push(published);
-        outbox.save(published);
+        final DomainEvent completed = event.complete();
+        queue.push(completed);
+        outbox.save(completed);
     }
 }
