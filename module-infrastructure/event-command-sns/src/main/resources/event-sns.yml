@@ -1,12 +1,9 @@
 spring:
   cloud:
     aws:
-      stack.auto: false
-      sqs:
-        end-point: ${MESSAGE_ENDPOINT_URL}
+      sns:
+        topic-arn: ${TEAM_TOPIC_ARN}
         region: ${MESSAGE_DEFAULT_REGION}
         access-key: ${MESSAGE_ACCESS_KEY_ID}
         secret-key: ${MESSAGE_SECRET_ACCESS_KEY}
-
-        queue.name:
-          team-create: ${TEAM_CREATE_QUEUE_NAME}
+        type-key: ${MESSAGE_TYPE_KEY}

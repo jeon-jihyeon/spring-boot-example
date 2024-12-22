@@ -1,4 +1,4 @@
-package com.example.spring.infrastructure.event.publisher;
+package com.example.spring.infrastructure.event.queue;
 
 import com.example.spring.domain.event.DomainEvent;
 import io.awspring.cloud.sqs.config.SqsMessageListenerContainerFactory;
@@ -17,9 +17,9 @@ import java.time.Duration;
 
 @Configuration
 public class AwsSqsConfig {
-    private final AwsProperties properties;
+    private final AwsSqsProperties properties;
 
-    public AwsSqsConfig(AwsProperties properties) {
+    public AwsSqsConfig(AwsSqsProperties properties) {
         this.properties = properties;
     }
 

@@ -1,4 +1,4 @@
-package com.example.spring.infrastructure.event.publisher;
+package com.example.spring.infrastructure.event.queue;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

@@ -10,18 +10,18 @@ import java.util.List;
 public class DomainEventBatchService<E> {
     private final DomainEventOutboxMapper<E> mapper;
     private final DomainEventOutbox outbox;
-    private final TeamCreateEventQueue queue;
+    private final DomainEventProducer producer;
 
-    public DomainEventBatchService(DomainEventOutboxMapper<E> mapper, DomainEventOutbox outbox, TeamCreateEventQueue queue) {
+    public DomainEventBatchService(DomainEventOutboxMapper<E> mapper, DomainEventOutbox outbox, DomainEventProducer producer) {
         this.mapper = mapper;
         this.outbox = outbox;
-        this.queue = queue;
+        this.producer = producer;
     }
 
     @Transactional
-    public void invoke(List<E> entities, LocalDateTime now) {
+    public void invoke(List<E> entities, LocalDateTime now) throws Exception {
         final List<DomainEvent> events = entities.stream().map(e -> mapper.toDomain(e).complete(now)).toList();
-        queue.pushAll(events);
+        producer.sendBatch(events);
         outbox.publishAll(events.stream().map(DomainEvent::id).toList(), now);
     }
 }

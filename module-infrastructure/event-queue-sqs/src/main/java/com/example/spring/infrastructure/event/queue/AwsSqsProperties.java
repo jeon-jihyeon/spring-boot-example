@@ -1,18 +1,13 @@
-package com.example.spring.infrastructure.event.publisher;
+package com.example.spring.infrastructure.event.queue;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import software.amazon.awssdk.auth.credentials.AwsCredentials;
 
-@Component
-public record AwsProperties(
-        @Value("${spring.cloud.aws.end-point.url}")
+@ConfigurationProperties(prefix = "spring.cloud.aws.sqs")
+public record AwsSqsProperties(
         String endPoint,
-        @Value("${spring.cloud.aws.region.static}")
         String region,
-        @Value("${spring.cloud.aws.credentials.access-key}")
         String accessKey,
-        @Value("${spring.cloud.aws.credentials.secret-key}")
         String secretKey
 ) {
     public AwsCredentials toCredentials() {

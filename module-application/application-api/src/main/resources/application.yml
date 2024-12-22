@@ -8,6 +8,7 @@ spring:
       - api-client.yml
       - db-command.yml
       - db-event.yml
+      - event-sns.yml
       - sqs-pub.yml
   task.execution.pool:
     core-size: 10
