@@ -35,6 +35,11 @@ public class InboxEventAdapter implements DomainEventInbox {
     }
 
     @Override
+    public boolean exists(Long id) {
+        return repository.existsById(id);
+    }
+
+    @Override
     public void processAll(List<Long> ids, LocalDateTime now) {
         jpaQueryFactory.update(inboxEventEntity)
                 .where(inboxEventEntity.id.in(ids))

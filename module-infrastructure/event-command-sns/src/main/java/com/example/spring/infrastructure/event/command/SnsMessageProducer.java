@@ -49,7 +49,7 @@ public class SnsMessageProducer implements DomainEventProducer {
             for (AwsSnsMessage m : messages) entries.add(m.toEntry(objectMapper, properties.typeKey()));
 
             snsAsyncClient.publishBatch(PublishBatchRequest.builder()
-                    // by topic
+                    // TODO: by topic
                     .topicArn(properties.topicArn())
                     .publishBatchRequestEntries(entries)
                     .build());
