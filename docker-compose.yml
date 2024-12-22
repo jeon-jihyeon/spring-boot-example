@@ -3,12 +3,12 @@ services:
   aws:
     image: "localstack/localstack"
     container_name: "localstack"
-    env_file: "${SQS_VOLUME_BASE}/localstack.env"
+    env_file: "${LOCALSTACK_VOLUME_BASE}/localstack.env"
     command: "chmod +x /etc/localstack/init/ready.d/init-aws.sh"
     volumes:
-      - "${SQS_VOLUME_BASE}/localstack.sh:/etc/localstack/init/ready.d/init-aws.sh"
+      - "./localstack.sh:/etc/localstack/init/ready.d/init-aws.sh"
     ports:
-      - "${SQS_PORT}:${SQS_PORT}"
+      - "${LOCALSTACK_PORT}:${LOCALSTACK_PORT}"
   rdb-1:
     image: "${RDB_IMAGE}"
     container_name: "command"

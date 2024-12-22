@@ -10,9 +10,9 @@ import java.util.List;
 public class DomainEventBatchService<E> {
     private final DomainEventMapper<E> mapper;
     private final DomainEventOutbox outbox;
-    private final DomainEventQueue queue;
+    private final TeamCreateEventQueue queue;
 
-    public DomainEventBatchService(DomainEventMapper<E> mapper, DomainEventOutbox outbox, DomainEventQueue queue) {
+    public DomainEventBatchService(DomainEventMapper<E> mapper, DomainEventOutbox outbox, TeamCreateEventQueue queue) {
         this.mapper = mapper;
         this.outbox = outbox;
         this.queue = queue;

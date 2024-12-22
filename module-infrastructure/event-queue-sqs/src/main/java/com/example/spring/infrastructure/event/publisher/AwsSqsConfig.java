@@ -17,9 +17,9 @@ import java.time.Duration;
 
 @Configuration
 public class AwsSqsConfig {
-    private final AwsSqsProperties properties;
+    private final AwsProperties properties;
 
-    public AwsSqsConfig(AwsSqsProperties properties) {
+    public AwsSqsConfig(AwsProperties properties) {
         this.properties = properties;
     }
 

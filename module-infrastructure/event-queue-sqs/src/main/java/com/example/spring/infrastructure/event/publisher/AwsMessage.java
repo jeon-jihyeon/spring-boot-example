@@ -9,7 +9,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 import java.time.LocalDateTime;
 
-public record AwsSqsEvent(
+public record AwsMessage(
         Long id,
         String model,
         Long modelId,
@@ -23,7 +23,7 @@ public record AwsSqsEvent(
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
         LocalDateTime publishedAt
 ) {
-    public static AwsSqsEvent from(DomainEvent e) {
-        return new AwsSqsEvent(e.id(), e.model(), e.modelId(), e.createdAt(), e.published(), e.publishedAt());
+    public static AwsMessage from(DomainEvent e) {
+        return new AwsMessage(e.id(), e.modelName(), e.modelId(), e.createdAt(), e.published(), e.publishedAt());
     }
 }

@@ -2,7 +2,7 @@ package com.example.spring.domain.event;
 
 import java.util.List;
 
-public interface DomainEventQueue {
+public interface TeamCreateEventQueue {
     void push(DomainEvent event);
 
     void pull(DomainEvent event);

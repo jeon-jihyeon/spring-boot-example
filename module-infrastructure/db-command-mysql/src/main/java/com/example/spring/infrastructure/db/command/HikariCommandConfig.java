@@ -51,7 +51,7 @@ class HikariCommandConfig {
         vendorAdapter.setShowSql(true);
 
         Properties properties = new Properties();
-        properties.put("hibernate.physical_naming_strategy", "org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy");
+        properties.put("hibernate.physical_naming_strategy", "org.hibernate.boot.modelName.naming.CamelCaseToUnderscoresNamingStrategy");
 
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource);

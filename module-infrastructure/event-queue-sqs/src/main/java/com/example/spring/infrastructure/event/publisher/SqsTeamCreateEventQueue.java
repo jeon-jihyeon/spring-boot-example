@@ -1,8 +1,8 @@
 package com.example.spring.infrastructure.event.publisher;
 
 import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.event.DomainEventQueue;
-import com.example.spring.domain.player.PlayerTeamCreateEventHandler;
+import com.example.spring.domain.event.TeamCreateEventQueue;
+import com.example.spring.domain.player.TeamCreateEventHandler;
 import io.awspring.cloud.sqs.annotation.SqsListener;
 import io.awspring.cloud.sqs.operations.SqsTemplate;
 import org.springframework.messaging.Message;
@@ -12,20 +12,20 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class AwsSqsEventQueue implements DomainEventQueue {
+public class SqsTeamCreateEventQueue implements TeamCreateEventQueue {
     private final SqsTemplate sqsTemplate;
-    private final AwsSqsProperties properties;
-    private final PlayerTeamCreateEventHandler eventHandler;
+    private final AwsSqsQueueNames queueNames;
+    private final TeamCreateEventHandler eventHandler;
 
-    public AwsSqsEventQueue(SqsTemplate sqsTemplate, AwsSqsProperties properties, PlayerTeamCreateEventHandler eventHandler) {
+    public SqsTeamCreateEventQueue(SqsTemplate sqsTemplate, AwsSqsQueueNames queueNames, TeamCreateEventHandler eventHandler) {
         this.sqsTemplate = sqsTemplate;
-        this.properties = properties;
+        this.queueNames = queueNames;
         this.eventHandler = eventHandler;
     }
 
     @Override
     public void push(DomainEvent event) {
-        sqsTemplate.sendAsync(options -> options.queue(properties.queueName()).payload(AwsSqsEvent.from(event)));
+        sqsTemplate.sendAsync(options -> options.queue(queueNames.teamCreate()).payload(AwsMessage.from(event)));
     }
 
     @Override
@@ -36,8 +36,8 @@ public class AwsSqsEventQueue implements DomainEventQueue {
 
     @Override
     public void pushAll(List<DomainEvent> events) {
-        final List<Message<AwsSqsEvent>> messages = events.stream()
-                .map(e -> (Message<AwsSqsEvent>) new GenericMessage<>(AwsSqsEvent.from(e))).toList();
-        sqsTemplate.sendManyAsync(properties.queueName(), messages);
+        final List<Message<AwsMessage>> messages = events.stream()
+                .map(e -> (Message<AwsMessage>) new GenericMessage<>(AwsMessage.from(e))).toList();
+        sqsTemplate.sendManyAsync(queueNames.teamCreate(), messages);
     }
 }

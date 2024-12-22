@@ -22,7 +22,7 @@ public class DomainEventJpaMapper implements DomainEventMapper<DomainEventEntity
     public DomainEventEntity toEntity(DomainEvent event) {
         return new DomainEventEntity(
                 event.id(),
-                event.model(),
+                event.modelName(),
                 event.modelId(),
                 event.createdAt(),
                 event.published(),

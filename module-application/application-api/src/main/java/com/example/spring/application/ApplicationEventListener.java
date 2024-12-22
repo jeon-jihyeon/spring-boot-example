@@ -2,7 +2,7 @@ package com.example.spring.application;
 
 import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.DomainEventOutbox;
-import com.example.spring.domain.event.DomainEventQueue;
+import com.example.spring.domain.event.TeamCreateEventQueue;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
@@ -12,10 +12,10 @@ import org.springframework.transaction.event.TransactionalEventListener;
 
 @Component
 public class ApplicationEventListener {
-    private final DomainEventQueue queue;
+    private final TeamCreateEventQueue queue;
     private final DomainEventOutbox outbox;
 
-    public ApplicationEventListener(DomainEventQueue queue, DomainEventOutbox outbox) {
+    public ApplicationEventListener(TeamCreateEventQueue queue, DomainEventOutbox outbox) {
         this.queue = queue;
         this.outbox = outbox;
     }

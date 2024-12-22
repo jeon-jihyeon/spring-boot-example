@@ -5,11 +5,9 @@ import org.springframework.stereotype.Component;
 import software.amazon.awssdk.auth.credentials.AwsCredentials;
 
 @Component
-public record AwsSqsProperties(
+public record AwsProperties(
         @Value("${spring.cloud.aws.end-point.url}")
         String endPoint,
-        @Value("${spring.cloud.aws.sqs.queue.name}")
-        String queueName,
         @Value("${spring.cloud.aws.region.static}")
         String region,
         @Value("${spring.cloud.aws.credentials.access-key}")

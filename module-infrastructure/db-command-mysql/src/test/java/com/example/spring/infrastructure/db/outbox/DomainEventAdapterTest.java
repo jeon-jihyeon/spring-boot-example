@@ -20,11 +20,11 @@ class DomainEventAdapterTest extends BaseContextTest {
     @DisplayName("DomainEvent DB 생성-조회-삭제 테스트")
     void shouldBeSavedAndFound() {
         final LocalDateTime now = LocalDateTime.now();
-        adapter.save(new DomainEvent(1L, "model", 2L, now, false, now));
+        adapter.save(new DomainEvent(1L, "modelName", 2L, now, false, now));
 
         final DomainEvent found = adapter.findById(1L);
         assertThat(found.id()).isEqualTo(1L);
-        assertThat(found.model()).isEqualTo("model");
+        assertThat(found.modelName()).isEqualTo("modelName");
         assertThat(found.modelId()).isEqualTo(2L);
         assertThat(found.createdAt()).isEqualTo(now);
         assertThat(found.published()).isFalse();

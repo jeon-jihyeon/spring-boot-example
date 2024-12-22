@@ -4,5 +4,6 @@ dependencies {
 
     implementation platform("io.awspring.cloud:spring-cloud-aws-dependencies:${springCloudAwsVersion}")
     implementation 'io.awspring.cloud:spring-cloud-aws-starter-sqs'
+    implementation 'io.awspring.cloud:spring-cloud-aws-starter-sns'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 }

@@ -121,7 +121,7 @@ public class DomainEventEntity {
 
     @Override
     public String toString() {
-        return String.format("DomainEventEntity[id=%s, model=%s, modelId=%s, createdAt=%s, published=%s, publishedAt=%s]",
+        return String.format("DomainEventEntity[id=%s, modelName=%s, modelId=%s, createdAt=%s, published=%s, publishedAt=%s]",
                 id, model, modelId, createdAt, published, publishedAt);
     }
 }
