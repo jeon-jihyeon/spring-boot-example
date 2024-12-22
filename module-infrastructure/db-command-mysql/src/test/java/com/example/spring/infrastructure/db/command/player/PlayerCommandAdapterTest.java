@@ -1,11 +1,19 @@
 package com.example.spring.infrastructure.db.command.player;
 
+import com.example.spring.domain.player.FullName;
 import com.example.spring.domain.player.Grade;
 import com.example.spring.domain.player.Player;
+import com.example.spring.domain.player.PlayerId;
+import com.example.spring.domain.player.dto.PlayerCreateCommand;
+import com.example.spring.domain.player.dto.PlayerData;
+import com.example.spring.domain.team.TeamId;
 import com.example.spring.infrastructure.db.BaseContextTest;
 import com.example.spring.infrastructure.db.EntityNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -20,17 +28,31 @@ class PlayerCommandAdapterTest extends BaseContextTest {
     @Test
     @DisplayName("Player DB 생성-조회-삭제 테스트")
     void shouldBeSavedAndFoundAndDeleted() {
-        final Player saved = adapter.save(Player.of(11L, Grade.NOVICE, "first", "last", 22L));
-        assertThat(saved.getId().value()).isEqualTo(11L);
+        final PlayerData saved = adapter.save(PlayerData.of(11L, Grade.NOVICE, "first", "last", 22L));
+        assertThat(saved.id().value()).isEqualTo(11L);
 
-        final Player found = adapter.findById(saved.getId());
-        assertThat(found.getId().value()).isEqualTo(11L);
-        assertThat(found.getGrade()).isEqualTo(Grade.NOVICE);
-        assertThat(found.getFullName().firstName()).isEqualTo("first");
-        assertThat(found.getFullName().lastName()).isEqualTo("last");
-        assertThat(found.getTeamId().value()).isEqualTo(22L);
+        final PlayerData found = adapter.findById(saved.id());
+        assertThat(found.id().value()).isEqualTo(11L);
+        assertThat(found.grade()).isEqualTo(Grade.NOVICE);
+        assertThat(found.fullName().firstName()).isEqualTo("first");
+        assertThat(found.fullName().lastName()).isEqualTo("last");
+        assertThat(found.teamId().value()).isEqualTo(22L);
 
-        adapter.deleteById(saved.getId());
-        assertThrows(EntityNotFoundException.class, () -> adapter.findById(saved.getId()));
+        adapter.deleteById(saved.id());
+        assertThrows(EntityNotFoundException.class, () -> adapter.findById(saved.id()));
+    }
+
+    @Test
+    @DisplayName("Player DB Id 목록 단위 일괄 수정 테스트")
+    void testUpdateAll() {
+        final List<Long> playerIds = new ArrayList<>();
+        final PlayerData data = PlayerData.from(Player.create(new PlayerCreateCommand(new FullName("first", "last"))));
+
+        playerIds.add(adapter.save(data).id().value());
+        playerIds.add(adapter.save(data).id().value());
+        adapter.updateAll(new TeamId(1L), playerIds);
+
+        final PlayerData found = adapter.findById(new PlayerId(playerIds.get(0)));
+        assertThat(found.teamId().value()).isEqualTo(1L);
     }
 }

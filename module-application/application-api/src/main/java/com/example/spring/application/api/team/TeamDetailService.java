@@ -4,7 +4,6 @@ import com.example.spring.domain.team.TeamCommandRepository;
 import com.example.spring.domain.team.TeamId;
 import com.example.spring.domain.team.dto.TeamData;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TeamDetailService {
@@ -14,8 +13,7 @@ public class TeamDetailService {
         this.repository = repository;
     }
 
-    @Transactional
     public TeamData invoke(TeamId id) {
-        return TeamData.from(repository.findById(id));
+        return repository.findById(id);
     }
 }

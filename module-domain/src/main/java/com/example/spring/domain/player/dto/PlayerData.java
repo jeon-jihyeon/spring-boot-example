@@ -10,4 +10,8 @@ public record PlayerData(PlayerId id, Grade grade, FullName fullName, TeamId tea
     public static PlayerData from(Player player) {
         return new PlayerData(player.getId(), player.getGrade(), player.getFullName(), player.getTeamId());
     }
+
+    public static PlayerData of(Long id, Grade grade, String firstName, String lastName, Long teamId) {
+        return new PlayerData(new PlayerId(id), grade, new FullName(firstName, lastName), new TeamId(teamId));
+    }
 }

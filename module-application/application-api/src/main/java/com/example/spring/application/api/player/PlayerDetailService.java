@@ -14,6 +14,6 @@ public class PlayerDetailService {
     }
 
     public PlayerData invoke(PlayerId id) {
-        return PlayerData.from(repository.findById(id));
+        return repository.findById(id);
     }
 }

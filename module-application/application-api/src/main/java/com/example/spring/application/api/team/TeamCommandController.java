@@ -7,11 +7,11 @@ import com.example.spring.domain.team.TeamId;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class TeamController {
+public class TeamCommandController {
     private final TeamCreateService createService;
     private final TeamDetailService detailService;
 
-    public TeamController(TeamCreateService createService, TeamDetailService detailService) {
+    public TeamCommandController(TeamCreateService createService, TeamDetailService detailService) {
         this.createService = createService;
         this.detailService = detailService;
     }

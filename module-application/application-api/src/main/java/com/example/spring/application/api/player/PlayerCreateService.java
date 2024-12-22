@@ -17,6 +17,6 @@ public class PlayerCreateService {
 
     @Transactional
     public PlayerData invoke(PlayerCreateCommand command) {
-        return PlayerData.from(repository.save(Player.create(command)));
+        return repository.save(PlayerData.from(Player.create(command)));
     }
 }

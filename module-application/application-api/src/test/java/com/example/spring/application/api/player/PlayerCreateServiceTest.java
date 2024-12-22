@@ -27,10 +27,10 @@ class PlayerCreateServiceTest {
     @DisplayName("Player 생성 서비스 테스트")
     void shouldCreatePlayerAndReturnValidResponse() {
         final PlayerCreateCommand command = new PlayerCreateCommand(new FullName("first", "last"));
-        final Player model = Player.create(command);
-        when(commandRepository.save(any(Player.class))).thenReturn(model);
+        final PlayerData data = PlayerData.from(Player.create(command));
+        when(commandRepository.save(any(PlayerData.class))).thenReturn(data);
 
         // then
-        assertThat(service.invoke(command)).isEqualTo(PlayerData.from(model));
+        assertThat(service.invoke(command)).isEqualTo(data);
     }
 }

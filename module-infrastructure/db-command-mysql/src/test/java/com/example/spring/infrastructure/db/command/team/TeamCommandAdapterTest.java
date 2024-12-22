@@ -1,7 +1,6 @@
 package com.example.spring.infrastructure.db.command.team;
 
-import com.example.spring.domain.player.PlayerId;
-import com.example.spring.domain.team.Team;
+import com.example.spring.domain.team.dto.TeamData;
 import com.example.spring.infrastructure.db.BaseContextTest;
 import com.example.spring.infrastructure.db.EntityNotFoundException;
 import org.junit.jupiter.api.DisplayName;
@@ -24,15 +23,15 @@ class TeamCommandAdapterTest extends BaseContextTest {
     @DisplayName("Team DB 생성-조회-삭제 테스트")
     void shouldBeSavedAndFoundAndDeleted() {
         final LocalDateTime now = LocalDateTime.now();
-        final Team saved = adapter.save(Team.of(22L, "name", now, List.of(new PlayerId(11L))));
-        assertThat(saved.getId().value()).isEqualTo(22L);
+        final TeamData saved = adapter.save(TeamData.of(22L, "name", now, List.of(11L)));
+        assertThat(saved.id().value()).isEqualTo(22L);
 
-        final Team found = adapter.findById(saved.getId());
-        assertThat(found.getId().value()).isEqualTo(22L);
-        assertThat(found.getName().value()).isEqualTo("name");
-        assertThat(found.getStartsAt()).isEqualTo(now);
+        final TeamData found = adapter.findById(saved.id());
+        assertThat(found.id().value()).isEqualTo(22L);
+        assertThat(found.name().value()).isEqualTo("name");
+        assertThat(found.startsAt()).isEqualTo(now);
 
-        adapter.deleteById(saved.getId());
-        assertThrows(EntityNotFoundException.class, () -> adapter.findById(saved.getId()));
+        adapter.deleteById(saved.id());
+        assertThrows(EntityNotFoundException.class, () -> adapter.findById(saved.id()));
     }
 }

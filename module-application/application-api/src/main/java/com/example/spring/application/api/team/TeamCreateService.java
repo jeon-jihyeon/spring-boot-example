@@ -24,7 +24,7 @@ public class TeamCreateService {
 
     @Transactional
     public TeamData invoke(TeamCreateCommand command) {
-        final TeamData team = TeamData.from(repository.save(Team.create(command)));
+        final TeamData team = repository.save(TeamData.from(Team.create(command)));
         final DomainEvent event = DomainEvent.of(Team.class.getSimpleName(), team.id().value());
         publisher.publishEvent(event);
         outbox.save(event);

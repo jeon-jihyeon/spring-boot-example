@@ -1,9 +1,11 @@
 package com.example.spring.domain.team;
 
-public interface TeamCommandRepository {
-    Team save(Team team);
+import com.example.spring.domain.team.dto.TeamData;
 
-    Team findById(TeamId id);
+public interface TeamCommandRepository {
+    TeamData save(TeamData team);
+
+    TeamData findById(TeamId id);
 
     void deleteById(TeamId id);
 }

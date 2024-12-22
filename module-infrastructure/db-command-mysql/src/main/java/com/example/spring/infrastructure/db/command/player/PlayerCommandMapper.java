@@ -1,14 +1,14 @@
 package com.example.spring.infrastructure.db.command.player;
 
-import com.example.spring.domain.player.Player;
+import com.example.spring.domain.player.dto.PlayerData;
 import com.example.spring.infrastructure.db.command.BaseCommandMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PlayerCommandMapper implements BaseCommandMapper<Player, PlayerEntity> {
+public class PlayerCommandMapper implements BaseCommandMapper<PlayerData, PlayerEntity> {
     @Override
-    public Player toDomain(PlayerEntity entity) {
-        return Player.of(
+    public PlayerData toDomain(PlayerEntity entity) {
+        return PlayerData.of(
                 entity.getId(),
                 entity.getGrade(),
                 entity.getFirstName(),
@@ -18,13 +18,13 @@ public class PlayerCommandMapper implements BaseCommandMapper<Player, PlayerEnti
     }
 
     @Override
-    public PlayerEntity toEntity(Player domain) {
+    public PlayerEntity toEntity(PlayerData domain) {
         return new PlayerEntity(
-                domain.getId().value(),
-                domain.getGrade(),
-                domain.getFullName().firstName(),
-                domain.getFullName().lastName(),
-                domain.getTeamId().value()
+                domain.id().value(),
+                domain.grade(),
+                domain.fullName().firstName(),
+                domain.fullName().lastName(),
+                domain.teamId().value()
         );
     }
 }

@@ -12,8 +12,4 @@ public record ResponseModel<T>(T data, ResponseError error) {
     public static ResponseModel<?> error(ApiException e) {
         return new ResponseModel<>(null, ResponseError.from(e));
     }
-
-    public boolean isError() {
-        return error != null;
-    }
 }

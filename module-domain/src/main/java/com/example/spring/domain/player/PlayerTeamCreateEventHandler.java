@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PlayerTeamCreateEventHandler {
-    private final PlayerBulkCommandRepository repository;
+    private final PlayerCommandRepository repository;
     private final TeamApiClient client;
 
-    public PlayerTeamCreateEventHandler(PlayerBulkCommandRepository repository, TeamApiClient client) {
+    public PlayerTeamCreateEventHandler(PlayerCommandRepository repository, TeamApiClient client) {
         this.repository = repository;
         this.client = client;
     }

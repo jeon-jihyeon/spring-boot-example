@@ -4,6 +4,7 @@ import com.example.spring.infrastructure.db.command.BaseCommandEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -14,7 +15,7 @@ public class TeamEntity extends BaseCommandEntity {
     private String name;
     @Column(nullable = false)
     private LocalDateTime startsAt;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private Set<Long> playerIds;
 
     public TeamEntity() {

@@ -18,7 +18,7 @@ public class FeignExceptionConfig {
         return this::decode;
     }
 
-    private Exception decode(String methodKey, Response response) {
+    private ApiException decode(String methodKey, Response response) {
         final ApiException e = switch (response.status()) {
             case 404 -> new EntityNotFoundException(response.body());
             case 400 -> new InvalidValueException(response.body());

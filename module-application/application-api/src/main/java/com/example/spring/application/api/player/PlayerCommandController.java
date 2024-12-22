@@ -7,11 +7,11 @@ import com.example.spring.domain.player.PlayerId;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class PlayerController {
+public class PlayerCommandController {
     private final PlayerCreateService createService;
     private final PlayerDetailService detailService;
 
-    public PlayerController(PlayerCreateService createService, PlayerDetailService detailService) {
+    public PlayerCommandController(PlayerCreateService createService, PlayerDetailService detailService) {
         this.createService = createService;
         this.detailService = detailService;
     }

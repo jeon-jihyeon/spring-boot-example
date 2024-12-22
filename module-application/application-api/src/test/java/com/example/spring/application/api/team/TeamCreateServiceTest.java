@@ -33,9 +33,9 @@ class TeamCreateServiceTest {
     @DisplayName("Team 생성 서비스 테스트")
     void shouldCreateTeamAndReturnValidResponse() {
         final TeamCreateCommand command = new TeamCreateCommand(new TeamName("name"), List.of(new PlayerId(1L)));
-        final Team model = Team.create(command);
-        when(commandRepository.save(any(Team.class))).thenReturn(model);
+        final TeamData data = TeamData.from(Team.create(command));
+        when(commandRepository.save(any(TeamData.class))).thenReturn(data);
 
-        assertThat(service.invoke(command)).isEqualTo(TeamData.from(model));
+        assertThat(service.invoke(command)).isEqualTo(data);
     }
 }

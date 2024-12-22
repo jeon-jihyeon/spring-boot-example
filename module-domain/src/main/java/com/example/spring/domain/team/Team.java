@@ -19,15 +19,6 @@ public class Team {
         this.playerIds = playerIds;
     }
 
-    public static Team of(Long id, String name, LocalDateTime startsAt, List<PlayerId> playerIds) {
-        return new Team(
-                new TeamId(id),
-                new TeamName(name),
-                startsAt,
-                playerIds
-        );
-    }
-
     public static Team create(TeamCreateCommand command) {
         return new Team(
                 TeamId.newId(),
