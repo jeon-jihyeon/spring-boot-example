@@ -11,8 +11,8 @@ class CommandDslConfig {
     @PersistenceContext(unitName = "commandUnit")
     private EntityManager entityManager;
 
-    @Bean
-    public JPAQueryFactory commandQueryFactory() {
+    @Bean(name = "commandQueryFactory")
+    public JPAQueryFactory jpaQueryFactory() {
         return new JPAQueryFactory(entityManager);
     }
 }

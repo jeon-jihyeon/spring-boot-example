@@ -11,8 +11,8 @@ class OutboxDslConfig {
     @PersistenceContext(unitName = "outboxUnit")
     private EntityManager entityManager;
 
-    @Bean
-    public JPAQueryFactory outboxJPAQueryFactory() {
+    @Bean(name = "outboxJPAQueryFactory")
+    public JPAQueryFactory jpaQueryFactory() {
         return new JPAQueryFactory(entityManager);
     }
 }

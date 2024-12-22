@@ -7,6 +7,7 @@ spring:
       - batch.yml
       - api-client.yml
       - db-command.yml
+      - db-outbox.yml
       - sqs-pub.yml
   task.execution.pool:
     core-size: 10

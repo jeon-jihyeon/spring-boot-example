@@ -2,8 +2,9 @@ package com.example.spring.infrastructure.db.outbox;
 
 import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.DomainEventOutbox;
-import com.example.spring.infrastructure.db.EntityNotFoundException;
+import com.example.spring.infrastructure.db.OutboxNotFoundException;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,12 +17,16 @@ import static com.example.spring.infrastructure.db.outbox.QDomainEventEntity.dom
 public class DomainEventAdapter implements DomainEventOutbox {
     private final DomainEventJpaRepository repository;
     private final DomainEventJpaMapper mapper;
-    private final JPAQueryFactory outboxJPAQueryFactory;
+    private final JPAQueryFactory jpaQueryFactory;
 
-    public DomainEventAdapter(DomainEventJpaRepository repository, DomainEventJpaMapper mapper, JPAQueryFactory outboxJPAQueryFactory) {
+    public DomainEventAdapter(
+            DomainEventJpaRepository repository,
+            DomainEventJpaMapper mapper,
+            @Qualifier("outboxJPAQueryFactory") JPAQueryFactory jpaQueryFactory
+    ) {
         this.repository = repository;
         this.mapper = mapper;
-        this.outboxJPAQueryFactory = outboxJPAQueryFactory;
+        this.jpaQueryFactory = jpaQueryFactory;
     }
 
     @Override
@@ -32,12 +37,12 @@ public class DomainEventAdapter implements DomainEventOutbox {
 
     @Override
     public DomainEvent findById(Long id) {
-        return mapper.toDomain(repository.findById(id).orElseThrow(EntityNotFoundException::new));
+        return mapper.toDomain(repository.findById(id).orElseThrow(OutboxNotFoundException::new));
     }
 
     @Override
     public void publishAll(List<Long> ids, LocalDateTime now) {
-        outboxJPAQueryFactory.update(domainEventEntity)
+        jpaQueryFactory.update(domainEventEntity)
                 .where(domainEventEntity.id.in(ids))
                 .set(domainEventEntity.published, true)
                 .set(domainEventEntity.publishedAt, now)

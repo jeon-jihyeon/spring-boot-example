@@ -6,6 +6,7 @@ import com.example.spring.domain.player.dto.PlayerData;
 import com.example.spring.domain.team.TeamId;
 import com.example.spring.infrastructure.db.EntityNotFoundException;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,12 +17,16 @@ import static com.example.spring.infrastructure.db.command.player.QPlayerEntity.
 public class PlayerCommandAdapter implements PlayerCommandRepository {
     private final PlayerJpaRepository repository;
     private final PlayerCommandMapper mapper;
-    private final JPAQueryFactory commandQueryFactory;
+    private final JPAQueryFactory jpaQueryFactory;
 
-    public PlayerCommandAdapter(PlayerJpaRepository repository, PlayerCommandMapper mapper, JPAQueryFactory commandQueryFactory) {
+    public PlayerCommandAdapter(
+            PlayerJpaRepository repository,
+            PlayerCommandMapper mapper,
+            @Qualifier("commandQueryFactory") JPAQueryFactory commandQueryFactory
+    ) {
         this.repository = repository;
         this.mapper = mapper;
-        this.commandQueryFactory = commandQueryFactory;
+        this.jpaQueryFactory = commandQueryFactory;
     }
 
     @Override
@@ -36,7 +41,7 @@ public class PlayerCommandAdapter implements PlayerCommandRepository {
 
     @Override
     public void updateAll(TeamId teamId, List<Long> playerIds) {
-        commandQueryFactory.update(playerEntity)
+        jpaQueryFactory.update(playerEntity)
                 .where(playerEntity.id.in(playerIds))
                 .set(playerEntity.teamId, teamId.value())
                 .execute();

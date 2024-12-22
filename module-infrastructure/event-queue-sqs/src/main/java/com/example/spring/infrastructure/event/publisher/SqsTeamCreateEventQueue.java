@@ -29,7 +29,7 @@ public class SqsTeamCreateEventQueue implements TeamCreateEventQueue {
     }
 
     @Override
-    @SqsListener("${spring.cloud.aws.sqs.queue.name}")
+    @SqsListener("${spring.cloud.aws.sqs.queue.name.team-create}")
     public void pull(DomainEvent event) {
         eventHandler.invoke(event);
     }
