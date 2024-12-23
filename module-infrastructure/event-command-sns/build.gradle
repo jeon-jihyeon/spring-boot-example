@@ -1,8 +1,0 @@
-dependencies {
-    compileOnly project(":module-domain")
-    implementation 'org.springframework:spring-context'
-
-    implementation platform("io.awspring.cloud:spring-cloud-aws-dependencies:${springCloudAwsVersion}")
-    implementation 'io.awspring.cloud:spring-cloud-aws-starter-sns'
-    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
-}

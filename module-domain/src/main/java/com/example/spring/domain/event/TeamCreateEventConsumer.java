@@ -1,5 +1,5 @@
 package com.example.spring.domain.event;
 
-public interface TeamCreateEventQueue {
+public interface TeamCreateEventConsumer {
     void pull(DomainEvent event);
 }

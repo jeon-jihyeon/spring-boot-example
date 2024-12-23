@@ -1,4 +1,4 @@
-package com.example.spring.infrastructure.event.command;
+package com.example.spring.infrastructure.event;
 
 import com.example.spring.domain.event.DomainEvent;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -14,7 +14,7 @@ import software.amazon.awssdk.services.sns.model.PublishBatchRequestEntry;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-public record AwsSnsMessage(
+public record AwsMessage(
         Long id,
         String type,
         String modelName,
@@ -29,8 +29,8 @@ public record AwsSnsMessage(
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
         LocalDateTime createdAt
 ) {
-    public static AwsSnsMessage from(DomainEvent e) {
-        return new AwsSnsMessage(e.id(), e.type().name(), e.modelName(), e.modelId(), e.completed(), e.completedAt(), e.createdAt());
+    public static AwsMessage from(DomainEvent e) {
+        return new AwsMessage(e.id(), e.type().name(), e.modelName(), e.modelId(), e.completed(), e.completedAt(), e.createdAt());
     }
 
     public PublishBatchRequestEntry toEntry(ObjectMapper objectMapper, String typeKey) throws JsonProcessingException {

@@ -16,7 +16,6 @@ public abstract class BaseException extends RuntimeException {
         this.data = data;
     }
 
-
     public ErrorCode getCode() {
         return code;
     }

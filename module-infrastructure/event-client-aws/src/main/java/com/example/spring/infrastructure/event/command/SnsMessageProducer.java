@@ -2,6 +2,7 @@ package com.example.spring.infrastructure.event.command;
 
 import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.DomainEventProducer;
+import com.example.spring.infrastructure.event.AwsMessage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
@@ -33,7 +34,7 @@ public class SnsMessageProducer implements DomainEventProducer {
 
     @Override
     public void send(DomainEvent event) throws JsonProcessingException {
-        final AwsSnsMessage message = AwsSnsMessage.from(event);
+        final AwsMessage message = AwsMessage.from(event);
         snsAsyncClient.publish(PublishRequest.builder()
                 .topicArn(properties.topicArn())
                 .messageAttributes(Map.of(properties.typeKey(), MessageAttributeValue.builder().stringValue(message.type()).build()))
@@ -44,9 +45,9 @@ public class SnsMessageProducer implements DomainEventProducer {
     @Override
     public void sendBatch(List<DomainEvent> events) throws JsonProcessingException {
         if (events != null && !events.isEmpty()) {
-            final List<AwsSnsMessage> messages = events.stream().map(AwsSnsMessage::from).toList();
+            final List<AwsMessage> messages = events.stream().map(AwsMessage::from).toList();
             final List<PublishBatchRequestEntry> entries = new ArrayList<>();
-            for (AwsSnsMessage m : messages) entries.add(m.toEntry(objectMapper, properties.typeKey()));
+            for (AwsMessage m : messages) entries.add(m.toEntry(objectMapper, properties.typeKey()));
 
             snsAsyncClient.publishBatch(PublishBatchRequest.builder()
                     // TODO: by topic
