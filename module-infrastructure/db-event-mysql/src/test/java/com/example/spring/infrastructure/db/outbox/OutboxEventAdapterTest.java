@@ -1,7 +1,7 @@
 package com.example.spring.infrastructure.db.outbox;
 
 import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.infrastructure.db.BaseContextTest;
+import com.example.spring.infrastructure.db.BaseCommandDbTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class OutboxEventAdapterTest extends BaseContextTest {
+class OutboxEventAdapterTest extends BaseCommandDbTest {
     private final OutboxEventAdapter adapter;
     private final OutboxEventJpaRepository repository;
 

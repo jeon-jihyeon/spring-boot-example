@@ -30,11 +30,12 @@ public class TeamEventHandler {
     @Transactional
     public void handle(DomainEvent event) {
         if (inbox.exists(event.id())) return;
-
         inbox.save(event);
         final TeamId teamId = new TeamId(event.modelId());
         final TeamData team = client.findById(teamId);
         repository.save(team);
+
+        // TODO: sns fan-out logic
         playerRepository.updateAll(teamId, team.playerIds().stream().map(PlayerId::value).toList());
     }
 }

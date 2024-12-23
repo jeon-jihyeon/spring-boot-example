@@ -15,7 +15,7 @@ public class BaseCommandEntity {
     protected Long id;
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
-    protected LocalDateTime createdAt;
+    private LocalDateTime createdAt;
     @UpdateTimestamp
     @Column(nullable = false)
     private LocalDateTime updatedAt;

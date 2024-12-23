@@ -1,12 +1,10 @@
 package com.example.spring.infrastructure.db.inbox;
 
 import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.event.DomainEventInboxMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class InboxEventJpaMapper implements DomainEventInboxMapper<InboxEventEntity> {
-    @Override
+public class InboxEventJpaMapper {
     public DomainEvent toDomain(InboxEventEntity entity) {
         return new DomainEvent(
                 entity.getId(),
@@ -19,7 +17,6 @@ public class InboxEventJpaMapper implements DomainEventInboxMapper<InboxEventEnt
         );
     }
 
-    @Override
     public InboxEventEntity toEntity(DomainEvent event) {
         return new InboxEventEntity(
                 event.id(),

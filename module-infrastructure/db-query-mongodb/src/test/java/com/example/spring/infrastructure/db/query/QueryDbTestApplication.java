@@ -1,4 +1,4 @@
-package com.example.spring.infrastructure.db;
+package com.example.spring.infrastructure.db.query;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,8 +6,8 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 @ConfigurationPropertiesScan
 @SpringBootApplication
-class DBTestApplication {
+class QueryDbTestApplication {
     public static void main(String[] args) {
-        SpringApplication.run(DBTestApplication.class, args);
+        SpringApplication.run(QueryDbTestApplication.class, args);
     }
 }

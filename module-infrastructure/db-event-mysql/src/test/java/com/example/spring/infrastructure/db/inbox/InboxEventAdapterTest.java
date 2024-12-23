@@ -1,7 +1,7 @@
 package com.example.spring.infrastructure.db.inbox;
 
 import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.infrastructure.db.BaseContextTest;
+import com.example.spring.infrastructure.db.BaseCommandDbTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class InboxEventAdapterTest extends BaseContextTest {
+class InboxEventAdapterTest extends BaseCommandDbTest {
     private final InboxEventAdapter adapter;
     private final InboxEventJpaRepository repository;
 

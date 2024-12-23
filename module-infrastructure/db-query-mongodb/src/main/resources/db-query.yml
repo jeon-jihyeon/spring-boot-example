@@ -1,0 +1,17 @@
+---
+spring:
+  config.activate.on-profile: test
+de:
+  flapdoodle:
+    mongodb:
+      embedded:
+        version: 4.9.3
+
+---
+spring:
+  config.activate.on-profile: local
+  data:
+    mongodb:
+      database: query
+      uri: ${QUERY_DB_URI}
+      field-naming-strategy: org.springframework.data.mapping.model.SnakeCaseFieldNamingStrategy

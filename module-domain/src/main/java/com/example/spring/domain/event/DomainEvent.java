@@ -26,6 +26,10 @@ public record DomainEvent(
         return DomainEvent.of(Type.CREATE, modelName, modelId);
     }
 
+    public static DomainEvent updateType(String modelName, Long modelId) {
+        return DomainEvent.of(Type.UPDATE, modelName, modelId);
+    }
+
     public DomainEvent complete(LocalDateTime now) {
         return new DomainEvent(id, type, modelName, modelId, true, now, createdAt);
     }
@@ -34,5 +38,5 @@ public record DomainEvent(
         return complete(LocalDateTime.now());
     }
 
-    public enum Type {CREATE}
+    public enum Type {CREATE, UPDATE}
 }

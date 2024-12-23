@@ -9,5 +9,5 @@ import org.springframework.test.context.TestConstructor;
 @SpringBootTest
 @ActiveProfiles("test")
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-public abstract class BaseContextTest {
+public abstract class BaseCommandDbTest {
 }
