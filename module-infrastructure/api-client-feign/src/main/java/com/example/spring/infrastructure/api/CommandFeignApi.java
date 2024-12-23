@@ -9,5 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(value = "command-api", configuration = FeignExceptionConfig.class)
 public interface CommandFeignApi {
     @GetMapping(value = "/teams/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    ResponseModel<TeamResponse> getTeam(@PathVariable Long id);
+    ResponseModel<TeamApiResponse> getTeam(@PathVariable Long id);
+
+    @GetMapping(value = "/players/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    ResponseModel<PlayerApiResponse> getPlayer(@PathVariable Long id);
 }

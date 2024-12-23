@@ -26,10 +26,6 @@ public record DomainEvent(
         return DomainEvent.of(Type.CREATE, modelName, modelId);
     }
 
-    public static DomainEvent commandType(String modelName, Long modelId) {
-        return DomainEvent.of(Type.COMMAND, modelName, modelId);
-    }
-
     public DomainEvent complete(LocalDateTime now) {
         return new DomainEvent(id, type, modelName, modelId, true, now, createdAt);
     }
@@ -38,5 +34,5 @@ public record DomainEvent(
         return complete(LocalDateTime.now());
     }
 
-    public enum Type {CREATE, COMMAND}
+    public enum Type {CREATE}
 }

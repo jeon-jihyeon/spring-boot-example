@@ -1,7 +1,7 @@
 package com.example.spring.infrastructure.event.queue;
 
 import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.event.TeamCreateEventProducer;
+import com.example.spring.domain.event.TeamEventProducer;
 import com.example.spring.infrastructure.event.AwsMessage;
 import io.awspring.cloud.sqs.operations.SqsTemplate;
 import org.springframework.messaging.Message;
@@ -11,11 +11,11 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class SqsTeamCreateEventProducer implements TeamCreateEventProducer {
+public class SqsTeamEventProducer implements TeamEventProducer {
     private final SqsTemplate sqsTemplate;
     private final AwsSqsQueueNames queueNames;
 
-    public SqsTeamCreateEventProducer(SqsTemplate sqsTemplate, AwsSqsQueueNames queueNames) {
+    public SqsTeamEventProducer(SqsTemplate sqsTemplate, AwsSqsQueueNames queueNames) {
         this.sqsTemplate = sqsTemplate;
         this.queueNames = queueNames;
     }

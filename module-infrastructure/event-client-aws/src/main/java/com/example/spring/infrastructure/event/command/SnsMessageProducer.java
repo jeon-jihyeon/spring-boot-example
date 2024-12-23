@@ -2,7 +2,7 @@ package com.example.spring.infrastructure.event.command;
 
 import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.DomainEventProducer;
-import com.example.spring.domain.event.TeamCreateEventProducer;
+import com.example.spring.domain.event.TeamEventProducer;
 import com.example.spring.infrastructure.event.AwsMessage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,13 +22,13 @@ public class SnsMessageProducer implements DomainEventProducer {
     private final AwsSnsProperties properties;
     private final ObjectMapper objectMapper;
     private final SnsAsyncClient snsAsyncClient;
-    private final TeamCreateEventProducer teamCreateProducer;
+    private final TeamEventProducer teamCreateProducer;
 
     public SnsMessageProducer(
             AwsSnsProperties properties,
             ObjectMapper objectMapper,
             SnsAsyncClient snsAsyncClient,
-            TeamCreateEventProducer teamCreateProducer
+            TeamEventProducer teamCreateProducer
     ) {
         this.properties = properties;
         this.objectMapper = objectMapper;
