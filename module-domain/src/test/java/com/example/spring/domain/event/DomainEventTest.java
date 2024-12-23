@@ -12,8 +12,9 @@ class DomainEventTest {
     @DisplayName("DomainEvent 모델 초기화 테스트")
     void shouldInitializeModel() {
         final LocalDateTime now = LocalDateTime.now();
-        final DomainEvent model = new DomainEvent(1L, DomainEvent.Type.CREATE, "model", 2L, false, now, now);
+        final DomainEvent model = new DomainEvent(1L, Layer.DOMAIN, DomainEvent.Type.CREATE, "model", 2L, false, now, now);
         assertThat(model.id()).isEqualTo(1L);
+        assertThat(model.layer()).isEqualTo(Layer.DOMAIN);
         assertThat(model.type()).isEqualTo(DomainEvent.Type.CREATE);
         assertThat(model.modelName()).isEqualTo("model");
         assertThat(model.modelId()).isEqualTo(2L);

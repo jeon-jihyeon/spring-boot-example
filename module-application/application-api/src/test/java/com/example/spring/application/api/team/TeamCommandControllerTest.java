@@ -49,7 +49,7 @@ class TeamCommandControllerTest {
         final TeamCreateRequest request = new TeamCreateRequest("name", List.of(1L));
         final TeamData data = TeamData.from(Team.create(request.toCommand()));
 
-        when(service.write(any(TeamCreateCommand.class))).thenReturn(data);
+        when(service.create(any(TeamCreateCommand.class))).thenReturn(data);
 
         // then
         mvc.perform(MockMvcRequestBuilders.post("/api/teams")

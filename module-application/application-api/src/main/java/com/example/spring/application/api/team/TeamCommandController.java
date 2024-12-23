@@ -17,7 +17,7 @@ public class TeamCommandController {
 
     @PostMapping("/api/teams")
     public ResponseModel<TeamResponse> create(final @RequestBody TeamCreateRequest data) {
-        return ResponseModel.ok(TeamResponse.from(service.write(data.toCommand())));
+        return ResponseModel.ok(TeamResponse.from(service.create(data.toCommand())));
     }
 
     @GetMapping("/api/teams/{id}")

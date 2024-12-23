@@ -36,6 +36,6 @@ class TeamCommandServiceTest {
         final TeamData data = TeamData.from(Team.create(command));
         when(commandRepository.save(any(TeamData.class))).thenReturn(data);
 
-        assertThat(service.write(command)).isEqualTo(data);
+        assertThat(service.create(command)).isEqualTo(data);
     }
 }

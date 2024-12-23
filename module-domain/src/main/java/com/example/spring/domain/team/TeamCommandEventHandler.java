@@ -9,21 +9,18 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TeamEventHandler {
+public class TeamCommandEventHandler {
     private final DomainEventInbox inbox;
     private final PlayerCommandRepository playerRepository;
-    private final TeamQueryRepository repository;
     private final TeamCommandApiClient client;
 
-    public TeamEventHandler(
+    public TeamCommandEventHandler(
             DomainEventInbox inbox,
             PlayerCommandRepository playerRepository,
-            TeamQueryRepository repository,
             TeamCommandApiClient client
     ) {
         this.inbox = inbox;
         this.playerRepository = playerRepository;
-        this.repository = repository;
         this.client = client;
     }
 
@@ -33,9 +30,6 @@ public class TeamEventHandler {
         inbox.save(event);
         final TeamId teamId = new TeamId(event.modelId());
         final TeamData team = client.findById(teamId);
-        repository.save(team);
-
-        // TODO: sns fan-out logic
         playerRepository.updateAll(teamId, team.playerIds().stream().map(PlayerId::value).toList());
     }
 }

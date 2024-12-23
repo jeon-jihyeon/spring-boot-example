@@ -2,6 +2,7 @@ package com.example.spring.domain.team;
 
 import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.DomainEventOutbox;
+import com.example.spring.domain.event.Layer;
 import com.example.spring.domain.team.dto.TeamCreateCommand;
 import com.example.spring.domain.team.dto.TeamData;
 import jakarta.transaction.Transactional;
@@ -29,9 +30,9 @@ public class TeamCommandService {
     }
 
     @Transactional
-    public TeamData write(TeamCreateCommand command) {
+    public TeamData create(TeamCreateCommand command) {
         final TeamData team = repository.save(TeamData.from(Team.create(command)));
-        final DomainEvent event = DomainEvent.createType(Team.class.getSimpleName(), team.id().value());
+        final DomainEvent event = DomainEvent.createType(Layer.DOMAIN, Team.class.getSimpleName(), team.id().value());
         publisher.publishEvent(event);
         outbox.save(event);
         return team;

@@ -1,8 +1,8 @@
-package com.example.spring.domain.team;
+package com.example.spring.domain.player;
 
 import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.DomainEventInbox;
-import com.example.spring.domain.player.PlayerCommandRepository;
+import com.example.spring.domain.event.Layer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,26 +13,23 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class TeamEventHandlerTest {
+class PlayerQueryEventHandlerTest {
     @Mock
     private DomainEventInbox inbox;
     @Mock
-    private PlayerCommandRepository playerRepository;
+    private PlayerQueryRepository repository;
     @Mock
-    private TeamQueryRepository repository;
-    @Mock
-    private TeamCommandApiClient client;
+    private PlayerCommandApiClient client;
     @InjectMocks
-    private TeamEventHandler handler;
+    private PlayerQueryEventHandler handler;
 
     @Test
     void shouldPreventDuplicationForExistingEventInInbox() {
         when(inbox.exists(any(Long.class))).thenReturn(true);
-        handler.handle(DomainEvent.createType("test", 1L));
+        handler.handle(DomainEvent.createType(Layer.DOMAIN, "test", 1L));
 
         verify(inbox, never()).save(any());
         verifyNoInteractions(client);
         verifyNoInteractions(repository);
-        verifyNoInteractions(playerRepository);
     }
 }
