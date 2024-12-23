@@ -1,7 +1,7 @@
-package com.example.spring.domain.player;
+package com.example.spring.domain.event;
 
-import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.event.DomainEventInbox;
+import com.example.spring.domain.player.PlayerCommandRepository;
+import com.example.spring.domain.player.PlayerId;
 import com.example.spring.domain.team.TeamApiClient;
 import com.example.spring.domain.team.TeamId;
 import com.example.spring.domain.team.dto.TeamData;

@@ -35,7 +35,6 @@ public record AwsMessage(
 
     public PublishBatchRequestEntry toEntry(ObjectMapper objectMapper, String typeKey) throws JsonProcessingException {
         return PublishBatchRequestEntry.builder()
-                .id(id.toString())
                 .message(objectMapper.writeValueAsString(this))
                 .messageAttributes(Map.of(typeKey, MessageAttributeValue.builder().stringValue(type).build()))
                 .build();
