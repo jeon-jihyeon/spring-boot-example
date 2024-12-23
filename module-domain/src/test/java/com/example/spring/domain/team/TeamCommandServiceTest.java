@@ -1,9 +1,7 @@
-package com.example.spring.application.api.team;
+package com.example.spring.domain.team;
 
+import com.example.spring.domain.event.DomainEventOutbox;
 import com.example.spring.domain.player.PlayerId;
-import com.example.spring.domain.team.Team;
-import com.example.spring.domain.team.TeamCommandRepository;
-import com.example.spring.domain.team.TeamName;
 import com.example.spring.domain.team.dto.TeamCreateCommand;
 import com.example.spring.domain.team.dto.TeamData;
 import org.junit.jupiter.api.DisplayName;
@@ -21,13 +19,15 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class TeamCreateServiceTest {
+class TeamCommandServiceTest {
     @Mock
     private TeamCommandRepository commandRepository;
     @Mock
     private ApplicationEventPublisher publisher;
+    @Mock
+    private DomainEventOutbox outbox;
     @InjectMocks
-    private TeamCreateService service;
+    private TeamCommandService service;
 
     @Test
     @DisplayName("Team 생성 서비스 테스트")
@@ -36,6 +36,6 @@ class TeamCreateServiceTest {
         final TeamData data = TeamData.from(Team.create(command));
         when(commandRepository.save(any(TeamData.class))).thenReturn(data);
 
-        assertThat(service.invoke(command)).isEqualTo(data);
+        assertThat(service.write(command)).isEqualTo(data);
     }
 }

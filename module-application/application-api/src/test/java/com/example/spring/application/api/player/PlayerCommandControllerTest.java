@@ -4,6 +4,7 @@ import com.example.spring.application.api.player.data.PlayerCreateRequest;
 import com.example.spring.application.api.player.data.PlayerResponse;
 import com.example.spring.application.common.ResponseModel;
 import com.example.spring.domain.player.Player;
+import com.example.spring.domain.player.PlayerCommandService;
 import com.example.spring.domain.player.dto.PlayerCreateCommand;
 import com.example.spring.domain.player.dto.PlayerData;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,7 +28,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class PlayerCommandControllerTest {
     @Mock
-    private PlayerCreateService service;
+    private PlayerCommandService service;
     @Spy
     private ObjectMapper objectMapper;
     @InjectMocks
@@ -45,7 +46,7 @@ class PlayerCommandControllerTest {
         final PlayerCreateRequest request = new PlayerCreateRequest("first", "last");
         final PlayerData data = PlayerData.from(Player.create(request.toCommand()));
 
-        when(service.invoke(any(PlayerCreateCommand.class))).thenReturn(data);
+        when(service.create(any(PlayerCreateCommand.class))).thenReturn(data);
 
         // then
         mvc.perform(MockMvcRequestBuilders.post("/api/players")

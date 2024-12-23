@@ -1,10 +1,9 @@
-package com.example.spring.domain.event;
+package com.example.spring.domain.team;
 
+import com.example.spring.domain.event.DomainEvent;
+import com.example.spring.domain.event.DomainEventInbox;
 import com.example.spring.domain.player.PlayerCommandRepository;
 import com.example.spring.domain.player.PlayerId;
-import com.example.spring.domain.team.TeamCommandApiClient;
-import com.example.spring.domain.team.TeamId;
-import com.example.spring.domain.team.TeamQueryRepository;
 import com.example.spring.domain.team.dto.TeamData;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;

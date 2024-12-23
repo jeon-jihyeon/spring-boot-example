@@ -11,7 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @Tag("context")
 @SpringBootTest
-@ActiveProfiles("local")
+@ActiveProfiles("test")
 @AutoConfigureMockMvc
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 public abstract class BaseIntegrationTest {

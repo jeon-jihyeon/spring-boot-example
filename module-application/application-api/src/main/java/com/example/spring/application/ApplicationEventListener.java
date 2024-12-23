@@ -11,11 +11,11 @@ import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 
 @Component
-public class TeamCreateEventListener {
+public class ApplicationEventListener {
     private final DomainEventProducer producer;
     private final DomainEventOutbox outbox;
 
-    public TeamCreateEventListener(DomainEventProducer producer, DomainEventOutbox outbox) {
+    public ApplicationEventListener(DomainEventProducer producer, DomainEventOutbox outbox) {
         this.producer = producer;
         this.outbox = outbox;
     }

@@ -1,12 +1,9 @@
 package com.example.spring.infrastructure.event.command;
 
 import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.event.DomainEventProducer;
-import com.example.spring.domain.event.TeamEventProducer;
 import com.example.spring.infrastructure.event.AwsMessage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.stereotype.Component;
 import software.amazon.awssdk.services.sns.SnsAsyncClient;
 import software.amazon.awssdk.services.sns.model.MessageAttributeValue;
 import software.amazon.awssdk.services.sns.model.PublishBatchRequest;
@@ -17,23 +14,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@Component
-public class SnsMessageProducer implements DomainEventProducer {
+public class SnsMessageProducer {
     private final AwsSnsProperties properties;
     private final ObjectMapper objectMapper;
     private final SnsAsyncClient snsAsyncClient;
-    private final TeamEventProducer teamCreateProducer;
 
     public SnsMessageProducer(
             AwsSnsProperties properties,
             ObjectMapper objectMapper,
-            SnsAsyncClient snsAsyncClient,
-            TeamEventProducer teamCreateProducer
+            SnsAsyncClient snsAsyncClient
     ) {
         this.properties = properties;
         this.objectMapper = objectMapper;
         this.snsAsyncClient = snsAsyncClient;
-        this.teamCreateProducer = teamCreateProducer;
     }
 
     private Map<String, MessageAttributeValue> getMessageAttributes(String type) {
@@ -42,7 +35,8 @@ public class SnsMessageProducer implements DomainEventProducer {
                 "contentType", MessageAttributeValue.builder().stringValue("application/json").dataType("String").build());
     }
 
-    public void send(DomainEvent event, boolean no) throws JsonProcessingException {
+    public void send(DomainEvent event) throws JsonProcessingException {
+        // TODO: restoration
         final AwsMessage message = AwsMessage.from(event);
         snsAsyncClient.publish(PublishRequest.builder()
                 .topicArn(properties.topicArn())
@@ -51,7 +45,8 @@ public class SnsMessageProducer implements DomainEventProducer {
                 .build());
     }
 
-    public void sendBatch(List<DomainEvent> events, boolean no) throws JsonProcessingException {
+    public void sendBatch(List<DomainEvent> events) throws JsonProcessingException {
+        // TODO: restoration
         if (events != null && !events.isEmpty()) {
             final List<AwsMessage> messages = events.stream().map(AwsMessage::from).toList();
             final List<PublishBatchRequestEntry> entries = new ArrayList<>();
@@ -62,17 +57,5 @@ public class SnsMessageProducer implements DomainEventProducer {
                     .publishBatchRequestEntries(entries)
                     .build());
         }
-    }
-
-    @Override
-    public void send(DomainEvent event) throws Exception {
-        // TODO: delete
-        teamCreateProducer.push(event);
-    }
-
-    @Override
-    public void sendBatch(List<DomainEvent> events) throws Exception {
-        // TODO: delete
-        teamCreateProducer.pushAll(events);
     }
 }

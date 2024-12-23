@@ -1,8 +1,7 @@
-package com.example.spring.domain.event;
+package com.example.spring.domain.player;
 
-import com.example.spring.domain.player.PlayerCommandApiClient;
-import com.example.spring.domain.player.PlayerId;
-import com.example.spring.domain.player.PlayerQueryRepository;
+import com.example.spring.domain.event.DomainEvent;
+import com.example.spring.domain.event.DomainEventInbox;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
 

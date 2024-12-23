@@ -30,17 +30,17 @@ public class PlayerIntegrationTest extends BaseIntegrationTest {
     @Test
     @DisplayName("Player 생성 통합 테스트")
     void shouldCreatePlayerByApiSuccessfully() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.post("/api/players")
-                .content(objectMapper.writeValueAsString(PLAYER_REQUEST))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isOk());
-
-        // TODO:
-        MvcResult result = mvc.perform(MockMvcRequestBuilders.get("/api/players"))
+        Long id = getPlayerResponse(mvc.perform(MockMvcRequestBuilders.post("/api/players")
+                        .content(objectMapper.writeValueAsString(PLAYER_REQUEST))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
+                .andReturn()).data().id();
 
-        PlayerResponse data = getPlayerResponse(result).data();
+        PlayerResponse data = getPlayerResponse(mvc.perform(MockMvcRequestBuilders.get("/api/players/{id}", id))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn()).data();
+
         assertThat(data.id()).isNotNull();
         assertThat(data.grade()).isEqualTo(Grade.NOVICE);
         assertThat(data.teamId()).isEqualTo(TeamId.NoTeam.value());

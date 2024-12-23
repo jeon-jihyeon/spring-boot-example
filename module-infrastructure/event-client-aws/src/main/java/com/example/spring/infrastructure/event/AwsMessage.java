@@ -39,4 +39,8 @@ public record AwsMessage(
                 .messageAttributes(Map.of(typeKey, MessageAttributeValue.builder().stringValue(type).build()))
                 .build();
     }
+
+    public String getQueueName() {
+        return String.format("%s-%s", modelName, type.toLowerCase());
+    }
 }

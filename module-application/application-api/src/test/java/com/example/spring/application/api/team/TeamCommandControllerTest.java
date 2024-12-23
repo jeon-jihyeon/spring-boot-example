@@ -4,6 +4,7 @@ import com.example.spring.application.api.team.data.TeamCreateRequest;
 import com.example.spring.application.api.team.data.TeamResponse;
 import com.example.spring.application.common.ResponseModel;
 import com.example.spring.domain.team.Team;
+import com.example.spring.domain.team.TeamCommandService;
 import com.example.spring.domain.team.dto.TeamCreateCommand;
 import com.example.spring.domain.team.dto.TeamData;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,7 +30,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class TeamCommandControllerTest {
     @Mock
-    private TeamCreateService service;
+    private TeamCommandService service;
     @InjectMocks
     private TeamCommandController controller;
     private ObjectMapper objectMapper;
@@ -48,7 +49,7 @@ class TeamCommandControllerTest {
         final TeamCreateRequest request = new TeamCreateRequest("name", List.of(1L));
         final TeamData data = TeamData.from(Team.create(request.toCommand()));
 
-        when(service.invoke(any(TeamCreateCommand.class))).thenReturn(data);
+        when(service.write(any(TeamCreateCommand.class))).thenReturn(data);
 
         // then
         mvc.perform(MockMvcRequestBuilders.post("/api/teams")
