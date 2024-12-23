@@ -23,7 +23,7 @@ public class ApplicationEventListener {
     @Async
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void handle(DomainEvent event) throws Exception {
+    public void handle(DomainEvent event) {
         final DomainEvent completed = event.complete();
         producer.send(completed);
         outbox.save(completed);

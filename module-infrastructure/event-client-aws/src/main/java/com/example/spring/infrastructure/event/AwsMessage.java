@@ -16,6 +16,7 @@ import java.util.Map;
 
 public record AwsMessage(
         Long id,
+        String layer,
         String type,
         String modelName,
         Long modelId,
@@ -30,7 +31,7 @@ public record AwsMessage(
         LocalDateTime createdAt
 ) {
     public static AwsMessage from(DomainEvent e) {
-        return new AwsMessage(e.id(), e.type().name(), e.modelName(), e.modelId(), e.completed(), e.completedAt(), e.createdAt());
+        return new AwsMessage(e.id(), e.layer().name(), e.type().name(), e.modelName(), e.modelId(), e.completed(), e.completedAt(), e.createdAt());
     }
 
     public PublishBatchRequestEntry toEntry(ObjectMapper objectMapper, String typeKey) throws JsonProcessingException {
@@ -41,6 +42,7 @@ public record AwsMessage(
     }
 
     public String getQueueName() {
-        return String.format("%s-%s", modelName, type.toLowerCase());
+        // TODO: sns fan-out logic
+        return String.format("%s-%s-%s", modelName, type.toLowerCase(), layer.toLowerCase());
     }
 }

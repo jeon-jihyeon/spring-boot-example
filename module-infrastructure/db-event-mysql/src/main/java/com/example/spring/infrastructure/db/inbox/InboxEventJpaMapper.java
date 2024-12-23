@@ -8,6 +8,7 @@ public class InboxEventJpaMapper {
     public DomainEvent toDomain(InboxEventEntity entity) {
         return new DomainEvent(
                 entity.getId(),
+                entity.getLayer(),
                 entity.getType(),
                 entity.getModelName(),
                 entity.getModelId(),
@@ -20,6 +21,7 @@ public class InboxEventJpaMapper {
     public InboxEventEntity toEntity(DomainEvent event) {
         return new InboxEventEntity(
                 event.id(),
+                event.layer(),
                 event.type(),
                 event.modelName(),
                 event.modelId(),

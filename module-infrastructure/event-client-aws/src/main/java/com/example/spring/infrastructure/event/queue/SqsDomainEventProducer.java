@@ -6,6 +6,7 @@ import com.example.spring.infrastructure.event.AwsMessage;
 import io.awspring.cloud.sqs.operations.SqsTemplate;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.GenericMessage;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -18,12 +19,14 @@ public class SqsDomainEventProducer implements DomainEventProducer {
         this.sqsTemplate = sqsTemplate;
     }
 
+    @Async
     @Override
     public void send(DomainEvent event) {
         final AwsMessage message = AwsMessage.from(event);
         sqsTemplate.sendAsync(options -> options.queue(message.getQueueName()).payload(message));
     }
 
+    @Async
     @Override
     public void sendBatch(List<DomainEvent> events) {
         if (events.isEmpty()) return;

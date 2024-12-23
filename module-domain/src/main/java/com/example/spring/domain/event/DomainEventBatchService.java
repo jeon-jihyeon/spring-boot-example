@@ -17,7 +17,7 @@ public class DomainEventBatchService {
     }
 
     @Transactional
-    public void invoke(List<DomainEvent> events, LocalDateTime now) throws Exception {
+    public void invoke(List<DomainEvent> events, LocalDateTime now) {
         producer.sendBatch(events);
         outbox.publishAll(events.stream().map(DomainEvent::id).toList(), now);
     }

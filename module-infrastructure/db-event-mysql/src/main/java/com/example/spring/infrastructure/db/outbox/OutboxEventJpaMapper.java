@@ -8,6 +8,7 @@ public class OutboxEventJpaMapper {
     public DomainEvent toDomain(OutboxEventEntity entity) {
         return new DomainEvent(
                 entity.getId(),
+                entity.getLayer(),
                 entity.getType(),
                 entity.getModelName(),
                 entity.getModelId(),
@@ -20,6 +21,7 @@ public class OutboxEventJpaMapper {
     public OutboxEventEntity toEntity(DomainEvent event) {
         return new OutboxEventEntity(
                 event.id(),
+                event.layer(),
                 event.type(),
                 event.modelName(),
                 event.modelId(),

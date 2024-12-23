@@ -4,6 +4,9 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import org.hibernate.event.service.spi.EventListenerRegistry;
+import org.hibernate.event.spi.EventType;
+import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -29,7 +32,6 @@ import java.util.Properties;
         transactionManagerRef = "commandTransactionManager"
 )
 class HikariCommandConfig {
-
     @Primary
     @Bean(name = "commandHikariConfig")
     @ConfigurationProperties(prefix = "spring.datasource.command")
@@ -65,7 +67,13 @@ class HikariCommandConfig {
 
     @Primary
     @Bean(name = "commandEntityManager")
-    public EntityManager entityManager(@Qualifier("commandEntityManagerFactory") EntityManagerFactory factory) {
+    public EntityManager entityManager(
+            @Qualifier("commandEntityManagerFactory") EntityManagerFactory factory,
+            CommandPostInsertEventListener eventListener
+    ) {
+        SessionFactoryImpl sessionFactory = factory.unwrap(SessionFactoryImpl.class);
+        EventListenerRegistry registry = sessionFactory.getServiceRegistry().getService(EventListenerRegistry.class);
+        if (registry != null) registry.getEventListenerGroup(EventType.POST_INSERT).appendListener(eventListener);
         return factory.createEntityManager();
     }
 
