@@ -1,4 +1,4 @@
-package com.example.spring.infrastructure.db.outbox;
+package com.example.spring.infrastructure.db.event.inbox;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.zaxxer.hikari.HikariConfig;
@@ -21,27 +21,27 @@ import org.springframework.transaction.PlatformTransactionManager;
 import java.util.Properties;
 
 @Configuration
-@EntityScan(basePackages = "com.example.spring.infrastructure.db.outbox")
+@EntityScan(basePackages = "com.example.spring.infrastructure.db.event.inbox")
 @EnableJpaRepositories(
-        basePackages = "com.example.spring.infrastructure.db.outbox",
-        entityManagerFactoryRef = "outboxEntityManagerFactory",
-        transactionManagerRef = "outboxTransactionManager"
+        basePackages = "com.example.spring.infrastructure.db.event.inbox",
+        entityManagerFactoryRef = "inboxEntityManagerFactory",
+        transactionManagerRef = "inboxTransactionManager"
 )
-class OutboxDbConfig {
+class InboxDbConfig {
 
-    @Bean(name = "outboxHikariConfig")
-    @ConfigurationProperties(prefix = "spring.datasource.outbox")
+    @Bean(name = "inboxHikariConfig")
+    @ConfigurationProperties(prefix = "spring.datasource.inbox")
     public HikariConfig config() {
         return new HikariConfig();
     }
 
-    @Bean(name = "outboxDataSource")
-    public HikariDataSource dataSource(@Qualifier("outboxHikariConfig") HikariConfig config) {
+    @Bean(name = "inboxDataSource")
+    public HikariDataSource dataSource(@Qualifier("inboxHikariConfig") HikariConfig config) {
         return new HikariDataSource(config);
     }
 
-    @Bean(name = "outboxEntityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier("outboxDataSource") HikariDataSource dataSource) {
+    @Bean(name = "inboxEntityManagerFactory")
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier("inboxDataSource") HikariDataSource dataSource) {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(false);
         vendorAdapter.setShowSql(true);
@@ -51,8 +51,8 @@ class OutboxDbConfig {
 
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource);
-        em.setPackagesToScan("com.example.spring.infrastructure.db.outbox");
-        em.setPersistenceUnitName("outboxUnit");
+        em.setPackagesToScan("com.example.spring.infrastructure.db.inbox");
+        em.setPersistenceUnitName("inboxUnit");
         em.setPersistenceProvider(new HibernatePersistenceProvider());
         em.setJpaVendorAdapter(vendorAdapter);
         em.setJpaProperties(properties);
@@ -60,18 +60,18 @@ class OutboxDbConfig {
     }
 
     @Primary
-    @Bean(name = "outboxEntityManager")
-    public EntityManager entityManager(@Qualifier("outboxEntityManagerFactory") EntityManagerFactory factory) {
+    @Bean(name = "inboxEntityManager")
+    public EntityManager entityManager(@Qualifier("inboxEntityManagerFactory") EntityManagerFactory factory) {
         return factory.createEntityManager();
     }
 
-    @Bean(name = "outboxTransactionManager")
-    public PlatformTransactionManager transactionManager(@Qualifier("outboxEntityManagerFactory") EntityManagerFactory factory) {
+    @Bean(name = "inboxTransactionManager")
+    public PlatformTransactionManager transactionManager(@Qualifier("inboxEntityManagerFactory") EntityManagerFactory factory) {
         return new JpaTransactionManager(factory);
     }
 
-    @Bean(name = "outboxJPAQueryFactory")
-    public JPAQueryFactory jpaQueryFactory(@Qualifier("outboxEntityManager") EntityManager entityManager) {
+    @Bean(name = "inboxJPAQueryFactory")
+    public JPAQueryFactory jpaQueryFactory(@Qualifier("inboxEntityManager") EntityManager entityManager) {
         return new JPAQueryFactory(entityManager);
     }
 }

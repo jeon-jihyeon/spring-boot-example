@@ -14,7 +14,7 @@ import java.util.stream.LongStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class IdGeneratorTest {
+class IdGeneratorTest extends BaseUnitTest {
 
     private static final int MILLION = 1000000;
     private static final int HUNDRED = 100;

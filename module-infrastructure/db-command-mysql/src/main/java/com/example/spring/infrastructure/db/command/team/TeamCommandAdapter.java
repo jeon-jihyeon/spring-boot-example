@@ -9,21 +9,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class TeamCommandAdapter implements TeamCommandRepository {
     private final TeamJpaRepository repository;
-    private final TeamCommandMapper mapper;
 
-    public TeamCommandAdapter(TeamJpaRepository repository, TeamCommandMapper mapper) {
+    public TeamCommandAdapter(TeamJpaRepository repository) {
         this.repository = repository;
-        this.mapper = mapper;
     }
 
     @Override
     public TeamData save(TeamData team) {
-        return mapper.toDomain(repository.save(mapper.toEntity(team)));
+        return repository.save(TeamEntity.from(team)).toData();
     }
 
     @Override
     public TeamData findById(TeamId id) {
-        return mapper.toDomain(repository.findById(id.value()).orElseThrow(EntityNotFoundException::new));
+        return repository.findById(id.value()).orElseThrow(EntityNotFoundException::new).toData();
     }
 
     @Override

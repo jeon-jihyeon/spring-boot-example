@@ -13,30 +13,28 @@ import java.util.List;
 
 import static com.example.spring.infrastructure.db.command.player.QPlayerEntity.playerEntity;
 
+
 @Repository
 public class PlayerCommandAdapter implements PlayerCommandRepository {
     private final PlayerJpaRepository repository;
-    private final PlayerCommandMapper mapper;
     private final JPAQueryFactory jpaQueryFactory;
 
     public PlayerCommandAdapter(
             PlayerJpaRepository repository,
-            PlayerCommandMapper mapper,
             @Qualifier("commandQueryFactory") JPAQueryFactory commandQueryFactory
     ) {
         this.repository = repository;
-        this.mapper = mapper;
         this.jpaQueryFactory = commandQueryFactory;
     }
 
     @Override
     public PlayerData save(PlayerData player) {
-        return mapper.toDomain(repository.save(mapper.toEntity(player)));
+        return repository.save(PlayerEntity.from(player)).toData();
     }
 
     @Override
     public PlayerData findById(PlayerId id) {
-        return mapper.toDomain(repository.findById(id.value()).orElseThrow(EntityNotFoundException::new));
+        return repository.findById(id.value()).orElseThrow(EntityNotFoundException::new).toData();
     }
 
     @Override

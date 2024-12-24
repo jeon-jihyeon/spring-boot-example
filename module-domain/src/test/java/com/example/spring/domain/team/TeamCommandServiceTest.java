@@ -1,5 +1,6 @@
 package com.example.spring.domain.team;
 
+import com.example.spring.domain.BaseUnitTest;
 import com.example.spring.domain.event.DomainEventOutbox;
 import com.example.spring.domain.player.PlayerId;
 import com.example.spring.domain.team.dto.TeamCreateCommand;
@@ -19,7 +20,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class TeamCommandServiceTest {
+class TeamCommandServiceTest extends BaseUnitTest {
     @Mock
     private TeamCommandRepository commandRepository;
     @Mock

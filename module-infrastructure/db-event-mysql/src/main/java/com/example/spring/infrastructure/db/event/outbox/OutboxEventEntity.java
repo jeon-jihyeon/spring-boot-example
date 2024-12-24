@@ -1,8 +1,8 @@
-package com.example.spring.infrastructure.db.outbox;
+package com.example.spring.infrastructure.db.event.outbox;
 
 import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.Layer;
-import com.example.spring.infrastructure.db.BaseEventEntity;
+import com.example.spring.infrastructure.db.event.BaseEventEntity;
 import jakarta.persistence.Entity;
 
 import java.time.LocalDateTime;
@@ -13,7 +13,7 @@ public class OutboxEventEntity extends BaseEventEntity {
     public OutboxEventEntity() {
     }
 
-    public OutboxEventEntity(
+    private OutboxEventEntity(
             Long id,
             Layer layer,
             DomainEvent.Type type,
@@ -24,5 +24,18 @@ public class OutboxEventEntity extends BaseEventEntity {
             LocalDateTime createdAt
     ) {
         super(id, layer, type, modelName, modelId, completed, completedAt, createdAt);
+    }
+
+    public static OutboxEventEntity from(DomainEvent event) {
+        return new OutboxEventEntity(
+                event.id(),
+                event.layer(),
+                event.type(),
+                event.modelName(),
+                event.modelId(),
+                event.completed(),
+                event.completedAt(),
+                event.createdAt()
+        );
     }
 }

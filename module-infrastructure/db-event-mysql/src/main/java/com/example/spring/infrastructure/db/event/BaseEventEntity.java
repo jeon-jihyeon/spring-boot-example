@@ -1,4 +1,4 @@
-package com.example.spring.infrastructure.db;
+package com.example.spring.infrastructure.db.event;
 
 import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.Layer;
@@ -55,6 +55,10 @@ public class BaseEventEntity {
     }
 
     public BaseEventEntity() {
+    }
+
+    public DomainEvent toModel() {
+        return new DomainEvent(id, layer, type, modelName, modelId, completed, completedAt, createdAt);
     }
 
     public Long getId() {

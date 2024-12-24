@@ -7,8 +7,8 @@ import com.example.spring.domain.player.PlayerId;
 import com.example.spring.domain.player.dto.PlayerCreateCommand;
 import com.example.spring.domain.player.dto.PlayerData;
 import com.example.spring.domain.team.TeamId;
-import com.example.spring.infrastructure.db.BaseContextTest;
 import com.example.spring.infrastructure.db.EntityNotFoundException;
+import com.example.spring.infrastructure.db.command.BaseContextTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

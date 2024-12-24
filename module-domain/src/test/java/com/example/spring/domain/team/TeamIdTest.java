@@ -1,11 +1,12 @@
 package com.example.spring.domain.team;
 
+import com.example.spring.domain.BaseUnitTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class TeamIdTest {
+class TeamIdTest extends BaseUnitTest {
     @Test
     @DisplayName("TeamId 객체 초기화 테스트")
     void shouldGenerateValueForNewId() {

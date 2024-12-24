@@ -1,6 +1,7 @@
 package com.example.spring.infrastructure.db.command.player;
 
 import com.example.spring.domain.player.Grade;
+import com.example.spring.domain.player.dto.PlayerData;
 import com.example.spring.infrastructure.db.command.BaseCommandEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,6 +35,20 @@ public class PlayerEntity extends BaseCommandEntity {
         this.firstName = firstName;
         this.lastName = lastName;
         this.teamId = teamId;
+    }
+
+    public static PlayerEntity from(PlayerData data) {
+        return new PlayerEntity(
+                data.id().value(),
+                data.grade(),
+                data.fullName().firstName(),
+                data.fullName().lastName(),
+                data.teamId().value()
+        );
+    }
+
+    public PlayerData toData() {
+        return PlayerData.of(id, grade, firstName, lastName, teamId);
     }
 
     public Grade getGrade() {

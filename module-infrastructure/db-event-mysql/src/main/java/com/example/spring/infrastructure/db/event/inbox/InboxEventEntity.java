@@ -1,8 +1,8 @@
-package com.example.spring.infrastructure.db.inbox;
+package com.example.spring.infrastructure.db.event.inbox;
 
 import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.Layer;
-import com.example.spring.infrastructure.db.BaseEventEntity;
+import com.example.spring.infrastructure.db.event.BaseEventEntity;
 import jakarta.persistence.Entity;
 
 import java.time.LocalDateTime;
@@ -12,7 +12,7 @@ public class InboxEventEntity extends BaseEventEntity {
     public InboxEventEntity() {
     }
 
-    public InboxEventEntity(
+    private InboxEventEntity(
             Long id,
             Layer layer,
             DomainEvent.Type type,
@@ -23,5 +23,18 @@ public class InboxEventEntity extends BaseEventEntity {
             LocalDateTime createdAt
     ) {
         super(id, layer, type, modelName, modelId, completed, completedAt, createdAt);
+    }
+
+    public static InboxEventEntity from(DomainEvent event) {
+        return new InboxEventEntity(
+                event.id(),
+                event.layer(),
+                event.type(),
+                event.modelName(),
+                event.modelId(),
+                event.completed(),
+                event.completedAt(),
+                event.createdAt()
+        );
     }
 }

@@ -1,4 +1,4 @@
-package com.example.spring.infrastructure.db.outbox;
+package com.example.spring.infrastructure.db.event.outbox;
 
 import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.DomainEventOutbox;
@@ -10,28 +10,26 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.example.spring.infrastructure.db.outbox.QOutboxEventEntity.outboxEventEntity;
+import static com.example.spring.infrastructure.db.event.outbox.QOutboxEventEntity.outboxEventEntity;
+
 
 @Repository
 public class OutboxEventAdapter implements DomainEventOutbox {
     private final OutboxEventJpaRepository repository;
-    private final OutboxEventJpaMapper mapper;
     private final JPAQueryFactory jpaQueryFactory;
 
     public OutboxEventAdapter(
             OutboxEventJpaRepository repository,
-            OutboxEventJpaMapper mapper,
             @Qualifier("outboxJPAQueryFactory") JPAQueryFactory jpaQueryFactory
     ) {
         this.repository = repository;
-        this.mapper = mapper;
         this.jpaQueryFactory = jpaQueryFactory;
     }
 
     @Override
     @Transactional
     public void save(DomainEvent event) {
-        repository.save(mapper.toEntity(event));
+        repository.save(OutboxEventEntity.from(event));
     }
 
     @Override

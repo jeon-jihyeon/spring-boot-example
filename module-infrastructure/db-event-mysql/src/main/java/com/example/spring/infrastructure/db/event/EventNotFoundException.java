@@ -1,4 +1,4 @@
-package com.example.spring.infrastructure.db;
+package com.example.spring.infrastructure.db.event;
 
 import com.example.spring.domain.BaseException;
 import com.example.spring.domain.ErrorCode;

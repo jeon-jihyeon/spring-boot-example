@@ -1,8 +1,8 @@
 package com.example.spring.infrastructure.db.command.team;
 
 import com.example.spring.domain.team.dto.TeamData;
-import com.example.spring.infrastructure.db.BaseContextTest;
 import com.example.spring.infrastructure.db.EntityNotFoundException;
+import com.example.spring.infrastructure.db.command.BaseContextTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -30,6 +30,7 @@ class TeamCommandAdapterTest extends BaseContextTest {
         assertThat(found.id().value()).isEqualTo(22L);
         assertThat(found.name().value()).isEqualTo("name");
         assertThat(found.startsAt()).isEqualTo(now);
+        assertThat(found.playerIds().get(0).value()).isEqualTo(1L);
 
         adapter.deleteById(saved.id());
         assertThrows(EntityNotFoundException.class, () -> adapter.findById(saved.id()));

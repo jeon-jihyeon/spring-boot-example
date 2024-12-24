@@ -1,8 +1,7 @@
 package com.example.spring.application.batch;
 
 import com.example.spring.domain.event.DomainEventBatchService;
-import com.example.spring.infrastructure.db.outbox.OutboxEventEntity;
-import com.example.spring.infrastructure.db.outbox.OutboxEventJpaMapper;
+import com.example.spring.infrastructure.db.event.outbox.OutboxEventEntity;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
@@ -41,7 +40,6 @@ public class OutboxBatchConfig {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final BatchThreadPoolProperties properties;
     private final DomainEventBatchService service;
-    private final OutboxEventJpaMapper mapper;
 
     @Value("${spring.batch.job.name}")
     private String jobName;
@@ -49,13 +47,9 @@ public class OutboxBatchConfig {
     @Value("${spring.batch.chunk-size}")
     private Integer chunkSize;
 
-    public OutboxBatchConfig(
-            BatchThreadPoolProperties properties,
-            DomainEventBatchService service,
-            OutboxEventJpaMapper mapper) {
+    public OutboxBatchConfig(BatchThreadPoolProperties properties, DomainEventBatchService service) {
         this.properties = properties;
         this.service = service;
-        this.mapper = mapper;
     }
 
     @Bean(name = "metaHikariConfig")
@@ -126,7 +120,7 @@ public class OutboxBatchConfig {
         return chunk -> {
             final List<OutboxEventEntity> entities = new ArrayList<>();
             for (OutboxEventEntity e : chunk) entities.add(e);
-            service.invoke(entities.stream().map(e -> mapper.toDomain(e).complete(now)).toList(), now);
+            service.invoke(entities.stream().map(e -> e.toModel().complete(now)).toList(), now);
         };
     }
 

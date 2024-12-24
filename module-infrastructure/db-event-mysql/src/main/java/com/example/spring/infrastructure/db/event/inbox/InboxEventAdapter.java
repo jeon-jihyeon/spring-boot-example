@@ -1,4 +1,4 @@
-package com.example.spring.infrastructure.db.inbox;
+package com.example.spring.infrastructure.db.event.inbox;
 
 import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.DomainEventInbox;
@@ -8,20 +8,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public class InboxEventAdapter implements DomainEventInbox {
     private final InboxEventJpaRepository repository;
-    private final InboxEventJpaMapper mapper;
 
-    public InboxEventAdapter(
-            InboxEventJpaRepository repository,
-            InboxEventJpaMapper mapper
-    ) {
+    public InboxEventAdapter(InboxEventJpaRepository repository) {
         this.repository = repository;
-        this.mapper = mapper;
     }
 
     @Override
     @Transactional
     public void save(DomainEvent event) {
-        repository.save(mapper.toEntity(event));
+        repository.save(InboxEventEntity.from(event));
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.example.spring.domain.player;
 
+import com.example.spring.domain.BaseUnitTest;
 import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.DomainEventInbox;
 import com.example.spring.domain.event.Layer;
@@ -13,7 +14,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class PlayerQueryEventHandlerTest {
+class PlayerQueryEventHandlerTest extends BaseUnitTest {
     @Mock
     private DomainEventInbox inbox;
     @Mock

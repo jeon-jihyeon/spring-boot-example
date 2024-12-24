@@ -33,7 +33,7 @@ subprojects {
     tasks.register('unitTest', Test) {
         group = "verification"
         useJUnitPlatform {
-            excludeTags('context')
+            includeTags('unit')
         }
     }
 

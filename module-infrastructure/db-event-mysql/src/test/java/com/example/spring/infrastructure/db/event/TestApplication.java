@@ -1,4 +1,4 @@
-package com.example.spring.infrastructure.db;
+package com.example.spring.infrastructure.db.event;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,8 +6,8 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 @ConfigurationPropertiesScan
 @SpringBootApplication
-class CommandDbTestApplication {
+class TestApplication {
     public static void main(String[] args) {
-        SpringApplication.run(CommandDbTestApplication.class, args);
+        SpringApplication.run(TestApplication.class, args);
     }
 }

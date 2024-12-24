@@ -1,5 +1,6 @@
 package com.example.spring.domain.player;
 
+import com.example.spring.domain.BaseUnitTest;
 import com.example.spring.domain.event.DomainEventOutbox;
 import com.example.spring.domain.player.dto.PlayerCreateCommand;
 import com.example.spring.domain.player.dto.PlayerData;
@@ -16,7 +17,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class PlayerCommandServiceTest {
+class PlayerCommandServiceTest extends BaseUnitTest {
     @Mock
     private PlayerCommandRepository commandRepository;
     @Mock

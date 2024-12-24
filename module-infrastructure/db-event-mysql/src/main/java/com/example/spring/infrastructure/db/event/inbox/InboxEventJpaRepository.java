@@ -1,4 +1,4 @@
-package com.example.spring.infrastructure.db.inbox;
+package com.example.spring.infrastructure.db.event.inbox;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,4 +1,4 @@
-package com.example.spring.infrastructure.db;
+package com.example.spring.infrastructure.db.event;
 
 import org.junit.jupiter.api.Tag;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -7,7 +7,7 @@ import org.springframework.test.context.TestConstructor;
 
 @Tag("context")
 @SpringBootTest
-@ActiveProfiles("test")
+@ActiveProfiles("local")
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-public abstract class BaseCommandDbTest {
+public abstract class BaseContextTest {
 }

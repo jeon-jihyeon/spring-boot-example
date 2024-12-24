@@ -6,7 +6,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestConstructor;
 
 @DataMongoTest
-@ActiveProfiles("test")
+@ActiveProfiles("local")
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 public abstract class BaseQueryDbTest {
 }
