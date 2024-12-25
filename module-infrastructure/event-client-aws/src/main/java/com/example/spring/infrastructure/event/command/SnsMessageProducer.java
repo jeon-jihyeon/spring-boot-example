@@ -30,8 +30,7 @@ public class SnsMessageProducer {
     }
 
     private Map<String, MessageAttributeValue> getMessageAttributes(String type) {
-        return Map.of(
-                properties.typeKey(), MessageAttributeValue.builder().stringValue(type).dataType("String").build(),
+        return Map.of(properties.typeKey(), MessageAttributeValue.builder().stringValue(type).dataType("String").build(),
                 "contentType", MessageAttributeValue.builder().stringValue("application/json").dataType("String").build());
     }
 

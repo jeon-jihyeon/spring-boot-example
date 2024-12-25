@@ -22,7 +22,6 @@ public class OutboxBatchController {
     @GetMapping("/batch/outbox")
     public void run() throws Exception {
         jobLauncher.run(job, new JobParametersBuilder()
-                .addLocalDateTime("now", LocalDateTime.now())
-                .toJobParameters());
+                .addLocalDateTime("now", LocalDateTime.now()).toJobParameters());
     }
 }
