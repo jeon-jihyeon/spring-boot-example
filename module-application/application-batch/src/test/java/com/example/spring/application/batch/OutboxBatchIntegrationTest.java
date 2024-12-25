@@ -5,17 +5,16 @@ import com.example.spring.domain.event.DomainEventProducer;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobExecution;
+import org.springframework.batch.core.*;
 import org.springframework.batch.test.JobLauncherTestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class OutboxBatchIntegrationTest extends BaseContextTest {
     private final JobLauncherTestUtils jobLauncherTestUtils;
@@ -31,14 +30,17 @@ class OutboxBatchIntegrationTest extends BaseContextTest {
     @Test
     public void testJob(@Autowired Job job) throws Exception {
         jobLauncherTestUtils.setJob(job);
-        final String insert = "INSERT INTO outbox_events VALUES (?, 'DOMAIN', 'CREATE', 'model', ?, FALSE, NULL, now(), now())";
+        final LocalDateTime now = LocalDateTime.now();
+        final String insert = "INSERT INTO outbox_events VALUES (?, 'DOMAIN', 'CREATE', 'model', ?, ?, NULL, now(), now())";
         final String select = "SELECT COUNT(*) FROM outbox_events WHERE completed=FALSE";
+        final JobParameters params = new JobParametersBuilder().addLocalDateTime("now", now).toJobParameters();
 
-        for (int i = 1; i <= 10; i++) jdbcTemplate.update(insert, i, i);
-        // fixme
+        for (int i = 1; i < 11; i++) jdbcTemplate.update(insert, i, i, false);
+        for (int i = 11; i < 21; i++) jdbcTemplate.update(insert, i, i, true);
         assertThat(jdbcTemplate.queryForObject(select, Integer.class)).isEqualTo(10);
-        JobExecution jobExecution = jobLauncherTestUtils.launchJob();
-        assertEquals("COMPLETED", jobExecution.getExitStatus().getExitCode());
+
+        JobExecution jobExecution = jobLauncherTestUtils.launchJob(params);
+        assertThat(jobExecution.getStatus()).isEqualTo(BatchStatus.COMPLETED);
         assertThat(jdbcTemplate.queryForObject(select, Integer.class)).isEqualTo(0);
     }
 

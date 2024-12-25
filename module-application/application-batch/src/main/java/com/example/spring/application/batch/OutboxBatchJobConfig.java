@@ -17,6 +17,7 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.Order;
 import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
 import org.springframework.batch.item.database.builder.JdbcPagingItemReaderBuilder;
+import org.springframework.batch.item.support.CompositeItemWriter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +26,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -52,8 +54,7 @@ public class OutboxBatchJobConfig {
     public Step outboxBatchStep(
             JobRepository jobRepository,
             ItemProcessor<DomainEvent, DomainEvent> itemProcessor,
-            ItemWriter<DomainEvent> itemWriter,
-            ItemWriter<DomainEvent> messageProducer,
+            CompositeItemWriter<DomainEvent> compositeItemWriter,
             ItemReader<DomainEvent> itemReader,
             @Qualifier("outboxTransactionManager") PlatformTransactionManager transactionManager
     ) {
@@ -61,8 +62,7 @@ public class OutboxBatchJobConfig {
                 .<DomainEvent, DomainEvent>chunk(chunkSize, transactionManager)
                 .reader(itemReader)
                 .processor(itemProcessor)
-                .writer(itemWriter)
-                .writer(messageProducer)
+                .writer(compositeItemWriter)
                 .build();
     }
 
@@ -88,11 +88,17 @@ public class OutboxBatchJobConfig {
     }
 
     @Bean
+    public CompositeItemWriter<DomainEvent> compositeItemWriter(ItemWriter<DomainEvent> itemWriter, ItemWriter<DomainEvent> messageProducer) {
+        return new CompositeItemWriter<>(Arrays.asList(itemWriter, messageProducer));
+    }
+
+    @Bean
     public ItemWriter<DomainEvent> itemWriter(@Qualifier("outboxDataSource") HikariDataSource dataSource) {
         return new JdbcBatchItemWriterBuilder<DomainEvent>()
                 .dataSource(dataSource)
-                .sql("UPDATE outbox_events SET completed = :completed, completed_at = :completedAt, updated_at = :completedAt WHERE id = :id;")
+                .sql("UPDATE outbox_events SET completed=:completed, completed_at=:completedAt, updated_at=:completedAt WHERE id=:id;")
                 .beanMapped()
+                .assertUpdates(true)
                 .build();
     }
 
