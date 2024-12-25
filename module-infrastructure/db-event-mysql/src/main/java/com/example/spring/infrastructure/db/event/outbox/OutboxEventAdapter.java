@@ -3,7 +3,6 @@ package com.example.spring.infrastructure.db.event.outbox;
 import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.DomainEventOutbox;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,12 +17,9 @@ public class OutboxEventAdapter implements DomainEventOutbox {
     private final OutboxEventJpaRepository repository;
     private final JPAQueryFactory jpaQueryFactory;
 
-    public OutboxEventAdapter(
-            OutboxEventJpaRepository repository,
-            @Qualifier("outboxJPAQueryFactory") JPAQueryFactory jpaQueryFactory
-    ) {
+    public OutboxEventAdapter(OutboxEventJpaRepository repository, JPAQueryFactory outboxJPAQueryFactory) {
         this.repository = repository;
-        this.jpaQueryFactory = jpaQueryFactory;
+        this.jpaQueryFactory = outboxJPAQueryFactory;
     }
 
     @Override

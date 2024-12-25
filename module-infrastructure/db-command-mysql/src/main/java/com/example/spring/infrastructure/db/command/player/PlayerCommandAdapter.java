@@ -6,7 +6,6 @@ import com.example.spring.domain.player.dto.PlayerData;
 import com.example.spring.domain.team.TeamId;
 import com.example.spring.infrastructure.db.EntityNotFoundException;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,10 +18,7 @@ public class PlayerCommandAdapter implements PlayerCommandRepository {
     private final PlayerJpaRepository repository;
     private final JPAQueryFactory jpaQueryFactory;
 
-    public PlayerCommandAdapter(
-            PlayerJpaRepository repository,
-            @Qualifier("commandQueryFactory") JPAQueryFactory commandQueryFactory
-    ) {
+    public PlayerCommandAdapter(PlayerJpaRepository repository, JPAQueryFactory commandQueryFactory) {
         this.repository = repository;
         this.jpaQueryFactory = commandQueryFactory;
     }

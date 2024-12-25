@@ -11,13 +11,13 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
@@ -29,19 +29,19 @@ import java.util.Properties;
 )
 class InboxDbConfig {
 
-    @Bean(name = "inboxHikariConfig")
+    @Bean
     @ConfigurationProperties(prefix = "spring.datasource.inbox")
-    public HikariConfig config() {
+    public HikariConfig inboxConfig() {
         return new HikariConfig();
     }
 
-    @Bean(name = "inboxDataSource")
-    public HikariDataSource dataSource(@Qualifier("inboxHikariConfig") HikariConfig config) {
+    @Bean
+    public DataSource inboxDataSource(@Qualifier("inboxConfig") HikariConfig config) {
         return new HikariDataSource(config);
     }
 
-    @Bean(name = "inboxEntityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier("inboxDataSource") HikariDataSource dataSource) {
+    @Bean
+    public LocalContainerEntityManagerFactoryBean inboxEntityManagerFactory(@Qualifier("inboxDataSource") DataSource dataSource) {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(false);
         vendorAdapter.setShowSql(true);
@@ -51,7 +51,7 @@ class InboxDbConfig {
 
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource);
-        em.setPackagesToScan("com.example.spring.infrastructure.db.inbox");
+        em.setPackagesToScan("com.example.spring.infrastructure.db.event.inbox");
         em.setPersistenceUnitName("inboxUnit");
         em.setPersistenceProvider(new HibernatePersistenceProvider());
         em.setJpaVendorAdapter(vendorAdapter);
@@ -59,19 +59,18 @@ class InboxDbConfig {
         return em;
     }
 
-    @Primary
-    @Bean(name = "inboxEntityManager")
-    public EntityManager entityManager(@Qualifier("inboxEntityManagerFactory") EntityManagerFactory factory) {
+    @Bean
+    public EntityManager inboxEntityManager(@Qualifier("inboxEntityManagerFactory") EntityManagerFactory factory) {
         return factory.createEntityManager();
     }
 
-    @Bean(name = "inboxTransactionManager")
-    public PlatformTransactionManager transactionManager(@Qualifier("inboxEntityManagerFactory") EntityManagerFactory factory) {
+    @Bean
+    public PlatformTransactionManager inboxTransactionManager(@Qualifier("inboxEntityManagerFactory") EntityManagerFactory factory) {
         return new JpaTransactionManager(factory);
     }
 
-    @Bean(name = "inboxJPAQueryFactory")
-    public JPAQueryFactory jpaQueryFactory(@Qualifier("inboxEntityManager") EntityManager entityManager) {
-        return new JPAQueryFactory(entityManager);
+    @Bean
+    public JPAQueryFactory inboxJPAQueryFactory(@Qualifier("inboxEntityManager") EntityManager em) {
+        return new JPAQueryFactory(em);
     }
 }

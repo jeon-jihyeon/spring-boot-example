@@ -5,9 +5,9 @@ import com.example.spring.domain.event.DomainEventOutbox;
 import com.example.spring.domain.event.Layer;
 import com.example.spring.domain.team.dto.TeamCreateCommand;
 import com.example.spring.domain.team.dto.TeamData;
-import jakarta.transaction.Transactional;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TeamCommandService {
@@ -29,7 +29,7 @@ public class TeamCommandService {
         return repository.findById(id);
     }
 
-    @Transactional
+    @Transactional(transactionManager = "commandTransactionManager")
     public TeamData create(TeamCreateCommand command) {
         final TeamData team = repository.save(TeamData.from(Team.create(command)));
         final DomainEvent event = DomainEvent.createType(Layer.DOMAIN, Team.class.getSimpleName(), team.id().value());

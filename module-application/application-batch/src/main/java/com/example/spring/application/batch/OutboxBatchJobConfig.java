@@ -2,7 +2,6 @@ package com.example.spring.application.batch;
 
 import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.DomainEventProducer;
-import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
@@ -14,40 +13,33 @@ import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.database.Order;
 import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
-import org.springframework.batch.item.database.builder.JdbcPagingItemReaderBuilder;
 import org.springframework.batch.item.support.CompositeItemWriter;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import javax.sql.DataSource;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 @Configuration
 public class OutboxBatchJobConfig {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final DomainEventProducer producer;
+    private final OutboxBatchJobProperties properties;
 
-    @Value("${spring.batch.job.name}")
-    private String jobName;
-
-    @Value("${spring.batch.chunk-size}")
-    private Integer chunkSize;
-
-    public OutboxBatchJobConfig(DomainEventProducer producer) {
+    public OutboxBatchJobConfig(DomainEventProducer producer, OutboxBatchJobProperties properties) {
         this.producer = producer;
+        this.properties = properties;
     }
 
     @Bean
     public Job outboxBatchJob(JobRepository jobRepository, Step outboxBatchStep) {
-        return new JobBuilder(jobName, jobRepository).start(outboxBatchStep).build();
+        return new JobBuilder(properties.name(), jobRepository).start(outboxBatchStep).build();
     }
 
     @Bean
@@ -56,28 +48,13 @@ public class OutboxBatchJobConfig {
             ItemProcessor<DomainEvent, DomainEvent> itemProcessor,
             CompositeItemWriter<DomainEvent> compositeItemWriter,
             ItemReader<DomainEvent> itemReader,
-            @Qualifier("outboxTransactionManager") PlatformTransactionManager transactionManager
+            PlatformTransactionManager outboxTransactionManager
     ) {
         return new StepBuilder("step", jobRepository)
-                .<DomainEvent, DomainEvent>chunk(chunkSize, transactionManager)
+                .<DomainEvent, DomainEvent>chunk(properties.chunkSize(), outboxTransactionManager)
                 .reader(itemReader)
                 .processor(itemProcessor)
                 .writer(compositeItemWriter)
-                .build();
-    }
-
-    @Bean
-    public ItemReader<DomainEvent> itemReader(@Qualifier("outboxDataSource") HikariDataSource dataSource) {
-        return new JdbcPagingItemReaderBuilder<DomainEvent>()
-                .name("jdbcPagingItemReader")
-                .fetchSize(chunkSize)
-                .dataSource(dataSource)
-                .selectClause("*")
-                .fromClause("from outbox_events")
-                .whereClause("where completed = :completed")
-                .rowMapper(new DomainEventRowMapper())
-                .parameterValues(Map.of("completed", false))
-                .sortKeys(Map.of("created_at", Order.DESCENDING))
                 .build();
     }
 
@@ -93,9 +70,9 @@ public class OutboxBatchJobConfig {
     }
 
     @Bean
-    public ItemWriter<DomainEvent> itemWriter(@Qualifier("outboxDataSource") HikariDataSource dataSource) {
+    public ItemWriter<DomainEvent> itemWriter(DataSource outboxDataSource) {
         return new JdbcBatchItemWriterBuilder<DomainEvent>()
-                .dataSource(dataSource)
+                .dataSource(outboxDataSource)
                 .sql("UPDATE outbox_events SET completed=:completed, completed_at=:completedAt, updated_at=:completedAt WHERE id=:id;")
                 .beanMapped()
                 .assertUpdates(true)

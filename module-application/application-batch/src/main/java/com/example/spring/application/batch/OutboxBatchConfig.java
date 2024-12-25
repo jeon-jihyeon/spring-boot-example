@@ -15,19 +15,19 @@ import javax.sql.DataSource;
 @Configuration
 @EnableBatchProcessing(dataSourceRef = "metaDataSource", transactionManagerRef = "metaTransactionManager")
 public class OutboxBatchConfig {
-    @Bean(name = "metaHikariConfig")
+    @Bean
     @ConfigurationProperties(prefix = "spring.datasource.meta")
-    public HikariConfig config() {
+    public HikariConfig metaConfig() {
         return new HikariConfig();
     }
 
-    @Bean(name = "metaDataSource")
-    public HikariDataSource dataSource(@Qualifier("metaHikariConfig") HikariConfig config) {
+    @Bean
+    public DataSource metaDataSource(@Qualifier("metaConfig") HikariConfig config) {
         return new HikariDataSource(config);
     }
 
-    @Bean(name = "metaTransactionManager")
-    public PlatformTransactionManager transactionManager(@Qualifier("metaDataSource") DataSource dataSource) {
+    @Bean
+    public PlatformTransactionManager metaTransactionManager(@Qualifier("metaDataSource") DataSource dataSource) {
         return new JdbcTransactionManager(dataSource);
     }
 }

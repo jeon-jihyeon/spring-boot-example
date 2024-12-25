@@ -2,8 +2,8 @@ package com.example.spring.domain.team;
 
 import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.DomainEventInbox;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class TeamQueryEventHandler {
@@ -17,7 +17,7 @@ public class TeamQueryEventHandler {
         this.client = client;
     }
 
-    @Transactional
+    @Transactional(transactionManager = "inboxTransactionManager")
     public void handle(DomainEvent event) {
         if (inbox.exists(event.id())) return;
         inbox.save(event);

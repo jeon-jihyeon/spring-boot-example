@@ -17,24 +17,24 @@ import javax.sql.DataSource;
 
 @Configuration
 public class OutboxBatchTestConfig {
-    @Bean(name = "outboxHikariConfig")
+    @Bean
     @ConfigurationProperties("spring.datasource.outbox")
-    public HikariConfig config() {
+    public HikariConfig outboxHikariConfig() {
         return new HikariConfig();
     }
 
-    @Bean(name = "outboxDataSource")
-    public HikariDataSource dataSource(@Qualifier("outboxHikariConfig") HikariConfig config) {
+    @Bean
+    public DataSource outboxDataSource(@Qualifier("outboxHikariConfig") HikariConfig config) {
         return new HikariDataSource(config);
     }
 
-    @Bean(name = "outboxTransactionManager")
-    public PlatformTransactionManager transactionManager(@Qualifier("outboxDataSource") DataSource dataSource) {
+    @Bean
+    public PlatformTransactionManager outboxTransactionManager(@Qualifier("outboxDataSource") DataSource dataSource) {
         return new JdbcTransactionManager(dataSource);
     }
 
     @Bean
-    public JdbcTemplate jdbcTemplate(HikariDataSource outboxDataSource) {
+    public JdbcTemplate jdbcTemplate(DataSource outboxDataSource) {
         return new JdbcTemplate(outboxDataSource);
     }
 

@@ -13,7 +13,6 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -21,6 +20,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
@@ -31,23 +31,20 @@ import java.util.Properties;
         entityManagerFactoryRef = "commandEntityManagerFactory",
         transactionManagerRef = "commandTransactionManager"
 )
-class HikariCommandConfig {
-    @Primary
-    @Bean(name = "commandHikariConfig")
+class CommandDbConfig {
+    @Bean
     @ConfigurationProperties(prefix = "spring.datasource.command")
-    public HikariConfig config() {
+    public HikariConfig commandConfig() {
         return new HikariConfig();
     }
 
-    @Primary
-    @Bean(name = "commandDataSource")
-    public HikariDataSource dataSource(@Qualifier("commandHikariConfig") HikariConfig config) {
+    @Bean
+    public DataSource commandDataSource(@Qualifier("commandConfig") HikariConfig config) {
         return new HikariDataSource(config);
     }
 
-    @Primary
-    @Bean(name = "commandEntityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier("commandDataSource") HikariDataSource dataSource) {
+    @Bean
+    public LocalContainerEntityManagerFactoryBean commandEntityManagerFactory(@Qualifier("commandDataSource") DataSource dataSource) {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(false);
         vendorAdapter.setShowSql(true);
@@ -65,9 +62,8 @@ class HikariCommandConfig {
         return em;
     }
 
-    @Primary
-    @Bean(name = "commandEntityManager")
-    public EntityManager entityManager(
+    @Bean
+    public EntityManager commandEntityManager(
             @Qualifier("commandEntityManagerFactory") EntityManagerFactory factory,
             CommandPostInsertEventListener eventListener
     ) {
@@ -77,9 +73,8 @@ class HikariCommandConfig {
         return factory.createEntityManager();
     }
 
-    @Primary
-    @Bean(name = "commandTransactionManager")
-    public PlatformTransactionManager transactionManager(@Qualifier("commandEntityManagerFactory") EntityManagerFactory factory) {
+    @Bean
+    public PlatformTransactionManager commandTransactionManager(@Qualifier("commandEntityManagerFactory") EntityManagerFactory factory) {
         return new JpaTransactionManager(factory);
     }
 }

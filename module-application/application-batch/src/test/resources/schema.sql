@@ -1,4 +1,4 @@
-CREATE TABLE outbox_events
+CREATE TABLE IF NOT EXISTS outbox_events
 (
     id           BIGINT       NOT NULL,
     layer        VARCHAR(12)  NOT NULL,

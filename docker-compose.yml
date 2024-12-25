@@ -53,16 +53,16 @@ services:
       - "${QUERY_DB_PORT}:27017"
     volumes:
       - ${QUERY_VOLUME_BASE}/query-init.js:/docker-entrypoint-initdb.d/init-db.js
-  server:
-    build: .
-    container_name: server
-    env_file: "${ENV_PATH}"
-    ports:
-      - "8080:8080"
-    depends_on:
-      - aws
-      - command
-      - batch
-      - inbox
-      - outbox
-      - query
+#  server:
+#    build: .
+#    container_name: server
+#    env_file: "${ENV_PATH}"
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - aws
+#      - command
+#      - batch
+#      - inbox
+#      - outbox
+#      - query
