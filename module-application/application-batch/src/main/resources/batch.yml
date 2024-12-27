@@ -16,12 +16,10 @@ spring:
       driver-class-name: org.h2.Driver
       jdbc-url: jdbc:h2:mem:batch;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
       username: admin
-      password: password
     outbox:
       driver-class-name: org.h2.Driver
       jdbc-url: jdbc:h2:mem:outbox;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
       username: admin
-      password: password
 ---
 spring:
   config.activate.on-profile: local

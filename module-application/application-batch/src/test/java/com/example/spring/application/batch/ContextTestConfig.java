@@ -16,7 +16,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import javax.sql.DataSource;
 
 @Configuration
-public class OutboxBatchTestConfig {
+public class ContextTestConfig {
     @Bean
     @ConfigurationProperties("spring.datasource.outbox")
     public HikariConfig outboxHikariConfig() {
