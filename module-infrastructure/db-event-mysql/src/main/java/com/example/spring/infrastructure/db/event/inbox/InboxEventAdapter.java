@@ -14,7 +14,7 @@ public class InboxEventAdapter implements DomainEventInbox {
     }
 
     @Override
-    @Transactional
+    @Transactional(transactionManager = "inboxTransactionManager")
     public void save(DomainEvent event) {
         repository.save(InboxEventEntity.from(event));
     }

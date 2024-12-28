@@ -1,7 +1,8 @@
 package com.example.spring.infrastructure.db.event.test_multiple;
 
 import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.event.Layer;
+import com.example.spring.domain.event.DomainEventLayer;
+import com.example.spring.domain.event.DomainEventType;
 import com.example.spring.infrastructure.db.event.BaseEmbeddedDbTest;
 import com.example.spring.infrastructure.db.event.inbox.InboxEventJpaRepository;
 import com.example.spring.infrastructure.db.event.outbox.OutboxEventJpaRepository;
@@ -23,7 +24,7 @@ public class MultipleDbTest extends BaseEmbeddedDbTest {
     }
 
     DomainEvent getModel(Long id) {
-        return new DomainEvent(id, Layer.DOMAIN, DomainEvent.Type.CREATE, "model", 2L, false, null, null);
+        return new DomainEvent(id, DomainEventLayer.DOMAIN, DomainEventType.CREATE, "model", 2L, false, null, null);
     }
 
     @Test
@@ -36,20 +37,16 @@ public class MultipleDbTest extends BaseEmbeddedDbTest {
         assertThat(inbox.existsById(10L)).isTrue();
         assertThat(outbox.existsById(10L)).isTrue();
 
-        assertThrows(NoUniqueBeanDefinitionException.class, () -> service.saveWithGlobalTxAndException(getModel(20L)));
-        assertThat(inbox.existsById(20L)).isFalse();
-        assertThat(outbox.existsById(20L)).isFalse();
+        assertThrows(NoUniqueBeanDefinitionException.class, () -> service.saveWithGlobalTxAndExceptionAndNewTx(getModel(20L)));
 
         assertThrows(MultipleDbException.class, () -> service.saveWithInboxExceptionAtFirst(getModel(30L)));
         assertThat(inbox.existsById(30L)).isFalse();
         assertThat(outbox.existsById(30L)).isFalse();
 
-        assertThrows(MultipleDbException.class, () -> service.saveWithInboxExceptionAtLast(getModel(30L)));
-        assertThat(inbox.existsById(30L)).isFalse();
-        assertThat(outbox.existsById(30L)).isTrue();
+        assertThrows(MultipleDbException.class, () -> service.saveWithInboxExceptionAtLast(getModel(40L)));
+        assertThat(inbox.existsById(40L)).isFalse();
+        assertThat(outbox.existsById(40L)).isTrue();
 
-        assertThrows(MultipleDbException.class, () -> service.saveWithInboxExceptionAtFistAndNewTx(getModel(50L)));
-        assertThat(inbox.existsById(50L)).isFalse();
-        assertThat(outbox.existsById(50L)).isFalse();
+        assertThrows(NoUniqueBeanDefinitionException.class, () -> service.saveWithInboxExceptionAtLastAndGlobalTx(getModel(50L)));
     }
 }

@@ -1,7 +1,8 @@
 package com.example.spring.infrastructure.db.event.outbox;
 
 import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.event.Layer;
+import com.example.spring.domain.event.DomainEventLayer;
+import com.example.spring.domain.event.DomainEventType;
 import com.example.spring.infrastructure.db.event.BaseEventEntity;
 import jakarta.persistence.Entity;
 
@@ -15,8 +16,8 @@ public class OutboxEventEntity extends BaseEventEntity {
 
     private OutboxEventEntity(
             Long id,
-            Layer layer,
-            DomainEvent.Type type,
+            DomainEventLayer layer,
+            DomainEventType type,
             String modelName,
             Long modelId,
             Boolean completed,

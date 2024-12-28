@@ -7,6 +7,7 @@ import com.example.spring.domain.team.TeamId;
 import com.example.spring.infrastructure.db.EntityNotFoundException;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class PlayerCommandAdapter implements PlayerCommandRepository {
     }
 
     @Override
+    @Transactional(transactionManager = "commandTransactionManager")
     public PlayerData save(PlayerData player) {
         return repository.save(PlayerEntity.from(player)).toData();
     }
@@ -34,6 +36,7 @@ public class PlayerCommandAdapter implements PlayerCommandRepository {
     }
 
     @Override
+    @Transactional(transactionManager = "commandTransactionManager")
     public void updateAll(TeamId teamId, List<Long> playerIds) {
         jpaQueryFactory.update(playerEntity)
                 .where(playerEntity.id.in(playerIds))
@@ -42,6 +45,7 @@ public class PlayerCommandAdapter implements PlayerCommandRepository {
     }
 
     @Override
+    @Transactional(transactionManager = "commandTransactionManager")
     public void deleteById(PlayerId id) {
         repository.deleteById(id.value());
     }

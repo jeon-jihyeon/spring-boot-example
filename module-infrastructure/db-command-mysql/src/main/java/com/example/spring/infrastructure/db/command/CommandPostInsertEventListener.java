@@ -1,9 +1,8 @@
 package com.example.spring.infrastructure.db.command;
 
 import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.event.DomainEventProducer;
-import com.example.spring.domain.event.Layer;
-import com.example.spring.infrastructure.db.EntityNotFoundException;
+import com.example.spring.domain.event.DomainEventLayer;
+import com.example.spring.domain.event.DomainEventOutbox;
 import com.example.spring.infrastructure.db.command.player.PlayerEntity;
 import com.example.spring.infrastructure.db.command.team.TeamEntity;
 import org.hibernate.event.spi.PostInsertEvent;
@@ -14,20 +13,23 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CommandPostInsertEventListener implements PostInsertEventListener {
-    private final DomainEventProducer producer;
+    private final DomainEventOutbox outbox;
 
-    public CommandPostInsertEventListener(DomainEventProducer producer) {
-        this.producer = producer;
+    public CommandPostInsertEventListener(DomainEventOutbox outbox) {
+        this.outbox = outbox;
     }
 
     @Async
     @Override
     public void onPostInsert(PostInsertEvent event) {
-        String modelName;
-        if (event.getEntity() instanceof PlayerEntity) modelName = "player";
-        else if (event.getEntity() instanceof TeamEntity) modelName = "team";
-        else throw new EntityNotFoundException();
-        producer.send(DomainEvent.createType(Layer.PERSISTENCE, modelName, (Long) event.getId()));
+        final Object e = event.getEntity();
+        if (e instanceof PlayerEntity || e instanceof TeamEntity) {
+            outbox.save(DomainEvent.createType(
+                    DomainEventLayer.PERSISTENCE,
+                    e.getClass().getSimpleName().replace("Entity", ""),
+                    (Long) event.getId()
+            ));
+        }
     }
 
     @Override

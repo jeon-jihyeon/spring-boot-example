@@ -28,9 +28,9 @@ public class MultipleDbTestService extends BaseEmbeddedDbTest {
     }
 
     @Transactional
-    void saveWithGlobalTxAndException(DomainEvent event) {
+    void saveWithGlobalTxAndExceptionAndNewTx(DomainEvent event) {
         txInboxService.saveInTx(event);
-        txOutboxService.saveInTx(event);
+        txOutboxService.saveInNewTx(event);
         throw new MultipleDbException();
     }
 
@@ -44,8 +44,9 @@ public class MultipleDbTestService extends BaseEmbeddedDbTest {
         txInboxService.saveWithException(event);
     }
 
-    void saveWithInboxExceptionAtFistAndNewTx(DomainEvent event) {
+    @Transactional
+    void saveWithInboxExceptionAtLastAndGlobalTx(DomainEvent event) {
+        txOutboxService.saveInTx(event);
         txInboxService.saveWithException(event);
-        txOutboxService.saveInNewTx(event);
     }
 }

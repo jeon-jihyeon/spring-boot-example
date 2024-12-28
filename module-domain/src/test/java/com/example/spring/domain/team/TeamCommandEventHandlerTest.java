@@ -3,7 +3,7 @@ package com.example.spring.domain.team;
 import com.example.spring.domain.BaseUnitTest;
 import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.DomainEventInbox;
-import com.example.spring.domain.event.Layer;
+import com.example.spring.domain.event.DomainEventLayer;
 import com.example.spring.domain.player.PlayerCommandRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +28,7 @@ class TeamCommandEventHandlerTest extends BaseUnitTest {
     @Test
     void shouldPreventDuplicationForExistingEventInInbox() {
         when(inbox.exists(any(Long.class))).thenReturn(true);
-        handler.handle(DomainEvent.createType(Layer.DOMAIN, "test", 1L));
+        handler.handle(DomainEvent.createType(DomainEventLayer.DOMAIN, "test", 1L));
 
         verify(inbox, never()).save(any());
         verifyNoInteractions(client);

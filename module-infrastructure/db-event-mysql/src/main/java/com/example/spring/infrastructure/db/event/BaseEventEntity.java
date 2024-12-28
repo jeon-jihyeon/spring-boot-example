@@ -1,7 +1,8 @@
 package com.example.spring.infrastructure.db.event;
 
 import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.event.Layer;
+import com.example.spring.domain.event.DomainEventLayer;
+import com.example.spring.domain.event.DomainEventType;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -15,10 +16,10 @@ public class BaseEventEntity {
     private Long id;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 12)
-    private Layer layer;
+    private DomainEventLayer layer;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
-    private DomainEvent.Type type;
+    private DomainEventType type;
     @Column(length = 64, nullable = false)
     private String modelName;
     @Column(nullable = false)
@@ -36,8 +37,8 @@ public class BaseEventEntity {
 
     public BaseEventEntity(
             Long id,
-            Layer layer,
-            DomainEvent.Type type,
+            DomainEventLayer layer,
+            DomainEventType type,
             String modelName,
             Long modelId,
             Boolean completed,
@@ -69,19 +70,19 @@ public class BaseEventEntity {
         this.id = id;
     }
 
-    public Layer getLayer() {
+    public DomainEventLayer getLayer() {
         return layer;
     }
 
-    public void setLayer(Layer layer) {
+    public void setLayer(DomainEventLayer layer) {
         this.layer = layer;
     }
 
-    public DomainEvent.Type getType() {
+    public DomainEventType getType() {
         return type;
     }
 
-    public void setType(DomainEvent.Type type) {
+    public void setType(DomainEventType type) {
         this.type = type;
     }
 

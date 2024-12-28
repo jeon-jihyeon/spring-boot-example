@@ -23,12 +23,13 @@ public class OutboxEventAdapter implements DomainEventOutbox {
     }
 
     @Override
-    @Transactional
+    @Transactional(transactionManager = "outboxTransactionManager")
     public void save(DomainEvent event) {
         repository.save(OutboxEventEntity.from(event));
     }
 
     @Override
+    @Transactional(transactionManager = "outboxTransactionManager")
     public void publishAll(List<Long> ids, LocalDateTime now) {
         jpaQueryFactory.update(outboxEventEntity)
                 .where(outboxEventEntity.id.in(ids))

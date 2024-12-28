@@ -5,6 +5,7 @@ import com.example.spring.domain.team.TeamId;
 import com.example.spring.domain.team.dto.TeamData;
 import com.example.spring.infrastructure.db.EntityNotFoundException;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class TeamCommandAdapter implements TeamCommandRepository {
@@ -15,6 +16,7 @@ public class TeamCommandAdapter implements TeamCommandRepository {
     }
 
     @Override
+    @Transactional(transactionManager = "commandTransactionManager")
     public TeamData save(TeamData team) {
         return repository.save(TeamEntity.from(team)).toData();
     }
@@ -25,6 +27,7 @@ public class TeamCommandAdapter implements TeamCommandRepository {
     }
 
     @Override
+    @Transactional(transactionManager = "commandTransactionManager")
     public void deleteById(TeamId id) {
         repository.deleteById(id.value());
     }

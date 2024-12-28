@@ -1,7 +1,8 @@
 package com.example.spring.infrastructure.db.event.inbox;
 
 import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.event.Layer;
+import com.example.spring.domain.event.DomainEventLayer;
+import com.example.spring.domain.event.DomainEventType;
 import com.example.spring.infrastructure.db.event.BaseEventEntity;
 import jakarta.persistence.Entity;
 
@@ -14,8 +15,8 @@ public class InboxEventEntity extends BaseEventEntity {
 
     private InboxEventEntity(
             Long id,
-            Layer layer,
-            DomainEvent.Type type,
+            DomainEventLayer layer,
+            DomainEventType type,
             String modelName,
             Long modelId,
             Boolean completed,

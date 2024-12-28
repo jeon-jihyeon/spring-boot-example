@@ -1,5 +1,5 @@
 package com.example.spring.domain.event;
 
-public enum Layer {
+public enum DomainEventLayer {
     DOMAIN, PERSISTENCE
 }
