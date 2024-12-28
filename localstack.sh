@@ -1,8 +1,8 @@
 #!/bin/bash
 function create_sqs_with_dlq() {
     topic_name=$1
-    queue_name="$topic_name-$2"                # param1-param2
-    dlq_name="$topic_name-$2-$DLQ_SUFFIX.fifo" # param1-param2-dlq.fifo
+    queue_name="$1-$2"                # param1-param2
+    dlq_name="$1-$2-$DLQ_SUFFIX.fifo" # param1-param2-dlq.fifo
 
     echo "-----------------------------------------------------------"
     echo "       Create DLQ for SQS queue: $dlq_name"

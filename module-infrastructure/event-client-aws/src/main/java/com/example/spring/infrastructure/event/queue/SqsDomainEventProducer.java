@@ -14,16 +14,18 @@ import java.util.List;
 @Component
 public class SqsDomainEventProducer implements DomainEventProducer {
     private final SqsTemplate sqsTemplate;
+    private final AwsSqsProperties properties;
 
-    public SqsDomainEventProducer(SqsTemplate sqsTemplate) {
+    public SqsDomainEventProducer(SqsTemplate sqsTemplate, AwsSqsProperties properties) {
         this.sqsTemplate = sqsTemplate;
+        this.properties = properties;
     }
 
     @Async
     @Override
     public void send(DomainEvent event) {
         final AwsMessage message = AwsMessage.from(event);
-        sqsTemplate.sendAsync(options -> options.queue(message.getQueueName()).payload(message));
+        sqsTemplate.sendAsync(options -> options.queue(properties.queueName()).payload(message));
     }
 
     @Async
@@ -32,6 +34,6 @@ public class SqsDomainEventProducer implements DomainEventProducer {
         if (events.isEmpty()) return;
         final List<Message<AwsMessage>> messages = events.stream()
                 .map(e -> (Message<AwsMessage>) new GenericMessage<>(AwsMessage.from(e))).toList();
-        sqsTemplate.sendManyAsync(messages.get(0).getPayload().getQueueName(), messages);
+        sqsTemplate.sendManyAsync(properties.queueName(), messages);
     }
 }

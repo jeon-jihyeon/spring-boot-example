@@ -1,5 +1,6 @@
 package com.example.spring.infrastructure.db.command;
 
+import com.example.spring.domain.event.dto.DomainEventCommand;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @MappedSuperclass
-public class BaseCommandEntity {
+public abstract class BaseCommandEntity {
     @Id
     protected Long id;
     @CreationTimestamp
@@ -32,8 +33,12 @@ public class BaseCommandEntity {
         return id;
     }
 
-    public String getModelName() {
+    private String getModelName() {
         return getClass().getSimpleName().replace("Entity", "").toLowerCase();
+    }
+
+    public DomainEventCommand getCommand() {
+        return new DomainEventCommand(getModelName(), getId());
     }
 
     @Override

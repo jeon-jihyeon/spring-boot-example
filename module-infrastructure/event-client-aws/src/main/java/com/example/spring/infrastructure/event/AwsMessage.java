@@ -16,21 +16,25 @@ import java.util.Map;
 
 public record AwsMessage(
         Long id,
-        String layer,
+        String state,
         String type,
         String modelName,
         Long modelId,
         @JsonSerialize(using = LocalDateTimeSerializer.class)
         @JsonDeserialize(using = LocalDateTimeDeserializer.class)
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
-        LocalDateTime completedAt,
+        LocalDateTime createdAt,
         @JsonSerialize(using = LocalDateTimeSerializer.class)
         @JsonDeserialize(using = LocalDateTimeDeserializer.class)
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
-        LocalDateTime createdAt
+        LocalDateTime processedAt,
+        @JsonSerialize(using = LocalDateTimeSerializer.class)
+        @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
+        LocalDateTime completedAt
 ) {
     public static AwsMessage from(DomainEvent e) {
-        return new AwsMessage(e.id(), e.state().name(), e.type().name(), e.modelName(), e.modelId(), e.completedAt(), e.createdAt());
+        return new AwsMessage(e.id(), e.state().name(), e.type().name(), e.modelName(), e.modelId(), e.createdAt(), e.processedAt(), e.completedAt());
     }
 
     public PublishBatchRequestEntry toEntry(ObjectMapper objectMapper, String typeKey) throws JsonProcessingException {
@@ -38,10 +42,5 @@ public record AwsMessage(
                 .message(objectMapper.writeValueAsString(this))
                 .messageAttributes(Map.of(typeKey, MessageAttributeValue.builder().stringValue(type).build()))
                 .build();
-    }
-
-    public String getQueueName() {
-        // TODO: sns fan-out logic
-        return String.format("%s-%s-%s", modelName, type.toLowerCase(), layer.toLowerCase());
     }
 }
