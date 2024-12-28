@@ -1,12 +1,12 @@
 package com.example.spring.infrastructure.db.command.player;
 
-import com.example.spring.domain.player.FullName;
-import com.example.spring.domain.player.Grade;
-import com.example.spring.domain.player.Player;
-import com.example.spring.domain.player.PlayerId;
 import com.example.spring.domain.player.dto.PlayerCreateCommand;
 import com.example.spring.domain.player.dto.PlayerData;
-import com.example.spring.domain.team.TeamId;
+import com.example.spring.domain.player.model.FullName;
+import com.example.spring.domain.player.model.Grade;
+import com.example.spring.domain.player.model.Player;
+import com.example.spring.domain.player.model.PlayerId;
+import com.example.spring.domain.team.model.TeamId;
 import com.example.spring.infrastructure.db.EntityNotFoundException;
 import com.example.spring.infrastructure.db.command.BaseContextTest;
 import org.junit.jupiter.api.DisplayName;

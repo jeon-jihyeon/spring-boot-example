@@ -1,6 +1,7 @@
 package com.example.spring.domain.player;
 
 import com.example.spring.domain.event.DomainEvent;
+import com.example.spring.domain.player.model.PlayerId;
 import org.springframework.stereotype.Component;
 
 @Component

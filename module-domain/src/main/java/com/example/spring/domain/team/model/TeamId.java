@@ -1,4 +1,4 @@
-package com.example.spring.domain.team;
+package com.example.spring.domain.team.model;
 
 import com.example.spring.domain.IdGenerator;
 

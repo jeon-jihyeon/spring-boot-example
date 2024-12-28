@@ -1,6 +1,6 @@
 package com.example.spring.infrastructure.db.command.team;
 
-import com.example.spring.domain.player.PlayerId;
+import com.example.spring.domain.player.model.PlayerId;
 import com.example.spring.domain.team.dto.TeamData;
 import com.example.spring.infrastructure.db.command.BaseCommandEntity;
 import jakarta.persistence.Column;

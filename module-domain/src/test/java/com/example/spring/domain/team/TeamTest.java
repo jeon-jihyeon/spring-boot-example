@@ -1,8 +1,10 @@
 package com.example.spring.domain.team;
 
 import com.example.spring.domain.BaseUnitTest;
-import com.example.spring.domain.player.PlayerId;
+import com.example.spring.domain.player.model.PlayerId;
 import com.example.spring.domain.team.dto.TeamCreateCommand;
+import com.example.spring.domain.team.model.Team;
+import com.example.spring.domain.team.model.TeamName;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;

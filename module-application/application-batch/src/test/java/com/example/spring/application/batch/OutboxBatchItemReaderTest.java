@@ -1,6 +1,7 @@
 package com.example.spring.application.batch;
 
 import com.example.spring.domain.event.DomainEvent;
+import com.example.spring.domain.event.DomainEventState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.batch.item.database.JdbcPagingItemReader;
@@ -34,9 +35,9 @@ class OutboxBatchItemReaderTest extends BaseUnitTest {
     @Test
     public void testReader() throws Exception {
         final LocalDateTime now = LocalDateTime.now();
-        final String insert = "INSERT INTO outbox_events VALUES (?, 'DOMAIN', 'CREATE', 'model', ?, ?, NULL, ?, ?)";
-        for (int i = 1; i < 11; i++) jdbcTemplate.update(insert, i, i, false, now, now);
-        for (int i = 11; i < 21; i++) jdbcTemplate.update(insert, i, i, true, now, now);
+        final String insert = "INSERT INTO outbox_events VALUES (?, ?, 'CREATE', 'model', ?, NULL, NULL, ?, ?)";
+        for (int i = 1; i < 11; i++) jdbcTemplate.update(insert, i, DomainEventState.PROCESSED.name(), i, now, now);
+        for (int i = 11; i < 21; i++) jdbcTemplate.update(insert, i, DomainEventState.COMPLETED.name(), i, now, now);
 
         DomainEvent e;
         reader.afterPropertiesSet();
@@ -44,6 +45,7 @@ class OutboxBatchItemReaderTest extends BaseUnitTest {
             e = reader.read();
             assertThat(e).isNotNull();
             assertThat(e.id()).isEqualTo(i);
+            assertThat(e.state()).isEqualTo(DomainEventState.PROCESSED);
             assertThat(e.createdAt()).isEqualTo(now);
         }
     }

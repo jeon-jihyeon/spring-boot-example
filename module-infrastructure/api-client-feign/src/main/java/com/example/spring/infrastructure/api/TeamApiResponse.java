@@ -1,9 +1,9 @@
 package com.example.spring.infrastructure.api;
 
-import com.example.spring.domain.player.PlayerId;
-import com.example.spring.domain.team.TeamId;
-import com.example.spring.domain.team.TeamName;
+import com.example.spring.domain.player.model.PlayerId;
 import com.example.spring.domain.team.dto.TeamData;
+import com.example.spring.domain.team.model.TeamId;
+import com.example.spring.domain.team.model.TeamName;
 
 import java.time.LocalDateTime;
 import java.util.List;

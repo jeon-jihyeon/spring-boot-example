@@ -1,6 +1,12 @@
 package com.example.spring.domain.team.dto;
 
-import com.example.spring.domain.team.TeamId;
+import com.example.spring.domain.player.model.PlayerId;
+import com.example.spring.domain.team.model.TeamId;
 
-public record TeamCreateEvent(TeamId id) {
+import java.util.List;
+
+public record TeamCreateEvent(TeamId teamId, List<PlayerId> playerIds) {
+    public static TeamCreateEvent from(TeamData data) {
+        return new TeamCreateEvent(data.id(), data.playerIds());
+    }
 }

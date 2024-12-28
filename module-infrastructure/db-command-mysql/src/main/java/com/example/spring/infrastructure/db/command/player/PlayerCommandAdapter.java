@@ -1,9 +1,9 @@
 package com.example.spring.infrastructure.db.command.player;
 
 import com.example.spring.domain.player.PlayerCommandRepository;
-import com.example.spring.domain.player.PlayerId;
 import com.example.spring.domain.player.dto.PlayerData;
-import com.example.spring.domain.team.TeamId;
+import com.example.spring.domain.player.model.PlayerId;
+import com.example.spring.domain.team.model.TeamId;
 import com.example.spring.infrastructure.db.EntityNotFoundException;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Repository;
@@ -41,6 +41,15 @@ public class PlayerCommandAdapter implements PlayerCommandRepository {
         jpaQueryFactory.update(playerEntity)
                 .where(playerEntity.id.in(playerIds))
                 .set(playerEntity.teamId, teamId.value())
+                .execute();
+    }
+
+    @Override
+    @Transactional(transactionManager = "commandTransactionManager")
+    public void updateAll(TeamId teamId) {
+        jpaQueryFactory.update(playerEntity)
+                .where(playerEntity.teamId.eq(teamId.value()))
+                .set(playerEntity.teamId, TeamId.NoTeam.value())
                 .execute();
     }
 

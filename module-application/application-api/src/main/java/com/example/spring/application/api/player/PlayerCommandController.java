@@ -4,7 +4,7 @@ import com.example.spring.application.api.player.data.PlayerCreateRequest;
 import com.example.spring.application.api.player.data.PlayerResponse;
 import com.example.spring.application.common.ResponseModel;
 import com.example.spring.domain.player.PlayerCommandService;
-import com.example.spring.domain.player.PlayerId;
+import com.example.spring.domain.player.model.PlayerId;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

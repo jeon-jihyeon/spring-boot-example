@@ -1,6 +1,6 @@
-package com.example.spring.domain.team;
+package com.example.spring.domain.team.model;
 
-import com.example.spring.domain.player.PlayerId;
+import com.example.spring.domain.player.model.PlayerId;
 import com.example.spring.domain.team.dto.TeamCreateCommand;
 
 import java.time.LocalDateTime;

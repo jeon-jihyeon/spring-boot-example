@@ -1,6 +1,6 @@
 package com.example.spring.application.api.team.data;
 
-import com.example.spring.domain.player.PlayerId;
+import com.example.spring.domain.player.model.PlayerId;
 import com.example.spring.domain.team.dto.TeamData;
 
 import java.time.LocalDateTime;

@@ -1,7 +1,7 @@
-package com.example.spring.domain.player;
+package com.example.spring.domain.player.model;
 
 import com.example.spring.domain.player.dto.PlayerCreateCommand;
-import com.example.spring.domain.team.TeamId;
+import com.example.spring.domain.team.model.TeamId;
 
 public class Player {
     private final PlayerId id;

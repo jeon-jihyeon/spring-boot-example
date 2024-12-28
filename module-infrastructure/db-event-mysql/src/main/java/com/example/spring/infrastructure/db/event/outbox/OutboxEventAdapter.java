@@ -2,6 +2,7 @@ package com.example.spring.infrastructure.db.event.outbox;
 
 import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.DomainEventOutbox;
+import com.example.spring.domain.event.DomainEventState;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +34,7 @@ public class OutboxEventAdapter implements DomainEventOutbox {
     public void publishAll(List<Long> ids, LocalDateTime now) {
         jpaQueryFactory.update(outboxEventEntity)
                 .where(outboxEventEntity.id.in(ids))
-                .set(outboxEventEntity.completed, true)
+                .set(outboxEventEntity.state, DomainEventState.COMPLETED)
                 .set(outboxEventEntity.completedAt, now)
                 .execute();
     }

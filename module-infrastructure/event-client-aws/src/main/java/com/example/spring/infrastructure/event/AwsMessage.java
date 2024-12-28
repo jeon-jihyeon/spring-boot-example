@@ -20,7 +20,6 @@ public record AwsMessage(
         String type,
         String modelName,
         Long modelId,
-        Boolean completed,
         @JsonSerialize(using = LocalDateTimeSerializer.class)
         @JsonDeserialize(using = LocalDateTimeDeserializer.class)
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
@@ -31,7 +30,7 @@ public record AwsMessage(
         LocalDateTime createdAt
 ) {
     public static AwsMessage from(DomainEvent e) {
-        return new AwsMessage(e.id(), e.layer().name(), e.type().name(), e.modelName(), e.modelId(), e.completed(), e.completedAt(), e.createdAt());
+        return new AwsMessage(e.id(), e.state().name(), e.type().name(), e.modelName(), e.modelId(), e.completedAt(), e.createdAt());
     }
 
     public PublishBatchRequestEntry toEntry(ObjectMapper objectMapper, String typeKey) throws JsonProcessingException {

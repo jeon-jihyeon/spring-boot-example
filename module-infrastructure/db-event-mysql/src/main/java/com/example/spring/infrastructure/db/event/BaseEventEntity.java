@@ -1,7 +1,7 @@
 package com.example.spring.infrastructure.db.event;
 
 import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.event.DomainEventLayer;
+import com.example.spring.domain.event.DomainEventState;
 import com.example.spring.domain.event.DomainEventType;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -15,8 +15,8 @@ public class BaseEventEntity {
     @Id
     private Long id;
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 12)
-    private DomainEventLayer layer;
+    @Column(nullable = false, length = 10)
+    private DomainEventState state;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
     private DomainEventType type;
@@ -24,42 +24,42 @@ public class BaseEventEntity {
     private String modelName;
     @Column(nullable = false)
     private Long modelId;
-    @Column(nullable = false)
-    private Boolean completed;
-    @Column
-    private LocalDateTime completedAt;
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
+    @Column
+    private LocalDateTime processedAt;
+    @Column
+    private LocalDateTime completedAt;
     @UpdateTimestamp
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
     public BaseEventEntity(
             Long id,
-            DomainEventLayer layer,
+            DomainEventState state,
             DomainEventType type,
             String modelName,
             Long modelId,
-            Boolean completed,
-            LocalDateTime completedAt,
-            LocalDateTime createdAt
+            LocalDateTime createdAt,
+            LocalDateTime processedAt,
+            LocalDateTime completedAt
     ) {
         this.id = id;
-        this.layer = layer;
+        this.state = state;
         this.type = type;
         this.modelName = modelName;
         this.modelId = modelId;
-        this.completed = completed;
-        this.completedAt = completedAt;
         this.createdAt = createdAt;
+        this.processedAt = processedAt;
+        this.completedAt = completedAt;
     }
 
     public BaseEventEntity() {
     }
 
     public DomainEvent toModel() {
-        return new DomainEvent(id, layer, type, modelName, modelId, completed, completedAt, createdAt);
+        return new DomainEvent(id, state, type, modelName, modelId, createdAt, processedAt, completedAt);
     }
 
     public Long getId() {
@@ -70,12 +70,12 @@ public class BaseEventEntity {
         this.id = id;
     }
 
-    public DomainEventLayer getLayer() {
-        return layer;
+    public DomainEventState getState() {
+        return state;
     }
 
-    public void setLayer(DomainEventLayer layer) {
-        this.layer = layer;
+    public void setState(DomainEventState layer) {
+        this.state = layer;
     }
 
     public DomainEventType getType() {
@@ -102,12 +102,12 @@ public class BaseEventEntity {
         this.modelId = modelId;
     }
 
-    public Boolean getCompleted() {
-        return completed;
+    public LocalDateTime getProcessedAt() {
+        return processedAt;
     }
 
-    public void setCompleted(Boolean published) {
-        this.completed = published;
+    public void setProcessedAt(LocalDateTime processedAt) {
+        this.processedAt = processedAt;
     }
 
     public LocalDateTime getCompletedAt() {
@@ -152,7 +152,7 @@ public class BaseEventEntity {
 
     @Override
     public String toString() {
-        return String.format("DomainEventEntity[id=%s, type=%s, modelName=%s, modelId=%s, createdAt=%s, completed=%s, completedAt=%s]",
-                id, type, modelName, modelId, createdAt, completed, completedAt);
+        return String.format("DomainEventEntity[teamId=%s, state=%s, type=%s, modelName=%s, modelId=%s, createdAt=%s, processedAt=%s, completedAt=%s]",
+                id, state, type, modelName, modelId, createdAt, processedAt, completedAt);
     }
 }

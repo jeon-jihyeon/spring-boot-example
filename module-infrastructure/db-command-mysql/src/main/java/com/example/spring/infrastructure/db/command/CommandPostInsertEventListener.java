@@ -1,7 +1,6 @@
 package com.example.spring.infrastructure.db.command;
 
 import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.event.DomainEventLayer;
 import com.example.spring.domain.event.DomainEventOutbox;
 import com.example.spring.infrastructure.db.command.player.PlayerEntity;
 import com.example.spring.infrastructure.db.command.team.TeamEntity;
@@ -25,7 +24,6 @@ public class CommandPostInsertEventListener implements PostInsertEventListener {
         final Object e = event.getEntity();
         if (e instanceof PlayerEntity || e instanceof TeamEntity) {
             outbox.save(DomainEvent.createType(
-                    DomainEventLayer.PERSISTENCE,
                     e.getClass().getSimpleName().replace("Entity", ""),
                     (Long) event.getId()
             ));

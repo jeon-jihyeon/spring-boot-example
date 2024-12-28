@@ -1,4 +1,4 @@
-package com.example.spring.domain.player;
+package com.example.spring.domain.player.model;
 
 public enum Grade {
     A, B, C;

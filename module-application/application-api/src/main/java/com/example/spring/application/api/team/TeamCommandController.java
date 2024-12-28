@@ -4,7 +4,7 @@ import com.example.spring.application.api.team.data.TeamCreateRequest;
 import com.example.spring.application.api.team.data.TeamResponse;
 import com.example.spring.application.common.ResponseModel;
 import com.example.spring.domain.team.TeamCommandService;
-import com.example.spring.domain.team.TeamId;
+import com.example.spring.domain.team.model.TeamId;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
