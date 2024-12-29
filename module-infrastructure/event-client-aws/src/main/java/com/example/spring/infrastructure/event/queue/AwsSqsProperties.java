@@ -9,7 +9,8 @@ public record AwsSqsProperties(
         String region,
         String accessKey,
         String secretKey,
-        String queueName
+        String commandQueue,
+        String teamQueue
 ) {
     public AwsCredentials toCredentials() {
         return new AwsCredentialsValue(accessKey, secretKey);

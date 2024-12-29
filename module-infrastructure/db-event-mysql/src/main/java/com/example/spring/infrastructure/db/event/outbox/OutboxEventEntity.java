@@ -1,7 +1,6 @@
 package com.example.spring.infrastructure.db.event.outbox;
 
 import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.event.DomainEventState;
 import com.example.spring.domain.event.DomainEventType;
 import com.example.spring.infrastructure.db.event.BaseEventEntity;
 import jakarta.persistence.Entity;
@@ -16,26 +15,24 @@ public class OutboxEventEntity extends BaseEventEntity {
 
     private OutboxEventEntity(
             Long id,
-            DomainEventState state,
+            Boolean completed,
             DomainEventType type,
             String modelName,
             Long modelId,
             LocalDateTime createdAt,
-            LocalDateTime processedAt,
             LocalDateTime completedAt
     ) {
-        super(id, state, type, modelName, modelId, createdAt, processedAt, completedAt);
+        super(id, completed, type, modelName, modelId, createdAt, completedAt);
     }
 
     public static OutboxEventEntity from(DomainEvent event) {
         return new OutboxEventEntity(
                 event.id(),
-                event.state(),
+                event.completed(),
                 event.type(),
                 event.modelName(),
                 event.modelId(),
                 event.createdAt(),
-                event.processedAt(),
                 event.completedAt()
         );
     }

@@ -10,10 +10,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class SqsDomainEventConsumer {
     private final Logger log = LoggerFactory.getLogger(getClass());
-    
+
     @Async
-    @SqsListener(value = "${spring.cloud.aws.sqs.queue-name}")
-    public void listen(DomainEvent event) {
-        log.info("[Consumer] {}", event);
+    @SqsListener(value = "${spring.cloud.aws.sqs.command-queue}")
+    public void listenCommand(DomainEvent event) {
+        log.info("[Command Queue Consumer] {}", event);
+    }
+
+    @Async
+    @SqsListener(value = "${spring.cloud.aws.sqs.team-queue}")
+    public void listenTeam(DomainEvent event) {
+        log.info("[Team Queue Consumer] {}", event);
     }
 }

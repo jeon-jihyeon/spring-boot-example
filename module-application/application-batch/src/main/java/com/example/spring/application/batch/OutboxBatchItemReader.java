@@ -1,7 +1,6 @@
 package com.example.spring.application.batch;
 
 import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.event.DomainEventState;
 import org.springframework.batch.item.database.JdbcPagingItemReader;
 import org.springframework.batch.item.database.Order;
 import org.springframework.batch.item.database.builder.JdbcPagingItemReaderBuilder;
@@ -27,8 +26,7 @@ public class OutboxBatchItemReader {
                 .dataSource(outboxDataSource)
                 .selectClause("*")
                 .fromClause("from outbox_events")
-                .whereClause("where state = :state")
-                .parameterValues(Map.of("state", DomainEventState.PROCESSED.name()))
+                .whereClause("where completed = false")
                 .sortKeys(Map.of("created_at", Order.DESCENDING))
                 .rowMapper(new DomainEventRowMapper())
                 .build();

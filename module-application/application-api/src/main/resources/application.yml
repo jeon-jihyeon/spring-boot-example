@@ -27,8 +27,6 @@ server:
 logging:
   level:
     org.springframework.boot.autoconfigure: WARN
-    com.zaxxer.hikari.HikariConfig: DEBUG
-    com.zaxxer.hikari: TRACE
 
 ---
 spring.config.activate.on-profile: test

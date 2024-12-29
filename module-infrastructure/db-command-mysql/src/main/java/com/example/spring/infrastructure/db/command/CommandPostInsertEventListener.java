@@ -1,6 +1,6 @@
 package com.example.spring.infrastructure.db.command;
 
-import com.example.spring.domain.event.DomainEventOutboxService;
+import com.example.spring.domain.event.CommandOutboxService;
 import org.hibernate.event.spi.PostInsertEvent;
 import org.hibernate.event.spi.PostInsertEventListener;
 import org.hibernate.persister.entity.EntityPersister;
@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CommandPostInsertEventListener implements PostInsertEventListener {
-    private final DomainEventOutboxService outboxService;
+    private final CommandOutboxService outboxService;
 
-    public CommandPostInsertEventListener(DomainEventOutboxService outboxService) {
+    public CommandPostInsertEventListener(CommandOutboxService outboxService) {
         this.outboxService = outboxService;
     }
 
@@ -19,7 +19,7 @@ public class CommandPostInsertEventListener implements PostInsertEventListener {
     @Override
     public void onPostInsert(PostInsertEvent event) {
         final Object e = event.getEntity();
-        if (e instanceof BaseCommandEntity) outboxService.process(((BaseCommandEntity) e).getCommand());
+        if (e instanceof BaseCommandEntity) outboxService.sendCreateType(((BaseCommandEntity) e).getCommand());
     }
 
     @Override

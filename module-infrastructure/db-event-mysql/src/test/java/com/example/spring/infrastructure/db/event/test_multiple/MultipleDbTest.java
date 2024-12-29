@@ -1,7 +1,6 @@
 package com.example.spring.infrastructure.db.event.test_multiple;
 
 import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.event.DomainEventState;
 import com.example.spring.domain.event.DomainEventType;
 import com.example.spring.infrastructure.db.event.BaseEmbeddedDbTest;
 import com.example.spring.infrastructure.db.event.inbox.InboxEventJpaRepository;
@@ -24,7 +23,7 @@ public class MultipleDbTest extends BaseEmbeddedDbTest {
     }
 
     DomainEvent getModel(Long id) {
-        return new DomainEvent(id, DomainEventState.CREATED, DomainEventType.CREATE, "model", 2L, null, null, null);
+        return new DomainEvent(id, false, DomainEventType.CREATE, "model", 2L, null, null);
     }
 
     @Test

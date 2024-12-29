@@ -1,7 +1,7 @@
 package com.example.spring.application.batch;
 
+import com.example.spring.domain.event.CommandMessageProducer;
 import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.event.DomainEventProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
@@ -29,10 +29,10 @@ import java.util.List;
 @Configuration
 public class OutboxBatchJobConfig {
     private final Logger log = LoggerFactory.getLogger(getClass());
-    private final DomainEventProducer producer;
+    private final CommandMessageProducer producer;
     private final OutboxBatchJobProperties properties;
 
-    public OutboxBatchJobConfig(DomainEventProducer producer, OutboxBatchJobProperties properties) {
+    public OutboxBatchJobConfig(CommandMessageProducer producer, OutboxBatchJobProperties properties) {
         this.producer = producer;
         this.properties = properties;
     }

@@ -1,8 +1,7 @@
 #!/bin/bash
 function create_sqs_with_dlq() {
-    topic_name=$1
-    queue_name="$1-$2"                # param1-param2
-    dlq_name="$1-$2-$DLQ_SUFFIX.fifo" # param1-param2-dlq.fifo
+    queue_name="$1"                # param1-param2
+    dlq_name="$1-$DLQ_SUFFIX.fifo" # param1-param2-dlq.fifo
 
     echo "-----------------------------------------------------------"
     echo "       Create DLQ for SQS queue: $dlq_name"
@@ -75,7 +74,7 @@ function create_sns() {
     for type in "${@:2}"
     do
       queue_arn=""
-      create_sqs_with_dlq "$topic_name" "$type"
+      create_sqs_with_dlq "$topic_name"
       subscribe_sns "$topic_arn" "$queue_arn" "$type"
     done
 }
@@ -83,4 +82,5 @@ function create_sns() {
 # fixme: fixing to FilterPolicy of localstack
 # create_sns "$TOPIC_TEAM" "create" "command"
 # create_sns "$TOPIC_PLAYER" "command"
-create_sqs_with_dlq "cqrs" "create"
+create_sqs_with_dlq "team"
+create_sqs_with_dlq "command"

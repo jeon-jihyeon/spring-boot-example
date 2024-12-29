@@ -1,7 +1,7 @@
 package com.example.spring.application.batch;
 
+import com.example.spring.domain.event.CommandMessageProducer;
 import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.event.DomainEventProducer;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +44,7 @@ class OutboxBatchIntegrationTest extends BaseContextTest {
         assertThat(jdbcTemplate.queryForObject(select, Integer.class)).isEqualTo(0);
     }
 
-    private final static class TestProducer implements DomainEventProducer {
+    private final static class TestProducer implements CommandMessageProducer {
         private final Logger log = LoggerFactory.getLogger(getClass());
 
         @Override

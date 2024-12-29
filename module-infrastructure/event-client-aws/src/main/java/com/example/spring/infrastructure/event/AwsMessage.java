@@ -16,7 +16,7 @@ import java.util.Map;
 
 public record AwsMessage(
         Long id,
-        String state,
+        Boolean completed,
         String type,
         String modelName,
         Long modelId,
@@ -27,14 +27,10 @@ public record AwsMessage(
         @JsonSerialize(using = LocalDateTimeSerializer.class)
         @JsonDeserialize(using = LocalDateTimeDeserializer.class)
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
-        LocalDateTime processedAt,
-        @JsonSerialize(using = LocalDateTimeSerializer.class)
-        @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
         LocalDateTime completedAt
 ) {
     public static AwsMessage from(DomainEvent e) {
-        return new AwsMessage(e.id(), e.state().name(), e.type().name(), e.modelName(), e.modelId(), e.createdAt(), e.processedAt(), e.completedAt());
+        return new AwsMessage(e.id(), e.completed(), e.type().name(), e.modelName(), e.modelId(), e.createdAt(), e.completedAt());
     }
 
     public PublishBatchRequestEntry toEntry(ObjectMapper objectMapper, String typeKey) throws JsonProcessingException {

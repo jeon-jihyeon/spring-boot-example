@@ -5,9 +5,6 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import org.hibernate.event.service.spi.EventListenerRegistry;
-import org.hibernate.event.spi.EventType;
-import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -63,16 +60,7 @@ class OutboxDbConfig {
     }
 
     @Bean
-    public EntityManager outboxEntityManager(
-            @Qualifier("outboxEntityManagerFactory") EntityManagerFactory factory,
-            OutboxPostUpdateEventListener postUpdateListener
-    ) {
-        SessionFactoryImpl sessionFactory = factory.unwrap(SessionFactoryImpl.class);
-        EventListenerRegistry registry = sessionFactory.getServiceRegistry().getService(EventListenerRegistry.class);
-        if (registry != null) {
-            registry.getEventListenerGroup(EventType.POST_UPDATE).appendListener(postUpdateListener);
-        }
-
+    public EntityManager outboxEntityManager(@Qualifier("outboxEntityManagerFactory") EntityManagerFactory factory) {
         return factory.createEntityManager();
     }
 
