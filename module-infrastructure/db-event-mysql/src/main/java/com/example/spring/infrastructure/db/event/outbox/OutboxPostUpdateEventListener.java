@@ -1,5 +1,6 @@
 package com.example.spring.infrastructure.db.event.outbox;
 
+import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.QueryInboxService;
 import org.hibernate.event.spi.PostUpdateEvent;
 import org.hibernate.event.spi.PostUpdateEventListener;
@@ -17,7 +18,10 @@ public class OutboxPostUpdateEventListener implements PostUpdateEventListener {
     @Override
     public void onPostUpdate(PostUpdateEvent event) {
         final Object e = event.getEntity();
-        if (e instanceof OutboxEventEntity) inboxService.create(((OutboxEventEntity) e).toModel());
+        if (e instanceof OutboxEventEntity) {
+            final DomainEvent domainEvent = ((OutboxEventEntity) e).toModel();
+            if (domainEvent.completed()) inboxService.create(domainEvent);
+        }
     }
 
     @Override

@@ -9,17 +9,17 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CommandPostInsertEventListener implements PostInsertEventListener {
-    private final CommandMessageService outboxService;
+    private final CommandMessageService messageService;
 
-    public CommandPostInsertEventListener(CommandMessageService outboxService) {
-        this.outboxService = outboxService;
+    public CommandPostInsertEventListener(CommandMessageService messageService) {
+        this.messageService = messageService;
     }
 
     @Async
     @Override
     public void onPostInsert(PostInsertEvent event) {
         final Object e = event.getEntity();
-        if (e instanceof BaseCommandEntity) outboxService.sendCreateType(((BaseCommandEntity) e).getCommand());
+        if (e instanceof BaseCommandEntity) messageService.sendCreateType(((BaseCommandEntity) e).getCommand());
     }
 
     @Override
