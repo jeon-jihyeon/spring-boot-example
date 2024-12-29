@@ -4,11 +4,11 @@ import com.example.spring.domain.event.dto.DomainEventCommand;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CommandOutboxService {
+public class CommandMessageService {
     private final DomainEventOutbox outbox;
     private final CommandMessageProducer producer;
 
-    public CommandOutboxService(DomainEventOutbox outbox, CommandMessageProducer producer) {
+    public CommandMessageService(DomainEventOutbox outbox, CommandMessageProducer producer) {
         this.outbox = outbox;
         this.producer = producer;
     }
@@ -29,10 +29,5 @@ public class CommandOutboxService {
         final DomainEvent event = DomainEvent.deleteType(command);
         producer.send(event);
         outbox.save(event);
-    }
-
-    public void complete(DomainEventCommand command) {
-        final DomainEvent event = outbox.findEvent(command);
-        outbox.save(event.complete());
     }
 }

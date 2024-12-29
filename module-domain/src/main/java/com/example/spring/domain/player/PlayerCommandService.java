@@ -23,7 +23,7 @@ public class PlayerCommandService {
     public PlayerData create(PlayerCreateCommand command) {
         return repository.save(PlayerData.from(Player.create(command)));
     }
-
+    
     public void registerAll(PlayersRegisterCommand command) {
         repository.updateAll(command.teamId(), command.playerIds().stream().map(PlayerId::value).toList());
     }

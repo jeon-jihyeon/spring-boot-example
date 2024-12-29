@@ -9,6 +9,10 @@ public record TeamCreateEvent(TeamId teamId) {
         return new TeamCreateEvent(data.id());
     }
 
+    public static TeamCreateEvent from(DomainEvent event) {
+        return new TeamCreateEvent(new TeamId(event.modelId()));
+    }
+
     public DomainEvent generalize() {
         return DomainEvent.createType(new DomainEventCommand("team", teamId.value()));
     }

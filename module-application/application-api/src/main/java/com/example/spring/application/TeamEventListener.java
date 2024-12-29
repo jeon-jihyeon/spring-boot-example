@@ -1,6 +1,6 @@
 package com.example.spring.application;
 
-import com.example.spring.domain.team.TeamOutboxService;
+import com.example.spring.domain.team.TeamMessageService;
 import com.example.spring.domain.team.dto.TeamCreateEvent;
 import com.example.spring.domain.team.dto.TeamDeleteEvent;
 import org.springframework.scheduling.annotation.Async;
@@ -10,9 +10,9 @@ import org.springframework.transaction.event.TransactionalEventListener;
 
 @Component
 public class TeamEventListener {
-    private final TeamOutboxService service;
+    private final TeamMessageService service;
 
-    public TeamEventListener(TeamOutboxService service) {
+    public TeamEventListener(TeamMessageService service) {
         this.service = service;
     }
 

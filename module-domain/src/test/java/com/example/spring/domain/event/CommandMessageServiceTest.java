@@ -13,14 +13,14 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class CommandOutboxServiceTest extends BaseUnitTest {
+class CommandMessageServiceTest extends BaseUnitTest {
     private static final DomainEventCommand COMMAND = new DomainEventCommand("name", 1L);
     @Mock
     private DomainEventOutbox outbox;
     @Mock
     private CommandMessageProducer producer;
     @InjectMocks
-    private CommandOutboxService service;
+    private CommandMessageService service;
 
     @Test
     void shouldNotSaveWhenExceptionOccursInCreate() {
@@ -47,14 +47,5 @@ class CommandOutboxServiceTest extends BaseUnitTest {
 
         verify(outbox, never()).save(any());
         verify(producer, times(1)).send(any());
-    }
-
-    @Test
-    void shouldNotSaveWhenFindEventCausesException() {
-        when(outbox.findEvent(any(DomainEventCommand.class))).thenThrow(RuntimeException.class);
-        assertThrows(RuntimeException.class, () -> service.complete(COMMAND));
-
-        verify(outbox, never()).save(any());
-        verify(outbox, times(1)).findEvent(any());
     }
 }

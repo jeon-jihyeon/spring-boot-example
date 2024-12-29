@@ -10,6 +10,10 @@ public record TeamDeleteEvent(TeamId teamId) {
         return new TeamDeleteEvent(command.id());
     }
 
+    public static TeamDeleteEvent from(DomainEvent event) {
+        return new TeamDeleteEvent(new TeamId(event.modelId()));
+    }
+
     public DomainEvent generalize() {
         return DomainEvent.createType(new DomainEventCommand(Team.class.getSimpleName(), teamId.value()));
     }

@@ -52,6 +52,6 @@ public record DomainEvent(
     }
 
     public DomainEvent copy() {
-        return new DomainEvent(id, false, type, modelName, modelId, createdAt, null);
+        return new DomainEvent(id, false, type, modelName, modelId, LocalDateTime.now(), null);
     }
 }
