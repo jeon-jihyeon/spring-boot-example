@@ -1,5 +1,6 @@
 package com.example.spring.domain.team;
 
+import com.example.spring.domain.BaseUnitTest;
 import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.DomainEventOutbox;
 import com.example.spring.domain.team.model.TeamId;
@@ -14,7 +15,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class TeamMessageServiceTest {
+class TeamMessageServiceTest extends BaseUnitTest {
     private static final TeamId TEAM_ID = new TeamId(111L);
     @Mock
     private DomainEventOutbox outbox;

@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.MongoTransactionManager;
+import org.springframework.data.mongodb.config.EnableMongoAuditing;
 import org.springframework.data.mongodb.core.convert.DbRefResolver;
 import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
 import org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper;
@@ -12,6 +13,7 @@ import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
+@EnableMongoAuditing
 public class MongodbQueryConfig {
     @Bean
     public MappingMongoConverter mappingMongoConverter(

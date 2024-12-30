@@ -1,6 +1,5 @@
 package com.example.spring.domain.player;
 
-import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.player.model.PlayerId;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +13,11 @@ public class PlayerQueryService {
         this.client = client;
     }
 
-    public void create(DomainEvent event) {
-        repository.save(client.findById(new PlayerId(event.modelId())));
+    public void save(PlayerId playerId) {
+        repository.save(client.findById(playerId));
+    }
+
+    public void delete(PlayerId playerId) {
+        repository.deleteById(playerId);
     }
 }

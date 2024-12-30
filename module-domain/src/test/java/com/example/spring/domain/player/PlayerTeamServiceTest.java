@@ -1,5 +1,6 @@
 package com.example.spring.domain.player;
 
+import com.example.spring.domain.BaseUnitTest;
 import com.example.spring.domain.player.model.PlayerId;
 import com.example.spring.domain.team.TeamCommandApiClient;
 import com.example.spring.domain.team.dto.TeamCreateCommand;
@@ -20,7 +21,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class PlayerTeamServiceTest {
+class PlayerTeamServiceTest extends BaseUnitTest {
     private static final TeamId TEAM_ID = new TeamId(1L);
     private static final TeamData TEAM_DATA = TeamData.from(Team.create(new TeamCreateCommand(new TeamName("name"), List.of(new PlayerId(1L)))));
     @Mock
