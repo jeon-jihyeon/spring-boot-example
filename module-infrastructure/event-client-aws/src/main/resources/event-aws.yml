@@ -7,8 +7,9 @@ spring:
         region: ${MESSAGE_DEFAULT_REGION}
         access-key: ${MESSAGE_ACCESS_KEY_ID}
         secret-key: ${MESSAGE_SECRET_ACCESS_KEY}
-        command-queue: ${MESSAGE_COMMAND_QUEUE}
-        team-queue: ${MESSAGE_TEAM_QUEUE}
+        queue:
+          player: ${MESSAGE_PLAYER_QUEUE}
+          team: ${MESSAGE_TEAM_QUEUE}
       sns:
         topic-arn: ${TEAM_TOPIC_ARN}
         region: ${MESSAGE_DEFAULT_REGION}

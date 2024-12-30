@@ -3,9 +3,7 @@ package com.example.spring.domain.player;
 import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.QueryInboxService;
 import com.example.spring.domain.event.dto.InboxCompleteEvent;
-import com.example.spring.domain.team.dto.TeamCreateEvent;
-import com.example.spring.domain.team.dto.TeamDeleteEvent;
-import com.example.spring.domain.team.dto.TeamUpdateEvent;
+import com.example.spring.domain.team.model.TeamId;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,9 +24,9 @@ public class PlayerTeamEventHandler {
     public void handle(DomainEvent event) {
         inboxService.receive(event);
         switch (event.type()) {
-            case CREATE -> service.handle(TeamCreateEvent.from(event));
-            case DELETE -> service.handle(TeamDeleteEvent.from(event));
-            case UPDATE -> service.handle(TeamUpdateEvent.from(event));
+            case CREATE -> service.handleCreate(new TeamId(event.modelId()));
+            case DELETE -> service.handleDelete(new TeamId(event.modelId()));
+            case UPDATE -> service.handleUpdate(new TeamId(event.modelId()));
         }
         publisher.publishEvent(new InboxCompleteEvent(event.id()));
     }

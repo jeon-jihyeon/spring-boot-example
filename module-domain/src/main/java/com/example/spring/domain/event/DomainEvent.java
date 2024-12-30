@@ -1,7 +1,6 @@
 package com.example.spring.domain.event;
 
 import com.example.spring.domain.IdGenerator;
-import com.example.spring.domain.event.dto.DomainEventCommand;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
@@ -31,16 +30,16 @@ public record DomainEvent(
         );
     }
 
-    public static DomainEvent createType(DomainEventCommand command) {
-        return DomainEvent.of(DomainEventType.CREATE, command.modelName(), command.modelId());
+    public static DomainEvent createType(String modelName, Long modelId) {
+        return DomainEvent.of(DomainEventType.CREATE, modelName, modelId);
     }
 
-    public static DomainEvent updateType(DomainEventCommand command) {
-        return DomainEvent.of(DomainEventType.UPDATE, command.modelName(), command.modelId());
+    public static DomainEvent updateType(String modelName, Long modelId) {
+        return DomainEvent.of(DomainEventType.UPDATE, modelName, modelId);
     }
 
-    public static DomainEvent deleteType(DomainEventCommand command) {
-        return DomainEvent.of(DomainEventType.DELETE, command.modelName(), command.modelId());
+    public static DomainEvent deleteType(String modelName, Long modelId) {
+        return DomainEvent.of(DomainEventType.DELETE, modelName, modelId);
     }
 
     public DomainEvent complete() {

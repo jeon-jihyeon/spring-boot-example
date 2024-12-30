@@ -1,7 +1,10 @@
 package com.example.spring.application.batch;
 
-import com.example.spring.domain.event.CommandMessageProducer;
 import com.example.spring.domain.event.DomainEvent;
+import com.example.spring.domain.player.PlayerMessageProducer;
+import com.example.spring.domain.player.model.Player;
+import com.example.spring.domain.team.TeamMessageProducer;
+import com.example.spring.domain.team.model.Team;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
@@ -29,11 +32,13 @@ import java.util.List;
 @Configuration
 public class OutboxBatchJobConfig {
     private final Logger log = LoggerFactory.getLogger(getClass());
-    private final CommandMessageProducer producer;
+    private final PlayerMessageProducer playerProducer;
+    private final TeamMessageProducer teamProducer;
     private final OutboxBatchJobProperties properties;
 
-    public OutboxBatchJobConfig(CommandMessageProducer producer, OutboxBatchJobProperties properties) {
-        this.producer = producer;
+    public OutboxBatchJobConfig(PlayerMessageProducer playerProducer, TeamMessageProducer teamProducer, OutboxBatchJobProperties properties) {
+        this.playerProducer = playerProducer;
+        this.teamProducer = teamProducer;
         this.properties = properties;
     }
 
@@ -73,7 +78,7 @@ public class OutboxBatchJobConfig {
     public ItemWriter<DomainEvent> itemWriter(DataSource outboxDataSource) {
         return new JdbcBatchItemWriterBuilder<DomainEvent>()
                 .dataSource(outboxDataSource)
-                .sql("UPDATE outbox_events SET completed=:completed, completed_at=:completedAt, updated_at=:completedAt WHERE teamId=:teamId;")
+                .sql("UPDATE outbox_events SET completed=:completed, completed_at=:completedAt, updated_at=:completedAt WHERE id=:id;")
                 .beanMapped()
                 .assertUpdates(true)
                 .build();
@@ -82,9 +87,14 @@ public class OutboxBatchJobConfig {
     @Bean
     public ItemWriter<DomainEvent> messageProducer() {
         return chunk -> {
-            final List<DomainEvent> models = new ArrayList<>();
-            for (DomainEvent e : chunk) models.add(e);
-            producer.sendBatch(models);
+            final List<DomainEvent> playerEvents = new ArrayList<>();
+            final List<DomainEvent> teamEvents = new ArrayList<>();
+            for (DomainEvent e : chunk) {
+                if (e.modelName().equals(Player.class.getSimpleName())) playerEvents.add(e);
+                else if (e.modelName().equals(Team.class.getSimpleName())) teamEvents.add(e);
+            }
+            if (!playerEvents.isEmpty()) playerProducer.sendBatch(playerEvents);
+            if (!teamEvents.isEmpty()) teamProducer.sendBatch(teamEvents);
         };
     }
 }

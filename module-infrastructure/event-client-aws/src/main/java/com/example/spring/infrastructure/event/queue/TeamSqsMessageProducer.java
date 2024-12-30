@@ -11,19 +11,19 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class SqsTeamMessageProducer implements TeamMessageProducer {
+public class TeamSqsMessageProducer implements TeamMessageProducer {
     private final SqsTemplate sqsTemplate;
-    private final AwsSqsProperties properties;
+    private final AwsSqsQueue queue;
 
-    public SqsTeamMessageProducer(SqsTemplate sqsTemplate, AwsSqsProperties properties) {
+    public TeamSqsMessageProducer(SqsTemplate sqsTemplate, AwsSqsQueue queue) {
         this.sqsTemplate = sqsTemplate;
-        this.properties = properties;
+        this.queue = queue;
     }
 
     @Override
     public void send(DomainEvent event) {
         final AwsMessage message = AwsMessage.from(event);
-        sqsTemplate.sendAsync(options -> options.queue(properties.teamQueue()).payload(message));
+        sqsTemplate.sendAsync(options -> options.queue(queue.team()).payload(message));
     }
 
     @Override
@@ -31,6 +31,6 @@ public class SqsTeamMessageProducer implements TeamMessageProducer {
         if (events.isEmpty()) return;
         final List<Message<AwsMessage>> messages = events.stream()
                 .map(e -> (Message<AwsMessage>) new GenericMessage<>(AwsMessage.from(e))).toList();
-        sqsTemplate.sendManyAsync(properties.teamQueue(), messages);
+        sqsTemplate.sendManyAsync(queue.team(), messages);
     }
 }

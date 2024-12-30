@@ -2,8 +2,8 @@ package com.example.spring.domain.team;
 
 import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.DomainEventOutbox;
-import com.example.spring.domain.team.dto.TeamCreateEvent;
-import com.example.spring.domain.team.dto.TeamDeleteEvent;
+import com.example.spring.domain.team.model.Team;
+import com.example.spring.domain.team.model.TeamId;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,15 +16,25 @@ public class TeamMessageService {
         this.producer = producer;
     }
 
-    public void sendCreateType(TeamCreateEvent event) {
-        final DomainEvent domainEvent = event.generalize();
-        producer.send(domainEvent);
-        outbox.save(domainEvent);
+    private String getModelName() {
+        return Team.class.getSimpleName();
     }
 
-    public void sendDeleteType(TeamDeleteEvent event) {
-        final DomainEvent domainEvent = event.generalize();
-        producer.send(domainEvent);
-        outbox.save(domainEvent);
+    public void sendCreateType(TeamId teamId) {
+        final DomainEvent event = DomainEvent.createType(getModelName(), teamId.value());
+        producer.send(event);
+        outbox.save(event);
+    }
+
+    public void sendUpdateType(TeamId teamId) {
+        final DomainEvent event = DomainEvent.updateType(getModelName(), teamId.value());
+        producer.send(event);
+        outbox.save(event);
+    }
+
+    public void sendDeleteType(TeamId teamId) {
+        final DomainEvent event = DomainEvent.createType(getModelName(), teamId.value());
+        producer.send(event);
+        outbox.save(event);
     }
 }

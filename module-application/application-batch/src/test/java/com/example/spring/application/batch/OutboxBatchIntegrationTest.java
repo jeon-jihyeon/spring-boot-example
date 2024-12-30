@@ -1,7 +1,8 @@
 package com.example.spring.application.batch;
 
-import com.example.spring.domain.event.CommandMessageProducer;
 import com.example.spring.domain.event.DomainEvent;
+import com.example.spring.domain.player.PlayerMessageProducer;
+import com.example.spring.domain.team.TeamMessageProducer;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,9 @@ class OutboxBatchIntegrationTest extends BaseContextTest {
     private final JobLauncherTestUtils jobLauncherTestUtils;
     private final JdbcTemplate jdbcTemplate;
     @SpyBean
-    private TestProducer producer;
+    private PlayerProducerSpy playerProducer;
+    @SpyBean
+    private TeamProducerSpy teamProducer;
 
     public OutboxBatchIntegrationTest(JobLauncherTestUtils jobLauncherTestUtils, JdbcTemplate jdbcTemplate) {
         this.jobLauncherTestUtils = jobLauncherTestUtils;
@@ -31,12 +34,12 @@ class OutboxBatchIntegrationTest extends BaseContextTest {
     public void testJob(@Autowired Job job) throws Exception {
         jobLauncherTestUtils.setJob(job);
         final LocalDateTime now = LocalDateTime.now();
-        final String insert = "INSERT INTO outbox_events VALUES (?, 'DOMAIN', 'CREATE', 'model', ?, ?, NULL, now(), now())";
+        final String insert = "INSERT INTO outbox_events VALUES (?, ?, 'CREATE', 'model', ?, NULL, now(), now())";
         final String select = "SELECT COUNT(*) FROM outbox_events WHERE completed=FALSE";
         final JobParameters params = new JobParametersBuilder().addLocalDateTime("now", now).toJobParameters();
 
-        for (int i = 1; i < 11; i++) jdbcTemplate.update(insert, i, i, false);
-        for (int i = 11; i < 21; i++) jdbcTemplate.update(insert, i, i, true);
+        for (int i = 1; i < 11; i++) jdbcTemplate.update(insert, i, false, i);
+        for (int i = 11; i < 21; i++) jdbcTemplate.update(insert, i, true, i);
         assertThat(jdbcTemplate.queryForObject(select, Integer.class)).isEqualTo(10);
 
         JobExecution jobExecution = jobLauncherTestUtils.launchJob(params);
@@ -44,17 +47,31 @@ class OutboxBatchIntegrationTest extends BaseContextTest {
         assertThat(jdbcTemplate.queryForObject(select, Integer.class)).isEqualTo(0);
     }
 
-    private final static class TestProducer implements CommandMessageProducer {
+    private final static class PlayerProducerSpy implements PlayerMessageProducer {
         private final Logger log = LoggerFactory.getLogger(getClass());
 
         @Override
         public void send(DomainEvent event) {
-            log.info("[Spy Message] {}", event);
+            log.info("[Player Spy Message] {}", event);
         }
 
         @Override
         public void sendBatch(List<DomainEvent> events) {
-            log.info("[Spy Message] {}", events);
+            log.info("[Player Spy Message] {}", events);
+        }
+    }
+
+    private final static class TeamProducerSpy implements TeamMessageProducer {
+        private final Logger log = LoggerFactory.getLogger(getClass());
+
+        @Override
+        public void send(DomainEvent event) {
+            log.info("[Team Spy Message] {}", event);
+        }
+
+        @Override
+        public void sendBatch(List<DomainEvent> events) {
+            log.info("[Team Spy Message] {}", events);
         }
     }
 }

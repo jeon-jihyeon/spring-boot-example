@@ -26,6 +26,7 @@ public abstract class ApiException extends BaseException {
             case NOT_FOUND -> new EntityNotFoundException(base.getData());
             case INVALID_VALUE -> new InvalidValueException(base.getData());
             case INTERNAL_SERVER -> new InternalServerException(base.getData());
+            case ALREADY_EXiST -> new EntityAlreadyExistsException(base.getData());
         };
     }
 

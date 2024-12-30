@@ -1,11 +1,7 @@
 package com.example.spring.domain.team;
 
-import com.example.spring.domain.event.CommandMessageProducer;
 import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.DomainEventOutbox;
-import com.example.spring.domain.event.dto.DomainEventCommand;
-import com.example.spring.domain.team.dto.TeamCreateEvent;
-import com.example.spring.domain.team.dto.TeamDeleteEvent;
 import com.example.spring.domain.team.model.TeamId;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,29 +15,38 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class TeamMessageServiceTest {
-    private static final DomainEventCommand COMMAND = new DomainEventCommand("name", 1L);
-    private static final TeamCreateEvent CREATE_EVENT = new TeamCreateEvent(new TeamId(111L));
-    private static final TeamDeleteEvent DELETE_EVENT = new TeamDeleteEvent(new TeamId(111L));
+    private static final TeamId TEAM_ID = new TeamId(111L);
     @Mock
     private DomainEventOutbox outbox;
     @Mock
-    private CommandMessageProducer producer;
+    private TeamMessageProducer producer;
     @InjectMocks
     private TeamMessageService service;
 
     @Test
     void shouldNotSaveWhenExceptionOccursInCreate() {
         doThrow(RuntimeException.class).when(producer).send(any(DomainEvent.class));
-        assertThrows(RuntimeException.class, () -> service.sendCreateType(CREATE_EVENT));
+        assertThrows(RuntimeException.class, () -> service.sendCreateType(TEAM_ID));
 
         verify(outbox, never()).save(any());
+        verify(producer, times(1)).send(any());
+    }
+
+    @Test
+    void shouldNotSaveWhenExceptionOccursInUpdate() {
+        doThrow(RuntimeException.class).when(producer).send(any(DomainEvent.class));
+        assertThrows(RuntimeException.class, () -> service.sendUpdateType(TEAM_ID));
+
+        verify(outbox, never()).save(any());
+        verify(producer, times(1)).send(any());
     }
 
     @Test
     void shouldNotSaveWhenExceptionOccursInDelete() {
         doThrow(RuntimeException.class).when(producer).send(any(DomainEvent.class));
-        assertThrows(RuntimeException.class, () -> service.sendDeleteType(DELETE_EVENT));
+        assertThrows(RuntimeException.class, () -> service.sendDeleteType(TEAM_ID));
 
         verify(outbox, never()).save(any());
+        verify(producer, times(1)).send(any());
     }
 }

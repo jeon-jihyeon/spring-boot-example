@@ -1,6 +1,5 @@
 package com.example.spring.domain.event;
 
-import com.example.spring.domain.event.dto.DomainEventCommand;
 import com.example.spring.domain.event.dto.InboxCompleteEvent;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,7 +32,7 @@ class QueryInboxServiceTest {
     @DisplayName("Inbox 중복 실행 방지 테스트")
     void shouldPreventDuplicationForExistingEventInInbox() {
         when(inbox.exists(any(Long.class))).thenReturn(true);
-        service.receive(DomainEvent.createType(new DomainEventCommand("test", 1L)));
+        service.receive(DomainEvent.createType("test", 1L));
 
         verify(inbox, never()).save(any());
     }

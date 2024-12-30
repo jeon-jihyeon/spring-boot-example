@@ -3,9 +3,7 @@ package com.example.spring.domain.player;
 import com.example.spring.domain.player.model.PlayerId;
 import com.example.spring.domain.team.TeamCommandApiClient;
 import com.example.spring.domain.team.dto.TeamCreateCommand;
-import com.example.spring.domain.team.dto.TeamCreateEvent;
 import com.example.spring.domain.team.dto.TeamData;
-import com.example.spring.domain.team.dto.TeamUpdateEvent;
 import com.example.spring.domain.team.model.Team;
 import com.example.spring.domain.team.model.TeamId;
 import com.example.spring.domain.team.model.TeamName;
@@ -23,8 +21,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class PlayerTeamServiceTest {
-    private static final TeamCreateEvent CREATE_EVENT = new TeamCreateEvent(new TeamId(1L));
-    private static final TeamUpdateEvent UPDATE_EVENT = new TeamUpdateEvent(new TeamId(1L));
+    private static final TeamId TEAM_ID = new TeamId(1L);
     private static final TeamData TEAM_DATA = TeamData.from(Team.create(new TeamCreateCommand(new TeamName("name"), List.of(new PlayerId(1L)))));
     @Mock
     private TeamCommandApiClient teamClient;
@@ -36,7 +33,7 @@ class PlayerTeamServiceTest {
     @Test
     void shouldNotRegisterWhenFindEventCausesException() {
         when(teamClient.findById(any(TeamId.class))).thenThrow(RuntimeException.class);
-        assertThrows(RuntimeException.class, () -> service.handle(CREATE_EVENT));
+        assertThrows(RuntimeException.class, () -> service.handleCreate(TEAM_ID));
 
         verify(commandService, never()).registerAll(any());
         verify(teamClient, times(1)).findById(any());
@@ -45,7 +42,7 @@ class PlayerTeamServiceTest {
     @Test
     void shouldRunRegisterAllForCreate() {
         when(teamClient.findById(any(TeamId.class))).thenReturn(TEAM_DATA);
-        service.handle(CREATE_EVENT);
+        service.handleCreate(TEAM_ID);
 
         verify(commandService, times(1)).registerAll(any());
         verify(teamClient, times(1)).findById(any());
@@ -54,7 +51,7 @@ class PlayerTeamServiceTest {
     @Test
     void shouldNotUpdateWhenFindEventCausesException() {
         when(teamClient.findById(any(TeamId.class))).thenThrow(RuntimeException.class);
-        assertThrows(RuntimeException.class, () -> service.handle(UPDATE_EVENT));
+        assertThrows(RuntimeException.class, () -> service.handleUpdate(TEAM_ID));
 
         verify(commandService, never()).registerAll(any());
         verify(teamClient, times(1)).findById(any());
@@ -63,7 +60,7 @@ class PlayerTeamServiceTest {
     @Test
     void shouldRunRegisterAllForUpdate() {
         when(teamClient.findById(any(TeamId.class))).thenReturn(TEAM_DATA);
-        service.handle(UPDATE_EVENT);
+        service.handleUpdate(TEAM_ID);
 
         verify(commandService, times(1)).registerAll(any());
         verify(teamClient, times(1)).findById(any());
