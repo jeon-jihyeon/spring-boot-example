@@ -15,7 +15,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -28,7 +27,7 @@ public class TeamIntegrationTest extends BaseContextTest {
     @Test
     @DisplayName("Team 생성 통합 테스트")
     void shouldCreatePlayerByApiSuccessfully() throws Exception {
-        final TeamCreateRequest request = new TeamCreateRequest("name", List.of(1L));
+        final TeamCreateRequest request = new TeamCreateRequest("name");
         final ResponseModel<TeamResponse> expected = ResponseModel.ok(TeamResponse.from(TeamData.from(Team.create(request.toCommand()))));
         final Long id = mapResponse(mvc.perform(MockMvcRequestBuilders.post("/api/teams")
                         .content(objectMapper.writeValueAsString(request))
@@ -46,6 +45,6 @@ public class TeamIntegrationTest extends BaseContextTest {
         assertThat(data.id()).isNotNull();
         assertThat(data.name()).isEqualTo(request.name());
         assertThat(data.startsAt()).isBefore(LocalDateTime.now());
-        assertThat(data.playerIds()).isEqualTo(request.playerIds());
+        assertThat(data.playerIds()).isEmpty();
     }
 }

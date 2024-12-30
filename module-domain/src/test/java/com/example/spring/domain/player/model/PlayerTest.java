@@ -1,12 +1,10 @@
-package com.example.spring.domain.player;
+package com.example.spring.domain.player.model;
 
 import com.example.spring.domain.BaseUnitTest;
 import com.example.spring.domain.player.dto.PlayerCreateCommand;
-import com.example.spring.domain.player.model.FullName;
-import com.example.spring.domain.player.model.Grade;
-import com.example.spring.domain.player.model.Player;
 import com.example.spring.domain.team.model.TeamId;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -23,5 +21,13 @@ class PlayerTest extends BaseUnitTest {
         assertThat(model.getTeamId()).isEqualTo(TeamId.NoTeam);
         assertThat(model.getFullName().firstName()).isEqualTo(first);
         assertThat(model.getFullName().lastName()).isEqualTo(last);
+    }
+
+    @Test
+    void shouldChangeTeamId() {
+        final Player model = Player.create(new PlayerCreateCommand(new FullName("first", "last")));
+        final TeamId teamId = new TeamId(12L);
+        assertThat(model.joinTeam(teamId).getTeamId()).isEqualTo(teamId);
+        assertThat(model.leaveTeam().getTeamId()).isEqualTo(TeamId.NoTeam);
     }
 }

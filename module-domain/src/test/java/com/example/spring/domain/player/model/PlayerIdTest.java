@@ -1,7 +1,6 @@
-package com.example.spring.domain.player;
+package com.example.spring.domain.player.model;
 
 import com.example.spring.domain.BaseUnitTest;
-import com.example.spring.domain.player.model.PlayerId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

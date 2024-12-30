@@ -16,7 +16,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class TeamMessageHandlerTest extends BaseUnitTest {
+class TeamQueryHandlerTest extends BaseUnitTest {
     private static final DomainEvent CREATE_EVENT = DomainEvent.createType("test", 1L);
     private static final DomainEvent DELETE_EVENT = DomainEvent.deleteType("test", 1L);
     @Mock
@@ -26,7 +26,7 @@ class TeamMessageHandlerTest extends BaseUnitTest {
     @Mock
     private TeamQueryService service;
     @InjectMocks
-    private TeamMessageHandler handler;
+    private TeamQueryHandler handler;
 
     @Test
     void shouldNotHandleWhenInboxCausesException() {

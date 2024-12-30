@@ -8,4 +8,8 @@ public record TeamId(Long value) {
     public static TeamId newId() {
         return new TeamId(IdGenerator.newId());
     }
+
+    public Boolean isNotNoTeam() {
+        return !value.equals(NoTeam.value);
+    }
 }

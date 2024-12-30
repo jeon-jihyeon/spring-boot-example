@@ -19,6 +19,8 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class PlayerCommandServiceTest extends BaseUnitTest {
+    private static final PlayerCreateCommand CREATE_COMMAND = new PlayerCreateCommand(new FullName("first", "last"));
+    private static final PlayerData DATA = PlayerData.from(Player.create(CREATE_COMMAND));
     @Mock
     private PlayerCommandRepository commandRepository;
     @InjectMocks
@@ -27,21 +29,18 @@ class PlayerCommandServiceTest extends BaseUnitTest {
     @Test
     @DisplayName("Player 조회 서비스 테스트")
     void shouldReturnValidResponse() {
-        final PlayerData data = PlayerData.from(Player.create(new PlayerCreateCommand(new FullName("first", "last"))));
-        when(commandRepository.findById(any(PlayerId.class))).thenReturn(data);
+        when(commandRepository.findById(any(PlayerId.class))).thenReturn(DATA);
 
         // then
-        assertThat(service.read(data.id())).isEqualTo(data);
+        assertThat(service.read(DATA.id())).isEqualTo(DATA);
     }
 
     @Test
     @DisplayName("Player 생성 서비스 테스트")
     void shouldCreatePlayerAndReturnValidResponse() {
-        final PlayerCreateCommand command = new PlayerCreateCommand(new FullName("first", "last"));
-        final PlayerData data = PlayerData.from(Player.create(command));
-        when(commandRepository.save(any(PlayerData.class))).thenReturn(data);
+        when(commandRepository.save(any(PlayerData.class))).thenReturn(DATA);
 
         // then
-        assertThat(service.create(command)).isEqualTo(data);
+        assertThat(service.create(CREATE_COMMAND)).isEqualTo(DATA);
     }
 }

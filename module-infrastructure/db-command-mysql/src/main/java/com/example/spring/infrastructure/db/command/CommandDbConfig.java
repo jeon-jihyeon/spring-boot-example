@@ -65,11 +65,17 @@ class CommandDbConfig {
     @Bean
     public EntityManager commandEntityManager(
             @Qualifier("commandEntityManagerFactory") EntityManagerFactory factory,
-            CommandPostInsertEventListener postInsertListener
+            CommandPostInsertEventListener postInsertListener,
+            CommandPostDeleteEventListener postDeleteEventListener,
+            CommandPostUpdateEventListener postUpdateEventListener
     ) {
         SessionFactoryImpl sessionFactory = factory.unwrap(SessionFactoryImpl.class);
         EventListenerRegistry registry = sessionFactory.getServiceRegistry().getService(EventListenerRegistry.class);
-        if (registry != null) registry.getEventListenerGroup(EventType.POST_INSERT).appendListener(postInsertListener);
+        if (registry != null) {
+            registry.getEventListenerGroup(EventType.POST_INSERT).appendListener(postInsertListener);
+            registry.getEventListenerGroup(EventType.POST_UPDATE).appendListener(postUpdateEventListener);
+            registry.getEventListenerGroup(EventType.POST_DELETE).appendListener(postDeleteEventListener);
+        }
         return sessionFactory.createEntityManager();
     }
 

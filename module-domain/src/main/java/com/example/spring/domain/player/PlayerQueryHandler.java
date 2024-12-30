@@ -1,35 +1,35 @@
-package com.example.spring.domain.team;
+package com.example.spring.domain.player;
 
 import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.QueryInboxService;
 import com.example.spring.domain.event.QueryOutboxService;
-import com.example.spring.domain.team.model.TeamId;
+import com.example.spring.domain.player.model.PlayerId;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TeamMessageHandler {
-    private final TeamQueryService service;
+public class PlayerQueryHandler {
     private final QueryInboxService inboxService;
     private final QueryOutboxService outboxService;
+    private final PlayerQueryService service;
 
-    public TeamMessageHandler(
-            TeamQueryService service,
+    public PlayerQueryHandler(
             QueryInboxService inboxService,
-            QueryOutboxService outboxService
+            QueryOutboxService outboxService,
+            PlayerQueryService service
     ) {
-        this.service = service;
         this.inboxService = inboxService;
         this.outboxService = outboxService;
+        this.service = service;
     }
 
     public void handle(DomainEvent event) {
         inboxService.receive(event);
         outboxService.complete(event);
 
-        final TeamId teamId = new TeamId(event.modelId());
+        final PlayerId playerId = new PlayerId(event.modelId());
         switch (event.type()) {
-            case CREATE, UPDATE -> service.save(teamId);
-            case DELETE -> service.delete(teamId);
+            case CREATE, UPDATE -> service.save(playerId);
+            case DELETE -> service.delete(playerId);
         }
         inboxService.complete(event);
     }

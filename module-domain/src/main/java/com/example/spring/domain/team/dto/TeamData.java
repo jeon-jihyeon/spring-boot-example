@@ -16,4 +16,8 @@ public record TeamData(TeamId id, TeamName name, LocalDateTime startsAt, List<Pl
     public static TeamData of(Long id, String name, LocalDateTime startsAt, List<Long> playerIds) {
         return new TeamData(new TeamId(id), new TeamName(name), startsAt, playerIds.stream().map(PlayerId::new).toList());
     }
+
+    public Team toModel() {
+        return Team.of(id, name, startsAt, playerIds);
+    }
 }

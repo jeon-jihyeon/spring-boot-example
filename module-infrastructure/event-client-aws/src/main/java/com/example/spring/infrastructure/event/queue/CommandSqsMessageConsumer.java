@@ -1,18 +1,18 @@
 package com.example.spring.infrastructure.event.queue;
 
 import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.player.PlayerMessageHandler;
-import com.example.spring.domain.team.TeamMessageHandler;
+import com.example.spring.domain.player.PlayerQueryHandler;
+import com.example.spring.domain.team.TeamQueryHandler;
 import io.awspring.cloud.sqs.annotation.SqsListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CommandSqsMessageConsumer {
-    private final PlayerMessageHandler playerHandler;
-    private final TeamMessageHandler teamHandler;
+    private final PlayerQueryHandler playerHandler;
+    private final TeamQueryHandler teamHandler;
 
-    public CommandSqsMessageConsumer(PlayerMessageHandler playerHandler, TeamMessageHandler teamHandler) {
+    public CommandSqsMessageConsumer(PlayerQueryHandler playerHandler, TeamQueryHandler teamHandler) {
         this.playerHandler = playerHandler;
         this.teamHandler = teamHandler;
     }

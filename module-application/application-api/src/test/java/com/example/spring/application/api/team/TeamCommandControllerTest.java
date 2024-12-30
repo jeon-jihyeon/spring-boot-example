@@ -27,7 +27,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -57,7 +56,7 @@ class TeamCommandControllerTest extends BaseUnitTest {
     @Test
     @DisplayName("Team 생성 API 테스트")
     void shouldReturnValidResponseForTeamCreation() throws Exception {
-        final TeamCreateRequest request = new TeamCreateRequest("name", List.of(1L, 2L));
+        final TeamCreateRequest request = new TeamCreateRequest("name");
         final TeamData data = TeamData.from(Team.create(request.toCommand()));
 
         when(service.create(any(TeamCreateCommand.class))).thenReturn(data);
@@ -80,6 +79,6 @@ class TeamCommandControllerTest extends BaseUnitTest {
         assertThat(response.id()).isEqualTo(id);
         assertThat(response.name()).isEqualTo(request.name());
         assertThat(response.startsAt()).isBefore(LocalDateTime.now());
-        assertThat(response.playerIds()).isEqualTo(request.playerIds());
+        assertThat(response.playerIds()).isEmpty();
     }
 }
