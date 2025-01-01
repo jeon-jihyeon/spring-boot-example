@@ -5,7 +5,7 @@ modular architecture for scalable and maintainable development. The project is d
 
 ## Architecture
 
-![alt text](https://github.com/jeon-jihyeon/spring-boot-example/blob/main/images/command.png?raw=true)
+![alt text](https://github.com/jeon-jihyeon/spring-boot-example/blob/main/images/architecture.png?raw=true)
 
 ### module-domain
 
@@ -63,12 +63,17 @@ OUTBOX_DB_DRIVER=
 OUTBOX_DB_URL=
 OUTBOX_DB_USERNAME=
 OUTBOX_DB_PASSWORD=
+QUERY_DB_URI=
 QUERY_DB_HOST=
 QUERY_DB_PORT=
 QUERY_DB_USERNAME=
 QUERY_DB_PASSWORD=
 
 # message queue properties
+MESSAGE_TEAM_QUEUE=
+MESSAGE_PLAYER_QUEUE=
+MESSAGE_PLAYER_TEAM_QUEUE=
+MESSAGE_TYPE_KEY
 MESSAGE_ENDPOINT_URL=
 MESSAGE_DEFAULT_REGION=
 MESSAGE_ACCESS_KEY_ID=

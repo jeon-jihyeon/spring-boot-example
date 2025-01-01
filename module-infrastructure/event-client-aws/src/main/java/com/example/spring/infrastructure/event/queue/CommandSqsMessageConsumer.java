@@ -21,19 +21,19 @@ public class CommandSqsMessageConsumer {
     }
 
     @Async
-    @SqsListener(value = "team")
+    @SqsListener(value = "${spring.cloud.aws.sqs.queue.team}")
     public void listenTeam(DomainEvent event) {
         teamHandler.handle(event);
     }
 
     @Async
-    @SqsListener(value = "player")
+    @SqsListener(value = "${spring.cloud.aws.sqs.queue.player}")
     public void listenPlayer(DomainEvent event) {
         playerHandler.handle(event);
     }
 
     @Async
-    @SqsListener(value = "player-team")
+    @SqsListener(value = "${spring.cloud.aws.sqs.queue.player-team}")
     public void listenPlayerTeam(DomainEvent event) {
         teamPlayerHandler.handle(event);
     }
