@@ -9,6 +9,8 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 import static com.example.spring.infrastructure.db.command.team.QTeamEntity.teamEntity;
 
 @Repository
@@ -39,11 +41,11 @@ public class TeamCommandAdapter implements TeamCommandRepository {
     }
 
     @Override
-    public TeamId findTeamId(PlayerId playerId) {
-        return queryFactory.select(teamEntity)
-                .where(teamEntity.playerIds.contains(playerId.value()))
-                .stream().findFirst()
-                .map(e -> new TeamId(e.getId()))
-                .orElse(TeamId.NoTeam);
+    public Optional<TeamData> findByPlayerId(PlayerId playerId) {
+        return Optional.ofNullable(queryFactory
+                        .selectFrom(teamEntity)
+                        .where(teamEntity.playerIds.contains(playerId.value()))
+                        .fetchFirst())
+                .map(TeamEntity::toData);
     }
 }

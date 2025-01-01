@@ -74,7 +74,7 @@ function create_sns() {
     for type in "${@:2}"
     do
       queue_arn=""
-      create_sqs_with_dlq "$topic_name"
+      create_sqs_with_dlq "$topic_name-$type"
       subscribe_sns "$topic_arn" "$queue_arn" "$type"
     done
 }
@@ -83,4 +83,5 @@ function create_sns() {
 # create_sns "$TOPIC_TEAM" "create" "command"
 # create_sns "$TOPIC_PLAYER" "command"
 create_sqs_with_dlq "team"
-create_sqs_with_dlq "command"
+create_sqs_with_dlq "player"
+create_sqs_with_dlq "player-team"

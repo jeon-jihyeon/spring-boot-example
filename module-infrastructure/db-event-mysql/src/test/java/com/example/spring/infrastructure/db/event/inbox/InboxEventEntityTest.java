@@ -20,7 +20,7 @@ class InboxEventEntityTest extends BaseUnitTest {
         final InboxEventEntity entity = InboxEventEntity.from(EVENT);
         assertThat(entity.getId()).isEqualTo(1L);
         assertThat(entity.getCompleted()).isFalse();
-        assertThat(entity.getModelName()).isEqualTo("model");
+        assertThat(entity.getQueueName()).isEqualTo("model");
         assertThat(entity.getModelId()).isEqualTo(2L);
         assertThat(entity.getCreatedAt()).isEqualTo(NOW);
         assertThat(entity.getCompletedAt()).isEqualTo(NOW);
@@ -32,7 +32,7 @@ class InboxEventEntityTest extends BaseUnitTest {
         final DomainEvent model = InboxEventEntity.from(EVENT).toModel();
         assertThat(model.id()).isEqualTo(1L);
         assertThat(model.completed()).isFalse();
-        assertThat(model.modelName()).isEqualTo("model");
+        assertThat(model.queueName()).isEqualTo("model");
         assertThat(model.modelId()).isEqualTo(2L);
         assertThat(model.createdAt()).isEqualTo(NOW);
         assertThat(model.completedAt()).isEqualTo(NOW);

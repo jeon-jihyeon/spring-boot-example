@@ -1,8 +1,7 @@
 package com.example.spring.application.batch;
 
 import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.player.PlayerMessageProducer;
-import com.example.spring.domain.team.TeamMessageProducer;
+import com.example.spring.domain.event.MessageBatchProducer;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,9 +20,7 @@ class OutboxBatchIntegrationTest extends BaseContextTest {
     private final JobLauncherTestUtils jobLauncherTestUtils;
     private final JdbcTemplate jdbcTemplate;
     @SpyBean
-    private PlayerProducerSpy playerProducer;
-    @SpyBean
-    private TeamProducerSpy teamProducer;
+    private MessageProducerSpy playerProducer;
 
     public OutboxBatchIntegrationTest(JobLauncherTestUtils jobLauncherTestUtils, JdbcTemplate jdbcTemplate) {
         this.jobLauncherTestUtils = jobLauncherTestUtils;
@@ -47,31 +44,12 @@ class OutboxBatchIntegrationTest extends BaseContextTest {
         assertThat(jdbcTemplate.queryForObject(select, Integer.class)).isEqualTo(0);
     }
 
-    private final static class PlayerProducerSpy implements PlayerMessageProducer {
+    private final static class MessageProducerSpy implements MessageBatchProducer {
         private final Logger log = LoggerFactory.getLogger(getClass());
 
         @Override
-        public void send(DomainEvent event) {
-            log.info("[Player Spy Message] {}", event);
-        }
-
-        @Override
         public void sendBatch(List<DomainEvent> events) {
-            log.info("[Player Spy Message] {}", events);
-        }
-    }
-
-    private final static class TeamProducerSpy implements TeamMessageProducer {
-        private final Logger log = LoggerFactory.getLogger(getClass());
-
-        @Override
-        public void send(DomainEvent event) {
-            log.info("[Team Spy Message] {}", event);
-        }
-
-        @Override
-        public void sendBatch(List<DomainEvent> events) {
-            log.info("[Team Spy Message] {}", events);
+            log.info("[Spy Message] {}", events);
         }
     }
 }

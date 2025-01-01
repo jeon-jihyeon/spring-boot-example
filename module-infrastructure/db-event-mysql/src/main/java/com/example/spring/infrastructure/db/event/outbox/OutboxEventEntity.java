@@ -17,12 +17,12 @@ public class OutboxEventEntity extends BaseEventEntity {
             Long id,
             Boolean completed,
             DomainEventType type,
-            String modelName,
+            String queueName,
             Long modelId,
             LocalDateTime createdAt,
             LocalDateTime completedAt
     ) {
-        super(id, completed, type, modelName, modelId, createdAt, completedAt);
+        super(id, completed, type, queueName, modelId, createdAt, completedAt);
     }
 
     public static OutboxEventEntity from(DomainEvent event) {
@@ -30,7 +30,7 @@ public class OutboxEventEntity extends BaseEventEntity {
                 event.id(),
                 event.completed(),
                 event.type(),
-                event.modelName(),
+                event.queueName(),
                 event.modelId(),
                 event.createdAt(),
                 event.completedAt()

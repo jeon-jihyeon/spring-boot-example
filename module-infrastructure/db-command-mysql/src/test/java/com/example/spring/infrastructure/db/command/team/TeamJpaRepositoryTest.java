@@ -1,7 +1,7 @@
 package com.example.spring.infrastructure.db.command.team;
 
-import com.example.spring.domain.player.PlayerMessageService;
-import com.example.spring.domain.team.TeamMessageService;
+import com.example.spring.domain.player.PlayerCommandMessageService;
+import com.example.spring.domain.team.TeamCommandMessageService;
 import com.example.spring.domain.team.dto.TeamCreateCommand;
 import com.example.spring.domain.team.dto.TeamData;
 import com.example.spring.domain.team.model.Team;
@@ -22,9 +22,9 @@ public class TeamJpaRepositoryTest {
     @Autowired
     private TeamJpaRepository repository;
     @MockBean
-    private TeamMessageService teamMessageService;
+    private TeamCommandMessageService teamCommandMessageService;
     @MockBean
-    private PlayerMessageService playerMessageService;
+    private PlayerCommandMessageService playerMessageService;
     @SpyBean
     private LocalContainerEntityManagerFactoryBean testCommandEntityManagerFactory;
 

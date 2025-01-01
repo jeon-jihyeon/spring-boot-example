@@ -1,6 +1,5 @@
 package com.example.spring.infrastructure.db.command;
 
-import com.example.spring.domain.event.dto.DomainEventCommand;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
@@ -31,14 +30,6 @@ public abstract class BaseCommandEntity {
 
     public Long getId() {
         return id;
-    }
-
-    private String getModelName() {
-        return getClass().getSimpleName().replace("Entity", "").toLowerCase();
-    }
-
-    public DomainEventCommand getCommand() {
-        return new DomainEventCommand(getModelName(), getId());
     }
 
     @Override

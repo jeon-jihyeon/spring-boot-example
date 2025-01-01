@@ -9,7 +9,7 @@ public record TeamId(Long value) {
         return new TeamId(IdGenerator.newId());
     }
 
-    public Boolean isNotNoTeam() {
-        return !value.equals(NoTeam.value);
+    public Boolean isNoTeam() {
+        return value.equals(NoTeam.value);
     }
 }

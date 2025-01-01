@@ -10,6 +10,6 @@ public class EntityAlreadyExistsException extends ApiException {
     }
 
     public EntityAlreadyExistsException(Object data) {
-        super(HttpStatus.INTERNAL_SERVER_ERROR, LogLevel.ERROR, ErrorCode.INTERNAL_SERVER, data);
+        super(HttpStatus.CONFLICT, LogLevel.ERROR, ErrorCode.ALREADY_EXiST, data);
     }
 }

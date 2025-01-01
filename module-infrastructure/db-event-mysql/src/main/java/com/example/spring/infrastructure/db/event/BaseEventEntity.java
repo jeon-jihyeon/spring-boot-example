@@ -19,7 +19,7 @@ public class BaseEventEntity {
     @Column(nullable = false, length = 10)
     private DomainEventType type;
     @Column(length = 64, nullable = false)
-    private String modelName;
+    private String queueName;
     @Column(nullable = false)
     private Long modelId;
     @CreationTimestamp
@@ -35,7 +35,7 @@ public class BaseEventEntity {
             Long id,
             Boolean completed,
             DomainEventType type,
-            String modelName,
+            String queueName,
             Long modelId,
             LocalDateTime createdAt,
             LocalDateTime completedAt
@@ -43,7 +43,7 @@ public class BaseEventEntity {
         this.id = id;
         this.completed = completed;
         this.type = type;
-        this.modelName = modelName;
+        this.queueName = queueName;
         this.modelId = modelId;
         this.createdAt = createdAt;
         this.completedAt = completedAt;
@@ -53,7 +53,7 @@ public class BaseEventEntity {
     }
 
     public DomainEvent toModel() {
-        return new DomainEvent(id, completed, type, modelName, modelId, createdAt, completedAt);
+        return new DomainEvent(id, completed, type, queueName, modelId, createdAt, completedAt);
     }
 
     public Long getId() {
@@ -80,12 +80,12 @@ public class BaseEventEntity {
         this.type = type;
     }
 
-    public String getModelName() {
-        return modelName;
+    public String getQueueName() {
+        return queueName;
     }
 
-    public void setModelName(String model) {
-        this.modelName = model;
+    public void setQueueName(String model) {
+        this.queueName = model;
     }
 
     public Long getModelId() {
@@ -138,7 +138,7 @@ public class BaseEventEntity {
 
     @Override
     public String toString() {
-        return String.format("DomainEventEntity[teamId=%s, completed=%s, type=%s, modelName=%s, modelId=%s, createdAt=%s, completedAt=%s]",
-                id, completed, type, modelName, modelId, createdAt, completedAt);
+        return String.format("DomainEventEntity[oldTeamId=%s, completed=%s, type=%s, queueName=%s, modelId=%s, createdAt=%s, completedAt=%s]",
+                id, completed, type, queueName, modelId, createdAt, completedAt);
     }
 }

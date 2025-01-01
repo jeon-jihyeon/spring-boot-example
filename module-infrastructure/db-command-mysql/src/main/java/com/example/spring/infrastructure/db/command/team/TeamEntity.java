@@ -60,4 +60,8 @@ public class TeamEntity extends BaseCommandEntity {
     public Set<Long> getPlayerIds() {
         return playerIds;
     }
+
+    public void setPlayerIds(Set<Long> playerIds) {
+        this.playerIds = playerIds;
+    }
 }

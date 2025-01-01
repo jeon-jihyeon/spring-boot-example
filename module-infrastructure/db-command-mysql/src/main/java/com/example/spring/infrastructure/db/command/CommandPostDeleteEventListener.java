@@ -1,8 +1,9 @@
 package com.example.spring.infrastructure.db.command;
 
-import com.example.spring.domain.player.PlayerMessageService;
+import com.example.spring.domain.event.DomainEventType;
+import com.example.spring.domain.player.PlayerCommandMessageService;
 import com.example.spring.domain.player.model.PlayerId;
-import com.example.spring.domain.team.TeamMessageService;
+import com.example.spring.domain.team.TeamCommandMessageService;
 import com.example.spring.domain.team.model.TeamId;
 import com.example.spring.infrastructure.db.command.player.PlayerEntity;
 import com.example.spring.infrastructure.db.command.team.TeamEntity;
@@ -14,10 +15,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CommandPostDeleteEventListener implements PostDeleteEventListener {
-    private final TeamMessageService teamMessage;
-    private final PlayerMessageService playerMessage;
+    private static final DomainEventType TYPE = DomainEventType.DELETE;
+    private final TeamCommandMessageService teamMessage;
+    private final PlayerCommandMessageService playerMessage;
 
-    public CommandPostDeleteEventListener(TeamMessageService teamMessage, PlayerMessageService playerMessage) {
+    public CommandPostDeleteEventListener(TeamCommandMessageService teamMessage, PlayerCommandMessageService playerMessage) {
         this.teamMessage = teamMessage;
         this.playerMessage = playerMessage;
     }
@@ -26,8 +28,8 @@ public class CommandPostDeleteEventListener implements PostDeleteEventListener {
     @Override
     public void onPostDelete(PostDeleteEvent event) {
         final Object e = event.getEntity();
-        if (e instanceof TeamEntity) teamMessage.sendDeleteType(new TeamId(((TeamEntity) e).getId()));
-        else if (e instanceof PlayerEntity) playerMessage.sendDeleteType(new PlayerId(((PlayerEntity) e).getId()));
+        if (e instanceof TeamEntity) teamMessage.send(TYPE, new TeamId(((TeamEntity) e).getId()));
+        else if (e instanceof PlayerEntity) playerMessage.send(TYPE, new PlayerId(((PlayerEntity) e).getId()));
     }
 
     @Override

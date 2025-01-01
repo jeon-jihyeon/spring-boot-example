@@ -29,7 +29,7 @@ class OutboxEventAdapterTest extends BaseContextTest {
         assertThat(found.getId()).isEqualTo(1L);
         assertThat(found.getCompleted()).isFalse();
         assertThat(found.getType()).isEqualTo(DomainEventType.CREATE);
-        assertThat(found.getModelName()).isEqualTo("model");
+        assertThat(found.getQueueName()).isEqualTo("model");
         assertThat(found.getModelId()).isEqualTo(2L);
         assertThat(found.getCreatedAt()).isEqualTo(now);
         assertThat(found.getCompletedAt()).isEqualTo(now);

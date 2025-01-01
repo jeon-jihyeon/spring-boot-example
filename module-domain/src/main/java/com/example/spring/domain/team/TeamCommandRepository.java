@@ -4,6 +4,8 @@ import com.example.spring.domain.player.model.PlayerId;
 import com.example.spring.domain.team.dto.TeamData;
 import com.example.spring.domain.team.model.TeamId;
 
+import java.util.Optional;
+
 public interface TeamCommandRepository {
     TeamData save(TeamData team);
 
@@ -11,5 +13,5 @@ public interface TeamCommandRepository {
 
     void deleteById(TeamId id);
 
-    TeamId findTeamId(PlayerId playerId);
+    Optional<TeamData> findByPlayerId(PlayerId playerId);
 }

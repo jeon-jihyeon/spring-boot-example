@@ -16,12 +16,12 @@ public class InboxEventEntity extends BaseEventEntity {
             Long id,
             Boolean completed,
             DomainEventType type,
-            String modelName,
+            String queueName,
             Long modelId,
             LocalDateTime createdAt,
             LocalDateTime completedAt
     ) {
-        super(id, completed, type, modelName, modelId, createdAt, completedAt);
+        super(id, completed, type, queueName, modelId, createdAt, completedAt);
     }
 
     public static InboxEventEntity from(DomainEvent event) {
@@ -29,7 +29,7 @@ public class InboxEventEntity extends BaseEventEntity {
                 event.id(),
                 event.completed(),
                 event.type(),
-                event.modelName(),
+                event.queueName(),
                 event.modelId(),
                 event.createdAt(),
                 event.completedAt()

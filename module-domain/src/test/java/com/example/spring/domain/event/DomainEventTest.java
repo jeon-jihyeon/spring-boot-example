@@ -17,7 +17,7 @@ class DomainEventTest extends BaseUnitTest {
         assertThat(model.id()).isEqualTo(1L);
         assertThat(model.completed()).isFalse();
         assertThat(model.type()).isEqualTo(DomainEventType.CREATE);
-        assertThat(model.modelName()).isEqualTo("model");
+        assertThat(model.queueName()).isEqualTo("model");
         assertThat(model.modelId()).isEqualTo(2L);
         assertThat(model.createdAt()).isEqualTo(now);
         assertThat(model.completedAt()).isEqualTo(now);

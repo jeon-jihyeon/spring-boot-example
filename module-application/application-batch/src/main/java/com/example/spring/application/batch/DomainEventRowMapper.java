@@ -16,7 +16,7 @@ public class DomainEventRowMapper implements RowMapper<DomainEvent> {
                 rs.getLong("id"),
                 rs.getBoolean("completed"),
                 DomainEventType.valueOf(rs.getString("type")),
-                rs.getString("model_name"),
+                rs.getString("queue_name"),
                 rs.getLong("model_id"),
                 rs.getObject("created_at", LocalDateTime.class),
                 rs.getObject("completed_at", LocalDateTime.class)

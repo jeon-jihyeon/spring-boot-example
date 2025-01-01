@@ -1,10 +1,7 @@
 package com.example.spring.application.batch;
 
 import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.player.PlayerMessageProducer;
-import com.example.spring.domain.player.model.Player;
-import com.example.spring.domain.team.TeamMessageProducer;
-import com.example.spring.domain.team.model.Team;
+import com.example.spring.domain.event.MessageBatchProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
@@ -32,13 +29,11 @@ import java.util.List;
 @Configuration
 public class OutboxBatchJobConfig {
     private final Logger log = LoggerFactory.getLogger(getClass());
-    private final PlayerMessageProducer playerProducer;
-    private final TeamMessageProducer teamProducer;
+    private final MessageBatchProducer messageProducer;
     private final OutboxBatchJobProperties properties;
 
-    public OutboxBatchJobConfig(PlayerMessageProducer playerProducer, TeamMessageProducer teamProducer, OutboxBatchJobProperties properties) {
-        this.playerProducer = playerProducer;
-        this.teamProducer = teamProducer;
+    public OutboxBatchJobConfig(MessageBatchProducer messageProducer, OutboxBatchJobProperties properties) {
+        this.messageProducer = messageProducer;
         this.properties = properties;
     }
 
@@ -87,14 +82,9 @@ public class OutboxBatchJobConfig {
     @Bean
     public ItemWriter<DomainEvent> messageProducer() {
         return chunk -> {
-            final List<DomainEvent> playerEvents = new ArrayList<>();
-            final List<DomainEvent> teamEvents = new ArrayList<>();
-            for (DomainEvent e : chunk) {
-                if (e.modelName().equals(Player.class.getSimpleName())) playerEvents.add(e);
-                else if (e.modelName().equals(Team.class.getSimpleName())) teamEvents.add(e);
-            }
-            if (!playerEvents.isEmpty()) playerProducer.sendBatch(playerEvents);
-            if (!teamEvents.isEmpty()) teamProducer.sendBatch(teamEvents);
+            final List<DomainEvent> events = new ArrayList<>();
+            for (DomainEvent e : chunk) events.add(e);
+            if (!events.isEmpty()) messageProducer.sendBatch(events);
         };
     }
 }

@@ -1,8 +1,9 @@
 package com.example.spring.infrastructure.db.command;
 
-import com.example.spring.domain.player.PlayerMessageService;
+import com.example.spring.domain.event.DomainEventType;
+import com.example.spring.domain.player.PlayerCommandMessageService;
 import com.example.spring.domain.player.model.PlayerId;
-import com.example.spring.domain.team.TeamMessageService;
+import com.example.spring.domain.team.TeamCommandMessageService;
 import com.example.spring.domain.team.model.TeamId;
 import com.example.spring.infrastructure.db.command.player.PlayerEntity;
 import com.example.spring.infrastructure.db.command.team.TeamEntity;
@@ -14,10 +15,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CommandPostUpdateEventListener implements PostUpdateEventListener {
-    private final TeamMessageService teamMessage;
-    private final PlayerMessageService playerMessage;
+    private static final DomainEventType TYPE = DomainEventType.UPDATE;
+    private final TeamCommandMessageService teamMessage;
+    private final PlayerCommandMessageService playerMessage;
 
-    public CommandPostUpdateEventListener(TeamMessageService teamMessage, PlayerMessageService playerMessage) {
+    public CommandPostUpdateEventListener(TeamCommandMessageService teamMessage, PlayerCommandMessageService playerMessage) {
         this.teamMessage = teamMessage;
         this.playerMessage = playerMessage;
     }
@@ -29,8 +31,8 @@ public class CommandPostUpdateEventListener implements PostUpdateEventListener {
         // final String[] names = event.getPersister().getPropertyNames();
         // final List<String> list = new ArrayList<>();
         // for (int i : event.getDirtyProperties()) if (!names[i].equals("updatedAt")) list.add(names[i]);
-        if (e instanceof TeamEntity) teamMessage.sendUpdateType(new TeamId(((TeamEntity) e).getId()));
-        else if (e instanceof PlayerEntity) playerMessage.sendUpdateType(new PlayerId(((PlayerEntity) e).getId()));
+        if (e instanceof TeamEntity) teamMessage.send(TYPE, new TeamId(((TeamEntity) e).getId()));
+        else if (e instanceof PlayerEntity) playerMessage.send(TYPE, new PlayerId(((PlayerEntity) e).getId()));
     }
 
     @Override

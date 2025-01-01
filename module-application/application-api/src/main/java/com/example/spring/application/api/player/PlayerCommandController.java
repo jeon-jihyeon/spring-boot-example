@@ -34,7 +34,7 @@ public class PlayerCommandController {
     }
 
     @PatchMapping("/api/players/{id}/teams")
-    public ResponseModel<PlayerResponse> joinTeam(final @PathVariable Long id, final PlayerJoinRequest data) {
+    public ResponseModel<PlayerResponse> joinTeam(final @PathVariable Long id, final @RequestBody PlayerJoinRequest data) {
         return ResponseModel.ok(PlayerResponse.from(joinService.invoke(data.toCommand(id))));
     }
 
