@@ -1,4 +1,4 @@
 dependencies {
-    implementation project(":module-domain")
+    implementation project(":module-domain:command")
     implementation 'org.springframework.boot:spring-boot-starter-web'
 }

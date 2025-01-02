@@ -3,7 +3,7 @@ package com.example.spring.application.api.player;
 import com.example.spring.application.api.player.data.PlayerQueryParam;
 import com.example.spring.application.api.player.data.PlayerQueryResponse;
 import com.example.spring.application.common.ResponseModel;
-import com.example.spring.domain.player.PlayerQueryService;
+import com.example.spring.domain.query.player.PlayerQueryService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

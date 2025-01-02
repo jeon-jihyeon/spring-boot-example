@@ -1,8 +1,8 @@
 package com.example.spring.infrastructure.api.command;
 
-import com.example.spring.domain.team.TeamCommandApiClient;
-import com.example.spring.domain.team.dto.TeamData;
-import com.example.spring.domain.team.model.TeamId;
+import com.example.spring.domain.command.team.TeamCommandApiClient;
+import com.example.spring.domain.command.team.dto.TeamData;
+import com.example.spring.domain.command.team.model.TeamId;
 import org.springframework.stereotype.Component;
 
 @Component

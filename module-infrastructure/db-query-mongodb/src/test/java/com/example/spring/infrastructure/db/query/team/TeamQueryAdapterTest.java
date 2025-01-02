@@ -1,6 +1,6 @@
 package com.example.spring.infrastructure.db.query.team;
 
-import com.example.spring.domain.team.dto.TeamData;
+import com.example.spring.domain.command.team.dto.TeamData;
 import com.example.spring.infrastructure.db.query.BaseContextTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

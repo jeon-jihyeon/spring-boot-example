@@ -4,11 +4,11 @@ import com.example.spring.application.api.player.data.PlayerCommandResponse;
 import com.example.spring.application.api.player.data.PlayerCreateRequest;
 import com.example.spring.application.api.player.data.PlayerJoinRequest;
 import com.example.spring.application.common.ResponseModel;
-import com.example.spring.domain.player.PlayerCommandJoinService;
-import com.example.spring.domain.player.PlayerCommandLeaveService;
-import com.example.spring.domain.player.PlayerCommandService;
-import com.example.spring.domain.player.dto.PlayerLeaveCommand;
-import com.example.spring.domain.player.model.PlayerId;
+import com.example.spring.domain.command.player.PlayerCommandJoinService;
+import com.example.spring.domain.command.player.PlayerCommandLeaveService;
+import com.example.spring.domain.command.player.PlayerCommandService;
+import com.example.spring.domain.command.player.dto.PlayerLeaveCommand;
+import com.example.spring.domain.command.player.model.PlayerId;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

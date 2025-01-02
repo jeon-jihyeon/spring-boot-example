@@ -1,8 +1,8 @@
 package com.example.spring.application.api.team.data;
 
 import com.example.spring.application.common.InvalidValueException;
-import com.example.spring.domain.team.dto.TeamCreateCommand;
-import com.example.spring.domain.team.model.TeamName;
+import com.example.spring.domain.command.team.dto.TeamCreateCommand;
+import com.example.spring.domain.command.team.model.TeamName;
 import org.springframework.util.StringUtils;
 
 public record TeamCreateRequest(String name) {

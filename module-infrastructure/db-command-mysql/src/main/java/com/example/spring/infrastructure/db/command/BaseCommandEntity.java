@@ -34,12 +34,8 @@ public abstract class BaseCommandEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         return Objects.equals(id, ((BaseCommandEntity) o).getId());
     }
 

@@ -1,17 +1,12 @@
 package com.example.spring.infrastructure.db.command.team;
 
-import com.example.spring.domain.player.model.PlayerId;
-import com.example.spring.domain.team.TeamCommandRepository;
-import com.example.spring.domain.team.dto.TeamData;
-import com.example.spring.domain.team.model.TeamId;
+import com.example.spring.domain.command.team.TeamCommandRepository;
+import com.example.spring.domain.command.team.dto.TeamData;
+import com.example.spring.domain.command.team.model.TeamId;
 import com.example.spring.infrastructure.db.EntityNotFoundException;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
-
-import static com.example.spring.infrastructure.db.command.team.QTeamEntity.teamEntity;
 
 @Repository
 public class TeamCommandAdapter implements TeamCommandRepository {
@@ -38,14 +33,5 @@ public class TeamCommandAdapter implements TeamCommandRepository {
     @Transactional(transactionManager = "commandTransactionManager")
     public void deleteById(TeamId id) {
         repository.deleteById(id.value());
-    }
-
-    @Override
-    public Optional<TeamData> findByPlayerId(PlayerId playerId) {
-        return Optional.ofNullable(queryFactory
-                        .selectFrom(teamEntity)
-                        .where(teamEntity.playerIds.contains(playerId.value()))
-                        .fetchFirst())
-                .map(TeamEntity::toData);
     }
 }

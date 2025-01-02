@@ -10,7 +10,6 @@ spring:
         queue:
           team: ${MESSAGE_TEAM_QUEUE}
           player: ${MESSAGE_PLAYER_QUEUE}
-          player-team: ${MESSAGE_PLAYER_TEAM_QUEUE}
       sns:
         topic-arn: ${TEAM_TOPIC_ARN}
         region: ${MESSAGE_DEFAULT_REGION}

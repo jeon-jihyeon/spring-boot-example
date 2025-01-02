@@ -1,9 +1,9 @@
 package com.example.spring.infrastructure.db.query.player;
 
-import com.example.spring.domain.player.PlayerQueryRepository;
-import com.example.spring.domain.player.dto.PlayerData;
-import com.example.spring.domain.player.model.PlayerId;
-import com.example.spring.domain.team.model.TeamId;
+import com.example.spring.domain.command.player.dto.PlayerData;
+import com.example.spring.domain.command.player.model.PlayerId;
+import com.example.spring.domain.command.team.model.TeamId;
+import com.example.spring.domain.query.player.PlayerQueryRepository;
 import com.example.spring.infrastructure.db.query.DocumentNotFoundException;
 import org.springframework.stereotype.Repository;
 

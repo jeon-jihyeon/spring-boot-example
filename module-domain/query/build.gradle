@@ -1,0 +1,4 @@
+dependencies {
+    implementation project(":module-domain:command")
+    implementation 'org.springframework:spring-context'
+}

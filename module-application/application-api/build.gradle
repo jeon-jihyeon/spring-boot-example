@@ -2,7 +2,8 @@ bootJar.enabled = true
 jar.enabled = false
 
 dependencies {
-    implementation project(":module-domain")
+    implementation project(":module-domain:command")
+    implementation project(":module-domain:query")
     implementation project(":module-application:application-batch")
     implementation project(":module-application:application-common")
 

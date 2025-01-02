@@ -1,8 +1,8 @@
 package com.example.spring.infrastructure.db.query.team;
 
-import com.example.spring.domain.team.TeamQueryRepository;
-import com.example.spring.domain.team.dto.TeamData;
-import com.example.spring.domain.team.model.TeamId;
+import com.example.spring.domain.command.team.dto.TeamData;
+import com.example.spring.domain.command.team.model.TeamId;
+import com.example.spring.domain.query.team.TeamQueryRepository;
 import com.example.spring.infrastructure.db.query.DocumentNotFoundException;
 import org.springframework.stereotype.Repository;
 

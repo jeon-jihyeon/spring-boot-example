@@ -1,8 +1,8 @@
 package com.example.spring.application;
 
-import com.example.spring.domain.player.PlayerTeamMessageService;
-import com.example.spring.domain.player.dto.PlayerTeamEvent;
-import com.example.spring.domain.player.model.PlayerId;
+import com.example.spring.domain.command.player.PlayerTeamMessageService;
+import com.example.spring.domain.command.player.dto.PlayerTeamEvent;
+import com.example.spring.domain.command.player.model.PlayerId;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionPhase;

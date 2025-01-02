@@ -1,10 +1,10 @@
 package com.example.spring.infrastructure.db.command;
 
+import com.example.spring.domain.command.player.PlayerCommandMessageService;
+import com.example.spring.domain.command.player.model.PlayerId;
+import com.example.spring.domain.command.team.TeamCommandMessageService;
+import com.example.spring.domain.command.team.model.TeamId;
 import com.example.spring.domain.event.DomainEventType;
-import com.example.spring.domain.player.PlayerCommandMessageService;
-import com.example.spring.domain.player.model.PlayerId;
-import com.example.spring.domain.team.TeamCommandMessageService;
-import com.example.spring.domain.team.model.TeamId;
 import com.example.spring.infrastructure.db.command.player.PlayerEntity;
 import com.example.spring.infrastructure.db.command.team.TeamEntity;
 import org.hibernate.event.spi.PostDeleteEvent;

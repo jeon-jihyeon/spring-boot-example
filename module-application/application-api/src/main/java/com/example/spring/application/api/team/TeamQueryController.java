@@ -3,7 +3,7 @@ package com.example.spring.application.api.team;
 import com.example.spring.application.api.team.data.TeamQueryParam;
 import com.example.spring.application.api.team.data.TeamQueryResponse;
 import com.example.spring.application.common.ResponseModel;
-import com.example.spring.domain.team.TeamQueryService;
+import com.example.spring.domain.query.team.TeamQueryService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

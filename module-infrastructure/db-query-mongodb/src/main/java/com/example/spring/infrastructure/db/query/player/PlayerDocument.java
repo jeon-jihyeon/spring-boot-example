@@ -1,10 +1,10 @@
 package com.example.spring.infrastructure.db.query.player;
 
-import com.example.spring.domain.player.dto.PlayerData;
-import com.example.spring.domain.player.model.FullName;
-import com.example.spring.domain.player.model.Grade;
-import com.example.spring.domain.player.model.PlayerId;
-import com.example.spring.domain.team.model.TeamId;
+import com.example.spring.domain.command.player.dto.PlayerData;
+import com.example.spring.domain.command.player.model.FullName;
+import com.example.spring.domain.command.player.model.Grade;
+import com.example.spring.domain.command.player.model.PlayerId;
+import com.example.spring.domain.command.team.model.TeamId;
 import com.example.spring.infrastructure.db.query.BaseQueryDocument;
 import org.springframework.data.mongodb.core.mapping.Document;
 

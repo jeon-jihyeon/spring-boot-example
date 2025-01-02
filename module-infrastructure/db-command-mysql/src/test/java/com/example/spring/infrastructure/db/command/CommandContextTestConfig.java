@@ -1,9 +1,9 @@
 package com.example.spring.infrastructure.db.command;
 
+import com.example.spring.domain.command.player.PlayerCommandMessageService;
+import com.example.spring.domain.command.team.TeamCommandMessageService;
 import com.example.spring.domain.event.DomainEventOutbox;
 import com.example.spring.domain.event.MessageProducer;
-import com.example.spring.domain.player.PlayerCommandMessageService;
-import com.example.spring.domain.team.TeamCommandMessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;

@@ -3,19 +3,16 @@ package com.example.spring.application.api.player;
 import com.example.spring.application.api.BaseUnitTest;
 import com.example.spring.application.api.player.data.PlayerCommandResponse;
 import com.example.spring.application.api.player.data.PlayerCreateRequest;
-import com.example.spring.application.api.player.data.PlayerJoinRequest;
 import com.example.spring.application.common.ResponseModel;
-import com.example.spring.domain.player.PlayerCommandJoinService;
-import com.example.spring.domain.player.PlayerCommandLeaveService;
-import com.example.spring.domain.player.PlayerCommandService;
-import com.example.spring.domain.player.dto.PlayerCreateCommand;
-import com.example.spring.domain.player.dto.PlayerData;
-import com.example.spring.domain.player.dto.PlayerLeaveCommand;
-import com.example.spring.domain.player.model.FullName;
-import com.example.spring.domain.player.model.Grade;
-import com.example.spring.domain.player.model.Player;
-import com.example.spring.domain.player.model.PlayerId;
-import com.example.spring.domain.team.model.TeamId;
+import com.example.spring.domain.command.player.PlayerCommandJoinService;
+import com.example.spring.domain.command.player.PlayerCommandLeaveService;
+import com.example.spring.domain.command.player.PlayerCommandService;
+import com.example.spring.domain.command.player.dto.PlayerCreateCommand;
+import com.example.spring.domain.command.player.dto.PlayerData;
+import com.example.spring.domain.command.player.model.Grade;
+import com.example.spring.domain.command.player.model.Player;
+import com.example.spring.domain.command.player.model.PlayerId;
+import com.example.spring.domain.command.team.model.TeamId;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -89,16 +86,5 @@ class PlayerCommandControllerTest extends BaseUnitTest {
         assertThat(response.teamId()).isEqualTo(TeamId.NoTeam.value());
         assertThat(response.firstName()).isEqualTo(request.firstName());
         assertThat(response.lastName()).isEqualTo(request.lastName());
-    }
-
-    @Test
-    void joinTeam() throws Exception {
-        final PlayerJoinRequest joinRequest = new PlayerJoinRequest(2L);
-        final PlayerData data = PlayerData.from(Player.create(new PlayerCreateCommand(new FullName("first", "last"))).joinTeam(new TeamId(1L)));
-
-        when(joinService.invoke(joinRequest.toCommand(1L))).thenReturn(data);
-        when(leaveService.invoke(new PlayerLeaveCommand(new PlayerId(1L)))).thenReturn(data);
-
-        // TODO:
     }
 }

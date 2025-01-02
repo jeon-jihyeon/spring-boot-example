@@ -1,6 +1,8 @@
 rootProject.name = 'spring-boot-example'
 
-include 'module-domain'
+include 'module-domain:command'
+include 'module-domain:event'
+include 'module-domain:query'
 include 'module-application:application-api'
 include 'module-application:application-batch'
 include 'module-application:application-common'

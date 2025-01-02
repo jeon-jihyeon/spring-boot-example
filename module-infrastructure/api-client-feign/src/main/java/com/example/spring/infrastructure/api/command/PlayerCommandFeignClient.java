@@ -1,8 +1,8 @@
 package com.example.spring.infrastructure.api.command;
 
-import com.example.spring.domain.player.PlayerCommandApiClient;
-import com.example.spring.domain.player.dto.PlayerData;
-import com.example.spring.domain.player.model.PlayerId;
+import com.example.spring.domain.command.player.PlayerCommandApiClient;
+import com.example.spring.domain.command.player.dto.PlayerData;
+import com.example.spring.domain.command.player.model.PlayerId;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -84,4 +84,3 @@ function create_sns() {
 # create_sns "$TOPIC_PLAYER" "command"
 create_sqs_with_dlq "team"
 create_sqs_with_dlq "player"
-create_sqs_with_dlq "player-team"

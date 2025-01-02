@@ -1,8 +1,8 @@
 package com.example.spring.infrastructure.api.query;
 
-import com.example.spring.domain.player.PlayerQueryApiClient;
-import com.example.spring.domain.player.dto.PlayerData;
-import com.example.spring.domain.team.model.TeamId;
+import com.example.spring.domain.command.player.dto.PlayerData;
+import com.example.spring.domain.command.team.model.TeamId;
+import com.example.spring.domain.query.player.PlayerQueryApiClient;
 import com.example.spring.infrastructure.api.PlayerApiResponse;
 import org.springframework.stereotype.Component;
 

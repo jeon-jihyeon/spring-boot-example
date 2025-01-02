@@ -4,11 +4,11 @@ import com.example.spring.application.api.BaseUnitTest;
 import com.example.spring.application.api.team.data.TeamCommandResponse;
 import com.example.spring.application.api.team.data.TeamCreateRequest;
 import com.example.spring.application.common.ResponseModel;
-import com.example.spring.domain.team.TeamCommandService;
-import com.example.spring.domain.team.dto.TeamCreateCommand;
-import com.example.spring.domain.team.dto.TeamData;
-import com.example.spring.domain.team.model.Team;
-import com.example.spring.domain.team.model.TeamId;
+import com.example.spring.domain.command.team.TeamCommandService;
+import com.example.spring.domain.command.team.dto.TeamCreateCommand;
+import com.example.spring.domain.command.team.dto.TeamData;
+import com.example.spring.domain.command.team.model.Team;
+import com.example.spring.domain.command.team.model.TeamId;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -79,6 +79,5 @@ class TeamCommandControllerTest extends BaseUnitTest {
         assertThat(response.id()).isEqualTo(id);
         assertThat(response.name()).isEqualTo(request.name());
         assertThat(response.startsAt()).isBefore(LocalDateTime.now());
-        assertThat(response.playerIds()).isEmpty();
     }
 }

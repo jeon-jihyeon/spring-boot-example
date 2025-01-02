@@ -1,7 +1,7 @@
 package com.example.spring.application.api.team.data;
 
 import com.example.spring.application.api.player.data.PlayerQueryResponse;
-import com.example.spring.domain.team.dto.TeamQuery;
+import com.example.spring.domain.query.team.dto.TeamQuery;
 
 import java.time.LocalDateTime;
 import java.util.List;

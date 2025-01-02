@@ -1,6 +1,6 @@
 package com.example.spring.application.api.team.data;
 
-import com.example.spring.domain.team.dto.TeamQueryCondition;
+import com.example.spring.domain.query.team.dto.TeamQueryCondition;
 
 import java.time.LocalDateTime;
 

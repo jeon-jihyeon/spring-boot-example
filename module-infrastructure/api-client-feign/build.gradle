@@ -1,5 +1,6 @@
 dependencies {
-    implementation project(":module-domain")
+    implementation project(":module-domain:command")
+    implementation project(":module-domain:query")
     implementation project(":module-application:application-common")
 
     implementation 'org.springframework:spring-context'

@@ -4,8 +4,8 @@ import com.example.spring.application.api.BaseContextTest;
 import com.example.spring.application.api.team.data.TeamCommandResponse;
 import com.example.spring.application.api.team.data.TeamCreateRequest;
 import com.example.spring.application.common.ResponseModel;
-import com.example.spring.domain.team.dto.TeamData;
-import com.example.spring.domain.team.model.Team;
+import com.example.spring.domain.command.team.dto.TeamData;
+import com.example.spring.domain.command.team.model.Team;
 import com.fasterxml.jackson.databind.JavaType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,6 +45,5 @@ public class TeamIntegrationTest extends BaseContextTest {
         assertThat(data.id()).isNotNull();
         assertThat(data.name()).isEqualTo(request.name());
         assertThat(data.startsAt()).isBefore(LocalDateTime.now());
-        assertThat(data.playerIds()).isEmpty();
     }
 }

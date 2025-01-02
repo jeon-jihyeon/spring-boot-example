@@ -1,8 +1,8 @@
 package com.example.spring.infrastructure.db.command.player;
 
-import com.example.spring.domain.player.PlayerCommandRepository;
-import com.example.spring.domain.player.dto.PlayerData;
-import com.example.spring.domain.player.model.PlayerId;
+import com.example.spring.domain.command.player.PlayerCommandRepository;
+import com.example.spring.domain.command.player.dto.PlayerData;
+import com.example.spring.domain.command.player.model.PlayerId;
 import com.example.spring.infrastructure.db.EntityNotFoundException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

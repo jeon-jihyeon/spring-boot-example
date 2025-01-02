@@ -1,8 +1,8 @@
 package com.example.spring.application.api.player.data;
 
 import com.example.spring.application.common.InvalidValueException;
-import com.example.spring.domain.player.dto.PlayerQueryCondition;
-import com.example.spring.domain.team.model.TeamId;
+import com.example.spring.domain.command.team.model.TeamId;
+import com.example.spring.domain.query.player.dto.PlayerQueryCondition;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package com.example.spring.infrastructure.db.query.player;
 
-import com.example.spring.domain.player.dto.PlayerData;
-import com.example.spring.domain.player.model.Grade;
+import com.example.spring.domain.command.player.dto.PlayerData;
+import com.example.spring.domain.command.player.model.Grade;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
