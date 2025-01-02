@@ -1,6 +1,13 @@
 package com.example.spring.domain.team;
 
 import com.example.spring.domain.BaseUnitTest;
+import com.example.spring.domain.player.PlayerQueryApiClient;
+import com.example.spring.domain.player.dto.PlayerData;
+import com.example.spring.domain.player.dto.PlayerQuery;
+import com.example.spring.domain.player.model.Grade;
+import com.example.spring.domain.team.dto.TeamData;
+import com.example.spring.domain.team.dto.TeamQuery;
+import com.example.spring.domain.team.dto.TeamQueryCondition;
 import com.example.spring.domain.team.model.TeamId;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -8,6 +15,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -19,6 +30,8 @@ class TeamQueryServiceTest extends BaseUnitTest {
     private TeamQueryRepository repository;
     @Mock
     private TeamCommandApiClient client;
+    @Mock
+    private PlayerQueryApiClient playerClient;
     @InjectMocks
     private TeamQueryService service;
 
@@ -29,5 +42,27 @@ class TeamQueryServiceTest extends BaseUnitTest {
 
         verify(repository, never()).save(any());
         verify(client, times(1)).findById(any());
+    }
+
+    @Test
+    void shouldFindTeamsWithPlayersGroupedByTeamId() {
+        var now = LocalDateTime.now();
+        var teams = List.of(TeamData.of(1L, "n", now, List.of()),
+                TeamData.of(2L, "n", now, List.of()),
+                TeamData.of(3L, "n", now, List.of()));
+        var players = List.of(PlayerData.of(1L, Grade.C, "f", "l", 1L),
+                PlayerData.of(2L, Grade.C, "f", "l", 2L),
+                PlayerData.of(3L, Grade.C, "f", "l", 2L),
+                PlayerData.of(4L, Grade.C, "f", "l", 3L));
+        when(repository.findTeamsAfter(any())).thenReturn(teams);
+        when(playerClient.findAllByTeamIds(any())).thenReturn(players);
+
+        var res = service.findTeams(new TeamQueryCondition(now));
+        assertThat(res.size()).isEqualTo(3);
+        for (TeamQuery q : res) {
+            for (PlayerQuery pq : q.players()) {
+                assertThat(q.id()).isEqualTo(pq.teamId());
+            }
+        }
     }
 }

@@ -24,4 +24,18 @@ class TeamQueryAdapterTest extends BaseContextTest {
         assertThat(found.id().value()).isEqualTo(22L);
         assertThat(found.startsAt()).isEqualTo(NOW);
     }
+
+    @Test
+    void shouldFindTeamsAfter() {
+        final LocalDateTime now = LocalDateTime.now();
+        adapter.save(TeamData.of(1L, "name", now, List.of(11L)));
+        adapter.save(TeamData.of(2L, "name", now, List.of(11L)));
+        adapter.save(TeamData.of(3L, "name", now, List.of(11L)));
+
+        final List<TeamData> teams = adapter.findTeamsAfter(now.minusSeconds(1));
+        assertThat(teams.size()).isEqualTo(3);
+        for (TeamData d : teams) {
+            assertThat(d.id().value()).isIn(List.of(1L, 2L, 3L));
+        }
+    }
 }

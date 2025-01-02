@@ -3,9 +3,11 @@ package com.example.spring.infrastructure.db.query.player;
 import com.example.spring.domain.player.PlayerQueryRepository;
 import com.example.spring.domain.player.dto.PlayerData;
 import com.example.spring.domain.player.model.PlayerId;
+import com.example.spring.domain.team.model.TeamId;
 import com.example.spring.infrastructure.db.query.DocumentNotFoundException;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -25,6 +27,11 @@ public class PlayerQueryAdapter implements PlayerQueryRepository {
     @Override
     public PlayerData findById(PlayerId id) {
         return repository.findById(id.value()).orElseThrow(DocumentNotFoundException::new).toData();
+    }
+
+    @Override
+    public List<PlayerData> findAllByTeamIds(List<TeamId> teamIds) {
+        return repository.findAllByTeamIdIn(teamIds.stream().map(TeamId::value).toList()).stream().map(PlayerDocument::toData).toList();
     }
 
     @Override

@@ -1,9 +1,9 @@
 package com.example.spring.application.api.player;
 
 import com.example.spring.application.api.BaseUnitTest;
+import com.example.spring.application.api.player.data.PlayerCommandResponse;
 import com.example.spring.application.api.player.data.PlayerCreateRequest;
 import com.example.spring.application.api.player.data.PlayerJoinRequest;
-import com.example.spring.application.api.player.data.PlayerResponse;
 import com.example.spring.application.common.ResponseModel;
 import com.example.spring.domain.player.PlayerCommandJoinService;
 import com.example.spring.domain.player.PlayerCommandLeaveService;
@@ -56,8 +56,8 @@ class PlayerCommandControllerTest extends BaseUnitTest {
         mvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
-    ResponseModel<PlayerResponse> mapResponse(MvcResult result) throws Exception {
-        JavaType t = objectMapper.getTypeFactory().constructParametricType(ResponseModel.class, PlayerResponse.class);
+    ResponseModel<PlayerCommandResponse> mapResponse(MvcResult result) throws Exception {
+        JavaType t = objectMapper.getTypeFactory().constructParametricType(ResponseModel.class, PlayerCommandResponse.class);
         return objectMapper.readValue(result.getResponse().getContentAsString(), t);
     }
 
@@ -70,7 +70,7 @@ class PlayerCommandControllerTest extends BaseUnitTest {
         when(service.create(any(PlayerCreateCommand.class))).thenReturn(data);
         when(service.read(any(PlayerId.class))).thenReturn(data);
 
-        final String expected = objectMapper.writeValueAsString(ResponseModel.ok(PlayerResponse.from(data)));
+        final String expected = objectMapper.writeValueAsString(ResponseModel.ok(PlayerCommandResponse.from(data)));
         final Long id = mapResponse(mvc.perform(MockMvcRequestBuilders.post("/api/players")
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -79,7 +79,7 @@ class PlayerCommandControllerTest extends BaseUnitTest {
                 .andExpect(MockMvcResultMatchers.content().string(expected))
                 .andReturn()).data().id();
 
-        final PlayerResponse response = mapResponse(mvc.perform(MockMvcRequestBuilders.get("/api/players/{id}", id))
+        final PlayerCommandResponse response = mapResponse(mvc.perform(MockMvcRequestBuilders.get("/api/players/{id}", id))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(expected))
                 .andReturn()).data();

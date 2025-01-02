@@ -1,7 +1,7 @@
 package com.example.spring.application.api.team;
 
+import com.example.spring.application.api.team.data.TeamCommandResponse;
 import com.example.spring.application.api.team.data.TeamCreateRequest;
-import com.example.spring.application.api.team.data.TeamResponse;
 import com.example.spring.application.common.ResponseModel;
 import com.example.spring.domain.team.TeamCommandService;
 import com.example.spring.domain.team.model.TeamId;
@@ -16,12 +16,12 @@ public class TeamCommandController {
     }
 
     @PostMapping("/api/teams")
-    public ResponseModel<TeamResponse> create(final @RequestBody TeamCreateRequest data) {
-        return ResponseModel.ok(TeamResponse.from(service.create(data.toCommand())));
+    public ResponseModel<TeamCommandResponse> create(final @RequestBody TeamCreateRequest data) {
+        return ResponseModel.ok(TeamCommandResponse.from(service.create(data.toCommand())));
     }
 
     @GetMapping("/api/teams/{id}")
-    public ResponseModel<TeamResponse> getTeam(final @PathVariable Long id) {
-        return ResponseModel.ok(TeamResponse.from(service.read(new TeamId(id))));
+    public ResponseModel<TeamCommandResponse> getTeam(final @PathVariable Long id) {
+        return ResponseModel.ok(TeamCommandResponse.from(service.read(new TeamId(id))));
     }
 }

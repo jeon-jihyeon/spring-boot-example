@@ -1,8 +1,8 @@
 package com.example.spring.application.api.team;
 
 import com.example.spring.application.api.BaseUnitTest;
+import com.example.spring.application.api.team.data.TeamCommandResponse;
 import com.example.spring.application.api.team.data.TeamCreateRequest;
-import com.example.spring.application.api.team.data.TeamResponse;
 import com.example.spring.application.common.ResponseModel;
 import com.example.spring.domain.team.TeamCommandService;
 import com.example.spring.domain.team.dto.TeamCreateCommand;
@@ -48,8 +48,8 @@ class TeamCommandControllerTest extends BaseUnitTest {
         objectMapper.registerModule(new JavaTimeModule());
     }
 
-    ResponseModel<TeamResponse> mapResponse(MvcResult result) throws Exception {
-        JavaType t = objectMapper.getTypeFactory().constructParametricType(ResponseModel.class, TeamResponse.class);
+    ResponseModel<TeamCommandResponse> mapResponse(MvcResult result) throws Exception {
+        JavaType t = objectMapper.getTypeFactory().constructParametricType(ResponseModel.class, TeamCommandResponse.class);
         return objectMapper.readValue(result.getResponse().getContentAsString(), t);
     }
 
@@ -62,7 +62,7 @@ class TeamCommandControllerTest extends BaseUnitTest {
         when(service.create(any(TeamCreateCommand.class))).thenReturn(data);
         when(service.read(any(TeamId.class))).thenReturn(data);
 
-        final String expected = objectMapper.writeValueAsString(ResponseModel.ok(TeamResponse.from(data)));
+        final String expected = objectMapper.writeValueAsString(ResponseModel.ok(TeamCommandResponse.from(data)));
         final Long id = mapResponse(mvc.perform(MockMvcRequestBuilders.post("/api/teams")
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -71,7 +71,7 @@ class TeamCommandControllerTest extends BaseUnitTest {
                 .andExpect(MockMvcResultMatchers.content().string(expected))
                 .andReturn()).data().id();
 
-        final TeamResponse response = mapResponse(mvc.perform(MockMvcRequestBuilders.get("/api/teams/{id}", id))
+        final TeamCommandResponse response = mapResponse(mvc.perform(MockMvcRequestBuilders.get("/api/teams/{id}", id))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(expected))
                 .andReturn()).data();

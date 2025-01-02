@@ -6,9 +6,9 @@ import com.example.spring.domain.team.dto.TeamData;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public record TeamResponse(Long id, String name, LocalDateTime startsAt, List<Long> playerIds) {
-    public static TeamResponse from(TeamData data) {
-        return new TeamResponse(
+public record TeamCommandResponse(Long id, String name, LocalDateTime startsAt, List<Long> playerIds) {
+    public static TeamCommandResponse from(TeamData data) {
+        return new TeamCommandResponse(
                 data.id().value(),
                 data.name().value(),
                 data.startsAt(),

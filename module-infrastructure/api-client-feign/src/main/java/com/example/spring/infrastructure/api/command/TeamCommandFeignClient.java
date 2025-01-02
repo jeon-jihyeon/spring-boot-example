@@ -1,4 +1,4 @@
-package com.example.spring.infrastructure.api;
+package com.example.spring.infrastructure.api.command;
 
 import com.example.spring.domain.team.TeamCommandApiClient;
 import com.example.spring.domain.team.dto.TeamData;

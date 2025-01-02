@@ -13,5 +13,5 @@ public interface TeamQueryRepository {
 
     void deleteById(TeamId id);
 
-    List<TeamData> findTeamsAfter(LocalDateTime dateTime);
+    List<TeamData> findTeamsAfter(LocalDateTime at);
 }

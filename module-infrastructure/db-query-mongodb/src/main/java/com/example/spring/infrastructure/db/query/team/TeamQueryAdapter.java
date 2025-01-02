@@ -35,8 +35,7 @@ public class TeamQueryAdapter implements TeamQueryRepository {
     }
 
     @Override
-    public List<TeamData> findTeamsAfter(LocalDateTime dateTime) {
-        // TODO:
-        return null;
+    public List<TeamData> findTeamsAfter(LocalDateTime at) {
+        return repository.findAllByStartsAtAfter(at).stream().map(TeamDocument::toData).toList();
     }
 }
