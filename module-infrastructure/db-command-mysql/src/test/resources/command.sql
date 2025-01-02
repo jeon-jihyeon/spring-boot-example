@@ -1,4 +1,20 @@
-create table players (id bigint not null, created_at timestamp(6) not null, updated_at timestamp(6) not null, first_name varchar(30) not null, grade varchar(1) not null, last_name varchar(30) not null, team_id bigint not null, primary key (id))
-create table teams (id bigint not null, created_at timestamp(6) not null, updated_at timestamp(6) not null, name varchar(30) not null, starts_at timestamp(6) not null, primary key (id))
-create table teams_player_ids (teams_id bigint not null, player_ids bigint)
-alter table if exists teams_player_ids add constraint FKbnm2w3qlftkvteqa95nxpw6as foreign key (teams_id) references teams
+CREATE TABLE players
+(
+    id         BIGINT       NOT NULL,
+    created_at TIMESTAMP(6) NOT NULL,
+    updated_at TIMESTAMP(6) NOT NULL,
+    first_name VARCHAR(30)  NOT NULL,
+    grade      VARCHAR(1)   NOT NULL,
+    last_name  VARCHAR(30)  NOT NULL,
+    team_id    BIGINT       NOT NULL,
+    PRIMARY KEY (id)
+);
+CREATE TABLE teams
+(
+    id         BIGINT       NOT NULL,
+    created_at TIMESTAMP(6) NOT NULL,
+    updated_at TIMESTAMP(6) NOT NULL,
+    name       VARCHAR(30)  NOT NULL,
+    starts_at  TIMESTAMP(6) NOT NULL,
+    PRIMARY KEY (id)
+);

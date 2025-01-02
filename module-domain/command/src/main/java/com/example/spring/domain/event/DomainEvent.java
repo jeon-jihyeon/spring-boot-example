@@ -3,6 +3,7 @@ package com.example.spring.domain.event;
 import com.example.spring.domain.IdGenerator;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public record DomainEvent(
         Long id,
@@ -13,24 +14,21 @@ public record DomainEvent(
         LocalDateTime createdAt,
         LocalDateTime completedAt
 ) {
+    private static DomainEvent of(DomainEventType type, String queueName, Long modelId, LocalDateTime createdAt) {
+        return new DomainEvent(IdGenerator.newId(), false, type, queueName, modelId, createdAt, null);
+    }
+
     public static DomainEvent of(DomainEventType type, String queueName, Long modelId) {
-        return new DomainEvent(
-                IdGenerator.newId(),
-                false,
-                type,
-                queueName,
-                modelId,
-                LocalDateTime.now(),
-                null
-        );
+        return of(type, queueName, modelId, LocalDateTime.now());
     }
 
     public static DomainEvent createType(String queueName, Long modelId) {
         return DomainEvent.of(DomainEventType.CREATE, queueName, modelId);
     }
 
-    public static DomainEvent updateType(String queueName, Long modelId) {
-        return DomainEvent.of(DomainEventType.UPDATE, queueName, modelId);
+    public static List<DomainEvent> updateTypes(String queueName, List<Long> modelIds) {
+        final LocalDateTime now = LocalDateTime.now();
+        return modelIds.stream().map(modelId -> DomainEvent.of(DomainEventType.UPDATE, queueName, modelId, now)).toList();
     }
 
     public static DomainEvent deleteType(String queueName, Long modelId) {

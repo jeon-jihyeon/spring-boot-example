@@ -27,7 +27,7 @@ class TeamCommandMessageServiceTest extends BaseUnitTest {
     private TeamCommandMessageService service;
 
     @Test
-    void shouldNotSaveWhenExceptionOccurs() {
+    void shouldNotSendWhenExceptionOccurs() {
         doThrow(RuntimeException.class).when(producer).send(any(DomainEvent.class));
         assertThrows(RuntimeException.class, () -> service.send(DomainEventType.CREATE, TEAM_ID));
 

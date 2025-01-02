@@ -24,8 +24,10 @@ server:
     connection-timeout: 20000
   port: 8080
 
+
 logging:
   level:
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
     org.springframework.boot.autoconfigure: WARN
 
 ---

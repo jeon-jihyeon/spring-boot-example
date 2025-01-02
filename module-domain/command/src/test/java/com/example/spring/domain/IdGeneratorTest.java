@@ -26,7 +26,7 @@ class IdGeneratorTest extends BaseUnitTest {
     }
 
     @Test
-    @DisplayName("백만개 id 생성이 50밀리초 이내에 생성됨을 검증")
+    @DisplayName("백만개 teamId 생성이 50밀리초 이내에 생성됨을 검증")
     void shouldGenerateOneMillionIdsWithin50Milliseconds() {
         final long startAt = System.currentTimeMillis();
         assertThat(LongStream.range(0, MILLION).map(l -> IdGenerator.newId()).count()).isEqualTo(MILLION);

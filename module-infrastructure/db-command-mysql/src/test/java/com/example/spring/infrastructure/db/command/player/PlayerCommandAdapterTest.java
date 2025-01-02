@@ -2,6 +2,7 @@ package com.example.spring.infrastructure.db.command.player;
 
 import com.example.spring.domain.command.player.dto.PlayerData;
 import com.example.spring.domain.command.player.model.Grade;
+import com.example.spring.domain.command.team.model.TeamId;
 import com.example.spring.infrastructure.db.EntityNotFoundException;
 import com.example.spring.infrastructure.db.command.BaseContextTest;
 import org.junit.jupiter.api.DisplayName;
@@ -32,5 +33,17 @@ class PlayerCommandAdapterTest extends BaseContextTest {
 
         adapter.deleteById(saved.id());
         assertThrows(EntityNotFoundException.class, () -> adapter.findById(saved.id()));
+    }
+
+    @Test
+    void shouldLeaveAll() {
+        adapter.save(PlayerData.of(1L, Grade.NOVICE, "first", "last", 22L));
+        adapter.save(PlayerData.of(2L, Grade.NOVICE, "first", "last", 22L));
+        adapter.save(PlayerData.of(3L, Grade.NOVICE, "first", "last", 22L));
+
+        var teamId = new TeamId(22L);
+        assertThat(adapter.existsByTeamId(teamId)).isTrue();
+        adapter.leaveAll(teamId);
+        assertThat(adapter.existsByTeamId(teamId)).isFalse();
     }
 }

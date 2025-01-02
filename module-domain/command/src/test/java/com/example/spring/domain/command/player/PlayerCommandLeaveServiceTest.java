@@ -2,7 +2,6 @@ package com.example.spring.domain.command.player;
 
 import com.example.spring.domain.command.player.dto.PlayerData;
 import com.example.spring.domain.command.player.dto.PlayerLeaveCommand;
-import com.example.spring.domain.command.player.dto.PlayerTeamEvent;
 import com.example.spring.domain.command.player.model.Grade;
 import com.example.spring.domain.command.player.model.PlayerId;
 import org.junit.jupiter.api.Test;
@@ -10,7 +9,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.context.ApplicationEventPublisher;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -21,8 +19,6 @@ import static org.mockito.Mockito.*;
 class PlayerCommandLeaveServiceTest {
     private static final PlayerLeaveCommand LEAVE_COMMAND = new PlayerLeaveCommand(new PlayerId(1L));
     private static final PlayerData DATA = PlayerData.of(1L, Grade.C, "first", "last", 2L);
-    @Mock
-    private ApplicationEventPublisher publisher;
     @Mock
     private PlayerCommandRepository repository;
     @InjectMocks
@@ -35,7 +31,6 @@ class PlayerCommandLeaveServiceTest {
         when(repository.save(any(PlayerData.class))).thenReturn(DATA);
         // then
         assertThat(service.invoke(LEAVE_COMMAND)).isEqualTo(DATA);
-        verify(publisher, times(1)).publishEvent(any(PlayerTeamEvent.class));
     }
 
     @Test
@@ -45,6 +40,5 @@ class PlayerCommandLeaveServiceTest {
 
         // then
         verify(repository, never()).save(any());
-        verify(publisher, never()).publishEvent(any());
     }
 }

@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class TeamCommandAdapterTest extends BaseContextTest {
     private static final LocalDateTime NOW = LocalDateTime.now();
-    private static final Long[] PLAYER_IDS = {11L, 22L, 33L};
     private static final TeamData TEAM_DATA = TeamData.of(22L, "name", NOW);
     private final TeamCommandAdapter adapter;
 
