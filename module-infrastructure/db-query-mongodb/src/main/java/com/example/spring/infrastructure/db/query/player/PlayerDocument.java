@@ -8,6 +8,8 @@ import com.example.spring.domain.team.model.TeamId;
 import com.example.spring.infrastructure.db.query.BaseQueryDocument;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
+
 @Document(collection = "players")
 public class PlayerDocument extends BaseQueryDocument {
     private final Grade grade;
@@ -20,8 +22,10 @@ public class PlayerDocument extends BaseQueryDocument {
             Grade grade,
             String firstName,
             String lastName,
-            Long teamId
+            Long teamId,
+            LocalDateTime createdAt
     ) {
+        super(createdAt);
         this.id = id;
         this.grade = grade;
         this.firstName = firstName;
@@ -35,7 +39,19 @@ public class PlayerDocument extends BaseQueryDocument {
                 data.grade(),
                 data.fullName().firstName(),
                 data.fullName().lastName(),
-                data.teamId().value()
+                data.teamId().value(),
+                null
+        );
+    }
+
+    public PlayerDocument update(PlayerData data) {
+        return new PlayerDocument(
+                data.id().value(),
+                data.grade(),
+                data.fullName().firstName(),
+                data.fullName().lastName(),
+                data.teamId().value(),
+                getCreatedAt()
         );
     }
 

@@ -21,8 +21,10 @@ public class TeamDocument extends BaseQueryDocument {
             Long id,
             String name,
             LocalDateTime startsAt,
-            Set<Long> playerIds
+            Set<Long> playerIds,
+            LocalDateTime createdAt
     ) {
+        super(createdAt);
         this.id = id;
         this.name = name;
         this.startsAt = startsAt;
@@ -34,7 +36,18 @@ public class TeamDocument extends BaseQueryDocument {
                 data.id().value(),
                 data.name().value(),
                 data.startsAt(),
-                data.playerIds().stream().map(PlayerId::value).collect(Collectors.toSet())
+                data.playerIds().stream().map(PlayerId::value).collect(Collectors.toSet()),
+                null
+        );
+    }
+
+    public TeamDocument update(TeamData data) {
+        return new TeamDocument(
+                data.id().value(),
+                data.name().value(),
+                data.startsAt(),
+                data.playerIds().stream().map(PlayerId::value).collect(Collectors.toSet()),
+                getCreatedAt()
         );
     }
 

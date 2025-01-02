@@ -9,6 +9,8 @@ import java.util.List;
 public interface TeamQueryRepository {
     TeamData save(TeamData team);
 
+    TeamData findById(TeamId id);
+
     void deleteById(TeamId id);
 
     List<TeamData> findTeamsAfter(LocalDateTime dateTime);

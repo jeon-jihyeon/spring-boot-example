@@ -3,10 +3,12 @@ package com.example.spring.infrastructure.db.query.team;
 import com.example.spring.domain.team.TeamQueryRepository;
 import com.example.spring.domain.team.dto.TeamData;
 import com.example.spring.domain.team.model.TeamId;
+import com.example.spring.infrastructure.db.query.DocumentNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class TeamQueryAdapter implements TeamQueryRepository {
@@ -18,7 +20,13 @@ public class TeamQueryAdapter implements TeamQueryRepository {
 
     @Override
     public TeamData save(TeamData team) {
-        return repository.save(TeamDocument.from(team)).toData();
+        final Optional<TeamDocument> existing = repository.findById(team.id().value());
+        return repository.save(existing.isPresent() ? existing.get().update(team) : TeamDocument.from(team)).toData();
+    }
+
+    @Override
+    public TeamData findById(TeamId id) {
+        return repository.findById(id.value()).orElseThrow(DocumentNotFoundException::new).toData();
     }
 
     @Override

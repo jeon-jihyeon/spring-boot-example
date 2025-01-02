@@ -16,6 +16,13 @@ public abstract class BaseQueryDocument implements Persistable<Long> {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
+    public BaseQueryDocument() {
+    }
+
+    public BaseQueryDocument(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public Long getId() {
         return id;
     }

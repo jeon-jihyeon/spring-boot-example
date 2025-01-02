@@ -3,7 +3,7 @@ package com.example.spring.infrastructure.db.command.team;
 import com.example.spring.domain.player.model.PlayerId;
 import com.example.spring.domain.team.dto.TeamData;
 import com.example.spring.infrastructure.db.EntityNotFoundException;
-import com.example.spring.infrastructure.db.command.BaseEmbeddedDbTest;
+import com.example.spring.infrastructure.db.command.BaseContextTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +13,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class TeamCommandAdapterTest extends BaseEmbeddedDbTest {
+class TeamCommandAdapterTest extends BaseContextTest {
     private static final LocalDateTime NOW = LocalDateTime.now();
     private static final Long[] PLAYER_IDS = {11L, 22L, 33L};
     private static final TeamData TEAM_DATA = TeamData.of(22L, "name", NOW, List.of(PLAYER_IDS));

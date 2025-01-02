@@ -6,6 +6,8 @@ import com.example.spring.domain.player.model.PlayerId;
 import com.example.spring.infrastructure.db.query.DocumentNotFoundException;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public class PlayerQueryAdapter implements PlayerQueryRepository {
     private final PlayerMongoRepository repository;
@@ -16,7 +18,8 @@ public class PlayerQueryAdapter implements PlayerQueryRepository {
 
     @Override
     public PlayerData save(PlayerData player) {
-        return repository.save(PlayerDocument.from(player)).toData();
+        final Optional<PlayerDocument> existing = repository.findById(player.id().value());
+        return repository.save(existing.isPresent() ? existing.get().update(player) : PlayerDocument.from(player)).toData();
     }
 
     @Override
