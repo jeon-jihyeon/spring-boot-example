@@ -2,7 +2,7 @@ spring:
   datasource.initialize: false
   jpa:
     open-in-view: false
-    hibernate.ddl-auto: none
+    hibernate.ddl-auto: validate
     properties:
       hibernate.default_batch_fetch_size: 100
       hibernate.jdbc.batch_size: 100
@@ -21,6 +21,7 @@ spring:
       driver-class-name: org.h2.Driver
       jdbc-url: jdbc:h2:mem:command;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
       username: admin
+
 ---
 spring:
   config.activate.on-profile: local
@@ -36,11 +37,12 @@ spring:
       username: ${COMMAND_DB_USERNAME}
       password: ${COMMAND_DB_PASSWORD}
       pool-name: hikari-command-pool
-      maximum-pool-size: 5
+      maximum-pool-size: 10
       validation-timeout: 1000
       connection-timeout: 1500
       keepalive-time: 30000
       max-lifetime: 300000
+      leak-detection-threshold: 2000
       data-source-properties:
         cachePrepStmts: true
         useServerPrepStmts: true
