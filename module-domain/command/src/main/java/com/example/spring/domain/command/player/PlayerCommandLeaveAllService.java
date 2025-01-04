@@ -1,9 +1,11 @@
 package com.example.spring.domain.command.player;
 
 import com.example.spring.domain.command.player.dto.PlayerLeaveAllCommand;
-import com.example.spring.domain.command.player.dto.PlayerLeaveAllEvent;
 import com.example.spring.domain.command.player.model.PlayerId;
-import org.springframework.context.ApplicationEventPublisher;
+import com.example.spring.domain.event.DomainEvent;
+import com.example.spring.domain.event.DomainEventOutboxRepository;
+import com.example.spring.domain.event.DomainEventQueue;
+import com.example.spring.domain.event.MessageBatchProducer;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,12 +13,18 @@ import java.util.List;
 
 @Service
 public class PlayerCommandLeaveAllService {
+    private final MessageBatchProducer batchProducer;
     private final PlayerCommandRepository repository;
-    private final ApplicationEventPublisher publisher;
+    private final DomainEventOutboxRepository outboxRepository;
 
-    public PlayerCommandLeaveAllService(PlayerCommandRepository repository, ApplicationEventPublisher publisher) {
+    public PlayerCommandLeaveAllService(
+            MessageBatchProducer batchProducer,
+            PlayerCommandRepository repository,
+            DomainEventOutboxRepository outboxRepository
+    ) {
+        this.batchProducer = batchProducer;
         this.repository = repository;
-        this.publisher = publisher;
+        this.outboxRepository = outboxRepository;
     }
 
     @Transactional(transactionManager = "commandTransactionManager")
@@ -24,6 +32,9 @@ public class PlayerCommandLeaveAllService {
         final List<PlayerId> ids = repository.findIdsByTeamId(command.teamId());
         if (ids.isEmpty()) return;
         repository.leaveAll(command.teamId());
-        publisher.publishEvent(new PlayerLeaveAllEvent(ids));
+
+        final List<DomainEvent> events = DomainEvent.updateTypes(DomainEventQueue.COMMAND_PLAYER.getName(), ids.stream().map(PlayerId::value).toList());
+        outboxRepository.createAll(events);
+        batchProducer.sendBatch(events);
     }
 }

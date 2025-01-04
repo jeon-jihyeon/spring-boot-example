@@ -19,11 +19,11 @@ public class OutboxBatchItemReader {
     }
 
     @Bean
-    public JdbcPagingItemReader<DomainEvent> itemReader(DataSource outboxDataSource) {
+    public JdbcPagingItemReader<DomainEvent> itemReader(DataSource commandDataSource) {
         return new JdbcPagingItemReaderBuilder<DomainEvent>()
                 .name("jdbcPagingItemReader")
                 .fetchSize(properties.chunkSize())
-                .dataSource(outboxDataSource)
+                .dataSource(commandDataSource)
                 .selectClause("*")
                 .fromClause("from outbox_events")
                 .whereClause("where completed = false")

@@ -48,10 +48,10 @@ public class OutboxBatchJobConfig {
             ItemProcessor<DomainEvent, DomainEvent> itemProcessor,
             CompositeItemWriter<DomainEvent> compositeItemWriter,
             ItemReader<DomainEvent> itemReader,
-            PlatformTransactionManager outboxTransactionManager
+            PlatformTransactionManager commandTransactionManager
     ) {
         return new StepBuilder("step", jobRepository)
-                .<DomainEvent, DomainEvent>chunk(properties.chunkSize(), outboxTransactionManager)
+                .<DomainEvent, DomainEvent>chunk(properties.chunkSize(), commandTransactionManager)
                 .reader(itemReader)
                 .processor(itemProcessor)
                 .writer(compositeItemWriter)
@@ -70,9 +70,9 @@ public class OutboxBatchJobConfig {
     }
 
     @Bean
-    public ItemWriter<DomainEvent> itemWriter(DataSource outboxDataSource) {
+    public ItemWriter<DomainEvent> itemWriter(DataSource commandDataSource) {
         return new JdbcBatchItemWriterBuilder<DomainEvent>()
-                .dataSource(outboxDataSource)
+                .dataSource(commandDataSource)
                 .sql("UPDATE outbox_events SET completed=:completed, completed_at=:completedAt, updated_at=:completedAt WHERE id=:id;")
                 .beanMapped()
                 .assertUpdates(true)

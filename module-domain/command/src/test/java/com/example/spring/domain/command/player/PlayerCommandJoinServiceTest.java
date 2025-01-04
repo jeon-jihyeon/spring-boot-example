@@ -8,6 +8,7 @@ import com.example.spring.domain.command.player.model.PlayerId;
 import com.example.spring.domain.command.team.TeamCommandApiClient;
 import com.example.spring.domain.command.team.dto.TeamData;
 import com.example.spring.domain.command.team.model.TeamId;
+import com.example.spring.domain.event.DomainEventOutboxRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,6 +31,8 @@ class PlayerCommandJoinServiceTest extends BaseUnitTest {
     private TeamCommandApiClient teamClient;
     @Mock
     private PlayerCommandRepository repository;
+    @Mock
+    private DomainEventOutboxRepository outboxRepository;
     @InjectMocks
     private PlayerCommandJoinService service;
 
@@ -42,6 +45,7 @@ class PlayerCommandJoinServiceTest extends BaseUnitTest {
         // then
         assertThat(service.invoke(JOIN_COMMAND)).isEqualTo(DATA);
         verify(teamClient, times(1)).findById(any());
+        verify(outboxRepository, times(1)).save(any());
     }
 
     @Test
@@ -54,5 +58,6 @@ class PlayerCommandJoinServiceTest extends BaseUnitTest {
         verify(repository, times(1)).findById(any());
         verify(teamClient, times(1)).findById(any());
         verify(repository, never()).save(any());
+        verify(outboxRepository, never()).save(any());
     }
 }

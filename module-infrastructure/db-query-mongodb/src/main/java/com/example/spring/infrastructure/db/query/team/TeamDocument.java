@@ -14,8 +14,7 @@ public class TeamDocument extends BaseQueryDocument {
     private final LocalDateTime startsAt;
 
     private TeamDocument(Long id, String name, LocalDateTime startsAt, LocalDateTime createdAt) {
-        super(createdAt);
-        this.id = id;
+        super(id, createdAt);
         this.name = name;
         this.startsAt = startsAt;
     }
@@ -29,7 +28,7 @@ public class TeamDocument extends BaseQueryDocument {
     }
 
     public TeamData toData() {
-        return new TeamData(new TeamId(id), new TeamName(name), startsAt);
+        return new TeamData(new TeamId(getId()), new TeamName(name), startsAt);
     }
 
     public String getName() {

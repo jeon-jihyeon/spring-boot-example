@@ -4,9 +4,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class QueryOutboxService {
-    private final DomainEventOutbox outbox;
+    private final DomainEventOutboxRepository outbox;
 
-    public QueryOutboxService(DomainEventOutbox outbox) {
+    public QueryOutboxService(DomainEventOutboxRepository outbox) {
         this.outbox = outbox;
     }
 

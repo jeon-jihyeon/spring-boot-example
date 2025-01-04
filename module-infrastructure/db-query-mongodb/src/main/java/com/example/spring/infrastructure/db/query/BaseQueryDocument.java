@@ -8,18 +8,15 @@ import org.springframework.data.domain.Persistable;
 import java.time.LocalDateTime;
 
 public abstract class BaseQueryDocument implements Persistable<Long> {
-    @Id
-    protected Long id;
     @CreatedDate
-    private LocalDateTime createdAt;
-
+    private final LocalDateTime createdAt;
+    @Id
+    private final Long id;
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    public BaseQueryDocument() {
-    }
-
-    public BaseQueryDocument(LocalDateTime createdAt) {
+    public BaseQueryDocument(Long id, LocalDateTime createdAt) {
+        this.id = id;
         this.createdAt = createdAt;
     }
 

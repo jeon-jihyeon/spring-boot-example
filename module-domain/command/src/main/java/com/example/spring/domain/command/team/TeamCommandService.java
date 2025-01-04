@@ -3,34 +3,39 @@ package com.example.spring.domain.command.team;
 import com.example.spring.domain.command.team.dto.TeamCreateCommand;
 import com.example.spring.domain.command.team.dto.TeamData;
 import com.example.spring.domain.command.team.dto.TeamDeleteCommand;
-import com.example.spring.domain.command.team.dto.TeamDeleteEvent;
 import com.example.spring.domain.command.team.model.Team;
 import com.example.spring.domain.command.team.model.TeamId;
-import org.springframework.context.ApplicationEventPublisher;
+import com.example.spring.domain.event.DomainEvent;
+import com.example.spring.domain.event.DomainEventOutboxRepository;
+import com.example.spring.domain.event.DomainEventQueue;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TeamCommandService {
+    private final DomainEventOutboxRepository outboxRepository;
     private final TeamCommandRepository repository;
-    private final ApplicationEventPublisher publisher;
 
-    public TeamCommandService(TeamCommandRepository repository, ApplicationEventPublisher publisher) {
+    public TeamCommandService(DomainEventOutboxRepository outboxRepository, TeamCommandRepository repository) {
+        this.outboxRepository = outboxRepository;
         this.repository = repository;
-        this.publisher = publisher;
     }
 
     public TeamData read(TeamId id) {
         return repository.findById(id);
     }
 
+    @Transactional(transactionManager = "commandTransactionManager")
     public TeamData create(TeamCreateCommand command) {
-        return repository.save(TeamData.from(Team.create(command)));
+        final TeamData data = repository.save(TeamData.from(Team.create(command)));
+        outboxRepository.save(DomainEvent.createType(DomainEventQueue.COMMAND_TEAM.getName(), data.id().value()));
+        return data;
     }
 
     @Transactional(transactionManager = "commandTransactionManager")
     public void delete(TeamDeleteCommand command) {
         repository.deleteById(command.teamId());
-        publisher.publishEvent(TeamDeleteEvent.from(command));
+        outboxRepository.save(DomainEvent.deleteType(DomainEventQueue.COMMAND_TEAM.getName(), command.teamId().value()));
+        outboxRepository.save(DomainEvent.deleteType(DomainEventQueue.DELETE_TEAM.getName(), command.teamId().value()));
     }
 }

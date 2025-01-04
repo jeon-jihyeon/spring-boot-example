@@ -4,9 +4,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class QueryInboxService {
-    private final DomainEventInbox inbox;
+    private final DomainEventInboxRepository inbox;
 
-    public QueryInboxService(DomainEventInbox inbox) {
+    public QueryInboxService(DomainEventInboxRepository inbox) {
         this.inbox = inbox;
     }
 

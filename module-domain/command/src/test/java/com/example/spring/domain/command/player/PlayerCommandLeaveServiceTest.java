@@ -5,6 +5,7 @@ import com.example.spring.domain.command.player.dto.PlayerData;
 import com.example.spring.domain.command.player.dto.PlayerLeaveCommand;
 import com.example.spring.domain.command.player.model.Grade;
 import com.example.spring.domain.command.player.model.PlayerId;
+import com.example.spring.domain.event.DomainEventOutboxRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,6 +21,9 @@ import static org.mockito.Mockito.*;
 class PlayerCommandLeaveServiceTest extends BaseUnitTest {
     private static final PlayerLeaveCommand LEAVE_COMMAND = new PlayerLeaveCommand(new PlayerId(1L));
     private static final PlayerData DATA = PlayerData.of(1L, Grade.C, "first", "last", 2L);
+    
+    @Mock
+    DomainEventOutboxRepository outboxRepository;
     @Mock
     private PlayerCommandRepository repository;
     @InjectMocks
@@ -40,6 +44,7 @@ class PlayerCommandLeaveServiceTest extends BaseUnitTest {
         assertThrows(RuntimeException.class, () -> service.invoke(LEAVE_COMMAND));
 
         // then
+        verify(outboxRepository, times(1)).save(any());
         verify(repository, never()).save(any());
     }
 }

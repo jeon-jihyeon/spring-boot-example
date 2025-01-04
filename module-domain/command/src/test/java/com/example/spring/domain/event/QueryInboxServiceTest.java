@@ -16,7 +16,7 @@ import static org.mockito.Mockito.when;
 class QueryInboxServiceTest extends BaseUnitTest {
     private static final DomainEvent EVENT = DomainEvent.createType("test", 1L);
     @Mock
-    private DomainEventInbox inbox;
+    private DomainEventInboxRepository inbox;
     @InjectMocks
     private QueryInboxService service;
 

@@ -1,11 +1,6 @@
 package com.example.spring.infrastructure.db.command;
 
-import com.example.spring.domain.command.player.PlayerCommandMessageService;
-import com.example.spring.domain.command.team.TeamCommandMessageService;
-import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.event.DomainEventOutbox;
-import com.example.spring.domain.event.MessageBatchProducer;
-import com.example.spring.domain.event.MessageProducer;
+import com.example.spring.domain.event.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,7 +17,7 @@ import java.util.List;
 @Configuration
 public class CommandContextTestConfig {
     private final Logger log = LoggerFactory.getLogger(getClass());
-    private final DomainEventOutbox outbox = new DomainEventOutbox() {
+    private final DomainEventOutboxRepository outbox = new DomainEventOutboxRepository() {
         @Override
         public void save(DomainEvent event) {
             log.debug("[Outbox] {}", event);
@@ -35,6 +30,18 @@ public class CommandContextTestConfig {
     };
     private final MessageProducer producer = event -> log.debug("[Message] {}", event);
     private final MessageBatchProducer batchProducer = events -> log.debug("[BatchMessage] {}", events);
+    private final DomainEventInboxRepository inbox = new DomainEventInboxRepository() {
+        @Override
+        public void save(DomainEvent event) {
+            log.debug("[Inbox] {}", event);
+        }
+
+        @Override
+        public boolean exists(Long id) {
+            log.debug("[Inbox] {}", id);
+            return false;
+        }
+    };
 
     @Bean
     @Profile("test")
@@ -48,12 +55,7 @@ public class CommandContextTestConfig {
     }
 
     @Bean
-    public TeamCommandMessageService teamCommandMessageService() {
-        return new TeamCommandMessageService(outbox, producer);
-    }
-
-    @Bean
-    public PlayerCommandMessageService playerCommandMessageService() {
-        return new PlayerCommandMessageService(outbox, producer, batchProducer);
+    public QueryNewInboxService newInboxService() {
+        return new QueryNewInboxService(inbox);
     }
 }

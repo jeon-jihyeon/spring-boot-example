@@ -18,12 +18,16 @@ public record DomainEvent(
         return new DomainEvent(IdGenerator.newId(), false, type, queueName, modelId, createdAt, null);
     }
 
-    public static DomainEvent of(DomainEventType type, String queueName, Long modelId) {
+    private static DomainEvent of(DomainEventType type, String queueName, Long modelId) {
         return of(type, queueName, modelId, LocalDateTime.now());
     }
 
     public static DomainEvent createType(String queueName, Long modelId) {
         return DomainEvent.of(DomainEventType.CREATE, queueName, modelId);
+    }
+
+    public static DomainEvent updateType(String queueName, Long modelId) {
+        return DomainEvent.of(DomainEventType.UPDATE, queueName, modelId);
     }
 
     public static List<DomainEvent> updateTypes(String queueName, List<Long> modelIds) {

@@ -25,8 +25,7 @@ public class PlayerDocument extends BaseQueryDocument {
             Long teamId,
             LocalDateTime createdAt
     ) {
-        super(createdAt);
-        this.id = id;
+        super(id, createdAt);
         this.grade = grade;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -56,7 +55,7 @@ public class PlayerDocument extends BaseQueryDocument {
     }
 
     public PlayerData toData() {
-        return new PlayerData(new PlayerId(id), grade, new FullName(firstName, lastName), new TeamId(teamId));
+        return new PlayerData(new PlayerId(getId()), grade, new FullName(firstName, lastName), new TeamId(teamId));
     }
 
     public Grade getGrade() {

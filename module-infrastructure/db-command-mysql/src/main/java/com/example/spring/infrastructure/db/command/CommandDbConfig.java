@@ -1,5 +1,7 @@
 package com.example.spring.infrastructure.db.command;
 
+import com.example.spring.infrastructure.db.command.outbox.OutboxPostInsertEventListener;
+import com.example.spring.infrastructure.db.command.outbox.OutboxPostUpdateEventListener;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import jakarta.persistence.EntityManager;
@@ -14,6 +16,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -65,16 +68,14 @@ class CommandDbConfig {
     @Bean
     public EntityManager commandEntityManager(
             @Qualifier("commandEntityManagerFactory") EntityManagerFactory factory,
-            CommandPostInsertEventListener postInsertListener,
-            CommandPostDeleteEventListener postDeleteEventListener,
-            CommandPostUpdateEventListener postUpdateEventListener
+            OutboxPostInsertEventListener outboxPostInsertEventListener,
+            OutboxPostUpdateEventListener outboxPostUpdateEventListener
     ) {
         SessionFactoryImpl sessionFactory = factory.unwrap(SessionFactoryImpl.class);
         EventListenerRegistry registry = sessionFactory.getServiceRegistry().getService(EventListenerRegistry.class);
         if (registry != null) {
-            registry.getEventListenerGroup(EventType.POST_INSERT).appendListener(postInsertListener);
-            registry.getEventListenerGroup(EventType.POST_UPDATE).appendListener(postUpdateEventListener);
-            registry.getEventListenerGroup(EventType.POST_DELETE).appendListener(postDeleteEventListener);
+            registry.getEventListenerGroup(EventType.POST_INSERT).appendListener(outboxPostInsertEventListener);
+            registry.getEventListenerGroup(EventType.POST_UPDATE).appendListener(outboxPostUpdateEventListener);
         }
         return sessionFactory.createEntityManager();
     }
@@ -82,5 +83,10 @@ class CommandDbConfig {
     @Bean
     public PlatformTransactionManager commandTransactionManager(@Qualifier("commandEntityManagerFactory") EntityManagerFactory factory) {
         return new JpaTransactionManager(factory);
+    }
+
+    @Bean
+    public JdbcTemplate jdbcTemplate(@Qualifier("commandDataSource") DataSource dataSource) {
+        return new JdbcTemplate(dataSource);
     }
 }

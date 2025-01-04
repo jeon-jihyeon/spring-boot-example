@@ -7,7 +7,6 @@ spring:
       - batch.yml
       - api-client.yml
       - db-command.yml
-      - db-event.yml
       - db-query.yml
       - event-aws.yml
   task.execution.pool:
