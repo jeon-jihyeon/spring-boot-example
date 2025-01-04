@@ -1,6 +1,7 @@
 package com.example.spring.infrastructure.db.query.team;
 
 import com.example.spring.domain.command.team.dto.TeamData;
+import com.example.spring.infrastructure.db.query.BaseUnitTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +9,7 @@ import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class TeamDocumentTest {
+class TeamDocumentTest extends BaseUnitTest {
     private static final LocalDateTime NOW = LocalDateTime.now();
     private static final TeamData TEAM_DATA = TeamData.of(22L, "name", NOW);
 

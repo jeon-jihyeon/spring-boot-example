@@ -1,5 +1,6 @@
 package com.example.spring.domain.command.player;
 
+import com.example.spring.domain.BaseUnitTest;
 import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.EventAlreadyExistsException;
 import com.example.spring.domain.event.QueryInboxService;
@@ -15,14 +16,14 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class PlayerCommandHandlerTest {
+class PlayerCommandHandlerTest extends BaseUnitTest {
     private static final DomainEvent CREATE_EVENT = DomainEvent.createType("test", 1L);
     @Mock
     private QueryInboxService inboxService;
     @Mock
     private QueryOutboxService outboxService;
     @Mock
-    private PlayerCommandRepository repository;
+    private PlayerCommandLeaveAllService service;
     @InjectMocks
     private PlayerCommandHandler handler;
 
@@ -33,7 +34,7 @@ class PlayerCommandHandlerTest {
 
         verify(inboxService, times(1)).receive(any());
         verify(outboxService, never()).complete(any());
-        verify(repository, never()).leaveAll(any());
+        verify(service, never()).invoke(any());
         verify(inboxService, never()).complete(any());
     }
 
@@ -43,7 +44,7 @@ class PlayerCommandHandlerTest {
 
         verify(inboxService, times(1)).receive(any());
         verify(outboxService, times(1)).complete(any());
-        verify(repository, times(1)).leaveAll(any());
+        verify(service, times(1)).invoke(any());
         verify(inboxService, times(1)).complete(any());
     }
 }

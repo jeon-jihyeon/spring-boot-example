@@ -16,7 +16,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class OutboxBatchIntegrationTest extends BaseContextTest {
+class OutboxBatchIntegrationTest extends BaseEmbeddedDbTest {
     private final JobLauncherTestUtils jobLauncherTestUtils;
     private final JdbcTemplate jdbcTemplate;
     @SpyBean

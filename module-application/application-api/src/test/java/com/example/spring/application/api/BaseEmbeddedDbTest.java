@@ -9,12 +9,12 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestConstructor;
 import org.springframework.test.web.servlet.MockMvc;
 
-@Tag("context")
+@Tag("embedded-db")
 @SpringBootTest
-@ActiveProfiles("local")
+@ActiveProfiles("test")
 @AutoConfigureMockMvc
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-public abstract class BaseContextTest {
+public abstract class BaseEmbeddedDbTest {
     @Autowired
     protected MockMvc mvc;
     @Autowired

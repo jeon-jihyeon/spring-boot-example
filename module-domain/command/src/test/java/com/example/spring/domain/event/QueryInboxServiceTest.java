@@ -1,5 +1,6 @@
 package com.example.spring.domain.event;
 
+import com.example.spring.domain.BaseUnitTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,7 +13,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class QueryInboxServiceTest {
+class QueryInboxServiceTest extends BaseUnitTest {
     private static final DomainEvent EVENT = DomainEvent.createType("test", 1L);
     @Mock
     private DomainEventInbox inbox;

@@ -2,12 +2,13 @@ package com.example.spring.infrastructure.db.query.player;
 
 import com.example.spring.domain.command.player.dto.PlayerData;
 import com.example.spring.domain.command.player.model.Grade;
+import com.example.spring.infrastructure.db.query.BaseUnitTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class PlayerDocumentTest {
+class PlayerDocumentTest extends BaseUnitTest {
     private static final PlayerData PLAYER_DATA = PlayerData.of(11L, Grade.NOVICE, "first", "last", 22L);
 
     @Test

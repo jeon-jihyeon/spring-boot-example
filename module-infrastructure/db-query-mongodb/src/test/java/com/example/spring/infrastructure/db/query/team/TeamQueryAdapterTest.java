@@ -1,8 +1,7 @@
 package com.example.spring.infrastructure.db.query.team;
 
 import com.example.spring.domain.command.team.dto.TeamData;
-import com.example.spring.infrastructure.db.query.BaseContextTest;
-import org.junit.jupiter.api.Test;
+import com.example.spring.infrastructure.db.query.BaseEmbeddedDbTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
@@ -10,14 +9,13 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class TeamQueryAdapterTest extends BaseContextTest {
+class TeamQueryAdapterTest extends BaseEmbeddedDbTest {
     private static final LocalDateTime NOW = LocalDateTime.now();
-    private static final TeamData TEAM_DATA = TeamData.of(22L, "name", NOW, List.of(11L));
+    private static final TeamData TEAM_DATA = TeamData.of(22L, "name", NOW);
 
     @Autowired
     private TeamQueryAdapter adapter;
 
-    @Test
     void save() {
         adapter.save(TEAM_DATA);
         final TeamData found = adapter.findById(TEAM_DATA.id());
@@ -25,12 +23,11 @@ class TeamQueryAdapterTest extends BaseContextTest {
         assertThat(found.startsAt()).isEqualTo(NOW);
     }
 
-    @Test
     void shouldFindTeamsAfter() {
         final LocalDateTime now = LocalDateTime.now();
-        adapter.save(TeamData.of(1L, "name", now, List.of(11L)));
-        adapter.save(TeamData.of(2L, "name", now, List.of(11L)));
-        adapter.save(TeamData.of(3L, "name", now, List.of(11L)));
+        adapter.save(TeamData.of(1L, "name", now));
+        adapter.save(TeamData.of(2L, "name", now));
+        adapter.save(TeamData.of(3L, "name", now));
 
         final List<TeamData> teams = adapter.findTeamsAfter(now.minusSeconds(1));
         assertThat(teams.size()).isEqualTo(3);

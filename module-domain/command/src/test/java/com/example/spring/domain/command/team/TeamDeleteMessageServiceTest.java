@@ -1,5 +1,6 @@
 package com.example.spring.domain.command.team;
 
+import com.example.spring.domain.BaseUnitTest;
 import com.example.spring.domain.command.team.dto.TeamDeleteEvent;
 import com.example.spring.domain.command.team.model.TeamId;
 import com.example.spring.domain.event.DomainEvent;
@@ -16,7 +17,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class TeamDeleteMessageServiceTest {
+class TeamDeleteMessageServiceTest extends BaseUnitTest {
     private static final TeamDeleteEvent EVENT = new TeamDeleteEvent(new TeamId(22L));
     @Mock
     private DomainEventOutbox outbox;

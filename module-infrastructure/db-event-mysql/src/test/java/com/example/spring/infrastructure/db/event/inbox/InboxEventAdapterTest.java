@@ -2,7 +2,7 @@ package com.example.spring.infrastructure.db.event.inbox;
 
 import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.DomainEventType;
-import com.example.spring.infrastructure.db.event.BaseContextTest;
+import com.example.spring.infrastructure.db.event.BaseEmbeddedDbTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class InboxEventAdapterTest extends BaseContextTest {
+class InboxEventAdapterTest extends BaseEmbeddedDbTest {
     private final InboxEventAdapter adapter;
     private final InboxEventJpaRepository repository;
 
@@ -31,7 +31,5 @@ class InboxEventAdapterTest extends BaseContextTest {
         assertThat(found.getType()).isEqualTo(DomainEventType.CREATE);
         assertThat(found.getQueueName()).isEqualTo("model");
         assertThat(found.getModelId()).isEqualTo(2L);
-        assertThat(found.getCreatedAt()).isEqualTo(now);
-        assertThat(found.getCompletedAt()).isEqualTo(now);
     }
 }

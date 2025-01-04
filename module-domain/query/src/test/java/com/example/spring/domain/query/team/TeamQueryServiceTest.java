@@ -48,9 +48,9 @@ class TeamQueryServiceTest extends BaseUnitTest {
     @Test
     void shouldFindTeamsWithPlayersGroupedByTeamId() {
         var now = LocalDateTime.now();
-        var teams = List.of(TeamData.of(1L, "n", now, List.of()),
-                TeamData.of(2L, "n", now, List.of()),
-                TeamData.of(3L, "n", now, List.of()));
+        var teams = List.of(TeamData.of(1L, "n", now),
+                TeamData.of(2L, "n", now),
+                TeamData.of(3L, "n", now));
         var players = List.of(PlayerData.of(1L, Grade.C, "f", "l", 1L),
                 PlayerData.of(2L, Grade.C, "f", "l", 2L),
                 PlayerData.of(3L, Grade.C, "f", "l", 2L),

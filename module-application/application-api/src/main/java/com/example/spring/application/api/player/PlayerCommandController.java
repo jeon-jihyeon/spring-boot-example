@@ -29,7 +29,7 @@ public class PlayerCommandController {
     }
 
     @GetMapping("/api/players/{id}")
-    public ResponseModel<PlayerCommandResponse> getPlayer(final @PathVariable Long id) {
+    public ResponseModel<PlayerCommandResponse> findPlayer(final @PathVariable Long id) {
         return ResponseModel.ok(PlayerCommandResponse.from(service.read(new PlayerId(id))));
     }
 

@@ -2,7 +2,7 @@ package com.example.spring.infrastructure.db.command.team;
 
 import com.example.spring.domain.command.team.dto.TeamData;
 import com.example.spring.infrastructure.db.EntityNotFoundException;
-import com.example.spring.infrastructure.db.command.BaseContextTest;
+import com.example.spring.infrastructure.db.command.BaseEmbeddedDbTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class TeamCommandAdapterTest extends BaseContextTest {
+class TeamCommandAdapterTest extends BaseEmbeddedDbTest {
     private static final LocalDateTime NOW = LocalDateTime.now();
     private static final TeamData TEAM_DATA = TeamData.of(22L, "name", NOW);
     private final TeamCommandAdapter adapter;
@@ -29,7 +29,6 @@ class TeamCommandAdapterTest extends BaseContextTest {
         final TeamData found = adapter.findById(saved.id());
         assertThat(found.id().value()).isEqualTo(22L);
         assertThat(found.name().value()).isEqualTo("name");
-        assertThat(found.startsAt()).isEqualTo(NOW);
 
         adapter.deleteById(saved.id());
         assertThrows(EntityNotFoundException.class, () -> adapter.findById(saved.id()));

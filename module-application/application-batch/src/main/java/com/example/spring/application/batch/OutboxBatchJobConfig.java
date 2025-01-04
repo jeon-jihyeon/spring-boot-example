@@ -73,7 +73,7 @@ public class OutboxBatchJobConfig {
     public ItemWriter<DomainEvent> itemWriter(DataSource outboxDataSource) {
         return new JdbcBatchItemWriterBuilder<DomainEvent>()
                 .dataSource(outboxDataSource)
-                .sql("UPDATE outbox_events SET completed=:completed, completed_at=:completedAt, updated_at=:completedAt WHERE teamId=:teamId;")
+                .sql("UPDATE outbox_events SET completed=:completed, completed_at=:completedAt, updated_at=:completedAt WHERE id=:id;")
                 .beanMapped()
                 .assertUpdates(true)
                 .build();

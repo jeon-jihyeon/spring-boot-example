@@ -4,14 +4,14 @@ import com.example.spring.domain.command.player.dto.PlayerData;
 import com.example.spring.domain.command.player.model.Grade;
 import com.example.spring.domain.command.team.model.TeamId;
 import com.example.spring.infrastructure.db.EntityNotFoundException;
-import com.example.spring.infrastructure.db.command.BaseContextTest;
+import com.example.spring.infrastructure.db.command.BaseEmbeddedDbTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class PlayerCommandAdapterTest extends BaseContextTest {
+class PlayerCommandAdapterTest extends BaseEmbeddedDbTest {
     private final PlayerCommandAdapter adapter;
 
     public PlayerCommandAdapterTest(PlayerCommandAdapter adapter) {
@@ -42,8 +42,8 @@ class PlayerCommandAdapterTest extends BaseContextTest {
         adapter.save(PlayerData.of(3L, Grade.NOVICE, "first", "last", 22L));
 
         var teamId = new TeamId(22L);
-        assertThat(adapter.existsByTeamId(teamId)).isTrue();
+        assertThat(adapter.findIdsByTeamId(teamId).size()).isEqualTo(3);
         adapter.leaveAll(teamId);
-        assertThat(adapter.existsByTeamId(teamId)).isFalse();
+        assertThat(adapter.findIdsByTeamId(teamId).size()).isEqualTo(0);
     }
 }

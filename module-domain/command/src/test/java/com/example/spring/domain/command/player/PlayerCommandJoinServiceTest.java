@@ -1,5 +1,6 @@
 package com.example.spring.domain.command.player;
 
+import com.example.spring.domain.BaseUnitTest;
 import com.example.spring.domain.command.player.dto.PlayerData;
 import com.example.spring.domain.command.player.dto.PlayerJoinCommand;
 import com.example.spring.domain.command.player.model.Grade;
@@ -21,7 +22,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class PlayerCommandJoinServiceTest {
+class PlayerCommandJoinServiceTest extends BaseUnitTest {
     private static final PlayerJoinCommand JOIN_COMMAND = new PlayerJoinCommand(new PlayerId(1L), new TeamId(2L));
     private static final PlayerData DATA = PlayerData.of(1L, Grade.C, "first", "last", 2L);
     private static final TeamData TEAM_DATA = TeamData.of(2L, "name", LocalDateTime.now());

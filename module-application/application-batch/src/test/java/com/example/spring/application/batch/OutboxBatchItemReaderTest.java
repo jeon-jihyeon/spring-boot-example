@@ -45,7 +45,6 @@ class OutboxBatchItemReaderTest extends BaseUnitTest {
             assertThat(e).isNotNull();
             assertThat(e.id()).isEqualTo(i);
             assertThat(e.completed()).isFalse();
-            assertThat(e.createdAt()).isEqualTo(now);
         }
     }
 

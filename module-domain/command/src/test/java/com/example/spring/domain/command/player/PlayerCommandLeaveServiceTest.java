@@ -1,5 +1,6 @@
 package com.example.spring.domain.command.player;
 
+import com.example.spring.domain.BaseUnitTest;
 import com.example.spring.domain.command.player.dto.PlayerData;
 import com.example.spring.domain.command.player.dto.PlayerLeaveCommand;
 import com.example.spring.domain.command.player.model.Grade;
@@ -16,7 +17,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class PlayerCommandLeaveServiceTest {
+class PlayerCommandLeaveServiceTest extends BaseUnitTest {
     private static final PlayerLeaveCommand LEAVE_COMMAND = new PlayerLeaveCommand(new PlayerId(1L));
     private static final PlayerData DATA = PlayerData.of(1L, Grade.C, "first", "last", 2L);
     @Mock

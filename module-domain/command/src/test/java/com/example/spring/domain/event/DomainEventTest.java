@@ -13,7 +13,7 @@ class DomainEventTest extends BaseUnitTest {
     @DisplayName("DomainEvent 모델 초기화 테스트")
     void shouldInitializeModel() {
         final LocalDateTime now = LocalDateTime.now();
-        final DomainEvent model = new DomainEvent(1L, false, DomainEventType.CREATE, "Model", 2L, now, now);
+        final DomainEvent model = new DomainEvent(1L, false, DomainEventType.CREATE, "model", 2L, now, now);
         assertThat(model.id()).isEqualTo(1L);
         assertThat(model.completed()).isFalse();
         assertThat(model.type()).isEqualTo(DomainEventType.CREATE);

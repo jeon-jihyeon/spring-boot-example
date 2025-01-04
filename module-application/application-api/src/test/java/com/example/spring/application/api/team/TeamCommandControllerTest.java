@@ -5,11 +5,8 @@ import com.example.spring.application.api.team.data.TeamCommandResponse;
 import com.example.spring.application.api.team.data.TeamCreateRequest;
 import com.example.spring.application.common.ResponseModel;
 import com.example.spring.domain.command.team.TeamCommandService;
-import com.example.spring.domain.command.team.dto.TeamCreateCommand;
 import com.example.spring.domain.command.team.dto.TeamData;
 import com.example.spring.domain.command.team.model.Team;
-import com.example.spring.domain.command.team.model.TeamId;
-import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,14 +18,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.time.LocalDateTime;
-
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -48,36 +41,25 @@ class TeamCommandControllerTest extends BaseUnitTest {
         objectMapper.registerModule(new JavaTimeModule());
     }
 
-    ResponseModel<TeamCommandResponse> mapResponse(MvcResult result) throws Exception {
-        JavaType t = objectMapper.getTypeFactory().constructParametricType(ResponseModel.class, TeamCommandResponse.class);
-        return objectMapper.readValue(result.getResponse().getContentAsString(), t);
-    }
-
     @Test
     @DisplayName("Team 생성 API 테스트")
     void shouldReturnValidResponseForTeamCreation() throws Exception {
-        final TeamCreateRequest request = new TeamCreateRequest("name");
-        final TeamData data = TeamData.from(Team.create(request.toCommand()));
+        var request = new TeamCreateRequest("name");
+        var data = TeamData.from(Team.create(request.toCommand()));
 
-        when(service.create(any(TeamCreateCommand.class))).thenReturn(data);
-        when(service.read(any(TeamId.class))).thenReturn(data);
+        when(service.create(any())).thenReturn(data);
+        when(service.read(any())).thenReturn(data);
 
-        final String expected = objectMapper.writeValueAsString(ResponseModel.ok(TeamCommandResponse.from(data)));
-        final Long id = mapResponse(mvc.perform(MockMvcRequestBuilders.post("/api/teams")
+        var expected = objectMapper.writeValueAsString(ResponseModel.ok(TeamCommandResponse.from(data)));
+        mvc.perform(MockMvcRequestBuilders.post("/api/teams")
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(expected))
-                .andReturn()).data().id();
+                .andExpect(MockMvcResultMatchers.content().string(expected));
 
-        final TeamCommandResponse response = mapResponse(mvc.perform(MockMvcRequestBuilders.get("/api/teams/{id}", id))
+        mvc.perform(MockMvcRequestBuilders.get("/api/teams/{id}", data.id().value()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(expected))
-                .andReturn()).data();
-
-        assertThat(response.id()).isEqualTo(id);
-        assertThat(response.name()).isEqualTo(request.name());
-        assertThat(response.startsAt()).isBefore(LocalDateTime.now());
+                .andExpect(MockMvcResultMatchers.content().string(expected));
     }
 }

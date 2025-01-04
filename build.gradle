@@ -40,7 +40,7 @@ subprojects {
     tasks.register('contextTest', Test) {
         group = "verification"
         useJUnitPlatform {
-            includeTags('context')
+            includeTags('embedded-db')
         }
     }
 }
