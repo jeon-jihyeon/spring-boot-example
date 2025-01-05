@@ -37,7 +37,7 @@ public class OutboxEventAdapter implements DomainEventOutboxRepository {
             ps.setString(4, e.queueName());
             ps.setLong(5, e.modelId());
             ps.setTimestamp(6, Timestamp.valueOf(e.createdAt()));
-            ps.setTimestamp(7, Timestamp.valueOf(e.completedAt()));
+            if (e.completedAt() != null) ps.setTimestamp(7, Timestamp.valueOf(e.completedAt()));
         });
     }
 }
