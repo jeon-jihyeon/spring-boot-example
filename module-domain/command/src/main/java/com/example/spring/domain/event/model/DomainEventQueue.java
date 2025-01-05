@@ -1,4 +1,4 @@
-package com.example.spring.domain.event;
+package com.example.spring.domain.event.model;
 
 public enum DomainEventQueue {
     COMMAND_TEAM("team"),

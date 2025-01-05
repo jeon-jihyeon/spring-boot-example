@@ -15,6 +15,6 @@ public class TeamCommandFeignClient implements TeamCommandApiClient {
 
     @Override
     public TeamData findById(TeamId id) {
-        return api.getTeam(id.value()).data().toData();
+        return api.findTeam(id.value()).data().toData();
     }
 }

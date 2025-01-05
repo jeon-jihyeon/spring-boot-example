@@ -5,9 +5,9 @@ import com.example.spring.domain.command.team.dto.TeamData;
 import com.example.spring.domain.command.team.dto.TeamDeleteCommand;
 import com.example.spring.domain.command.team.model.Team;
 import com.example.spring.domain.command.team.model.TeamId;
-import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.DomainEventOutboxRepository;
-import com.example.spring.domain.event.DomainEventQueue;
+import com.example.spring.domain.event.model.DomainEvent;
+import com.example.spring.domain.event.model.DomainEventQueue;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -1,4 +1,4 @@
-package com.example.spring.domain.event;
+package com.example.spring.domain.event.model;
 
 import com.example.spring.domain.IdGenerator;
 
@@ -47,7 +47,7 @@ public record DomainEvent(
         return new DomainEvent(id, true, type, queueName, modelId, createdAt, now);
     }
 
-    public DomainEvent copy() {
+    public DomainEvent copyInbox() {
         return new DomainEvent(id, false, type, queueName, modelId, LocalDateTime.now(), null);
     }
 }

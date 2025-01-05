@@ -7,7 +7,9 @@ import com.example.spring.domain.command.team.model.TeamId;
 import java.util.List;
 
 public interface PlayerQueryRepository {
-    PlayerData save(PlayerData player);
+    PlayerData create(PlayerData player);
+
+    PlayerData update(PlayerData player);
 
     PlayerData findById(PlayerId id);
 

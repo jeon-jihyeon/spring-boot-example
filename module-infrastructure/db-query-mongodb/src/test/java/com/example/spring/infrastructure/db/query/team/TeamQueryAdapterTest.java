@@ -17,7 +17,7 @@ class TeamQueryAdapterTest extends BaseEmbeddedDbTest {
     private TeamQueryAdapter adapter;
 
     void save() {
-        adapter.save(TEAM_DATA);
+        adapter.create(TEAM_DATA);
         final TeamData found = adapter.findById(TEAM_DATA.id());
         assertThat(found.id().value()).isEqualTo(22L);
         assertThat(found.startsAt()).isEqualTo(NOW);
@@ -25,9 +25,9 @@ class TeamQueryAdapterTest extends BaseEmbeddedDbTest {
 
     void shouldFindTeamsAfter() {
         final LocalDateTime now = LocalDateTime.now();
-        adapter.save(TeamData.of(1L, "name", now));
-        adapter.save(TeamData.of(2L, "name", now));
-        adapter.save(TeamData.of(3L, "name", now));
+        adapter.create(TeamData.of(1L, "name", now));
+        adapter.create(TeamData.of(2L, "name", now));
+        adapter.create(TeamData.of(3L, "name", now));
 
         final List<TeamData> teams = adapter.findTeamsAfter(now.minusSeconds(1));
         assertThat(teams.size()).isEqualTo(3);

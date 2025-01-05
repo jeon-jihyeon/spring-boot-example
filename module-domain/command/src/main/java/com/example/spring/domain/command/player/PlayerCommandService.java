@@ -4,9 +4,9 @@ import com.example.spring.domain.command.player.dto.PlayerCreateCommand;
 import com.example.spring.domain.command.player.dto.PlayerData;
 import com.example.spring.domain.command.player.model.Player;
 import com.example.spring.domain.command.player.model.PlayerId;
-import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.DomainEventOutboxRepository;
-import com.example.spring.domain.event.DomainEventQueue;
+import com.example.spring.domain.event.model.DomainEvent;
+import com.example.spring.domain.event.model.DomainEventQueue;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

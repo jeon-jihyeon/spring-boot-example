@@ -12,7 +12,7 @@ import java.util.Objects;
 @MappedSuperclass
 public abstract class BaseCommandEntity {
     @Id
-    protected Long id;
+    private Long id;
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -20,16 +20,38 @@ public abstract class BaseCommandEntity {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
+    public BaseCommandEntity() {
+    }
+    public BaseCommandEntity(Long id) {
+        this.id = id;
+    }
+    public BaseCommandEntity(Long id, LocalDateTime createdAt) {
+        this.id = id;
+        this.createdAt = createdAt;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override

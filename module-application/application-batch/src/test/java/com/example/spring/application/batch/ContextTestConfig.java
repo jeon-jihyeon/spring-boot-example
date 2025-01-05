@@ -2,7 +2,6 @@ package com.example.spring.application.batch;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,33 +18,33 @@ import javax.sql.DataSource;
 public class ContextTestConfig {
     @Bean
     @ConfigurationProperties("spring.datasource.outbox")
-    public HikariConfig outboxHikariConfig() {
+    public HikariConfig commandHikariConfig() {
         return new HikariConfig();
     }
 
     @Bean
-    public DataSource outboxDataSource(@Qualifier("outboxHikariConfig") HikariConfig config) {
-        return new HikariDataSource(config);
+    public DataSource commandDataSource(HikariConfig commandHikariConfig) {
+        return new HikariDataSource(commandHikariConfig);
     }
 
     @Bean
-    public PlatformTransactionManager outboxTransactionManager(@Qualifier("outboxDataSource") DataSource dataSource) {
-        return new JdbcTransactionManager(dataSource);
+    public PlatformTransactionManager commandTransactionManager(DataSource commandDataSource) {
+        return new JdbcTransactionManager(commandDataSource);
     }
 
     @Bean
-    public JdbcTemplate jdbcTemplate(DataSource outboxDataSource) {
-        return new JdbcTemplate(outboxDataSource);
+    public JdbcTemplate jdbcTemplate(DataSource commandDataSource) {
+        return new JdbcTemplate(commandDataSource);
     }
 
     @Bean
-    public DataSourceInitializer outboxInitializer(DataSource outboxDataSource) {
+    public DataSourceInitializer commandInitializer(DataSource commandDataSource) {
         ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
         resourceDatabasePopulator.addScript(new ClassPathResource("schema.sql"));
         // resourceDatabasePopulator.addScript(new ClassPathResource("data.sql"));
 
         DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
-        dataSourceInitializer.setDataSource(outboxDataSource);
+        dataSourceInitializer.setDataSource(commandDataSource);
         dataSourceInitializer.setDatabasePopulator(resourceDatabasePopulator);
         return dataSourceInitializer;
     }

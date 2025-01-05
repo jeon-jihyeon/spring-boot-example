@@ -1,7 +1,7 @@
 package com.example.spring.infrastructure.event.queue;
 
-import com.example.spring.domain.command.player.PlayerCommandHandler;
-import com.example.spring.domain.event.DomainEvent;
+import com.example.spring.domain.command.player.PlayerCommandLeaveAllService;
+import com.example.spring.domain.event.model.DomainEvent;
 import com.example.spring.domain.query.player.PlayerQueryHandler;
 import com.example.spring.domain.query.team.TeamQueryHandler;
 import io.awspring.cloud.sqs.annotation.SqsListener;
@@ -12,16 +12,16 @@ import org.springframework.stereotype.Component;
 public class CommandSqsMessageConsumer {
     private final PlayerQueryHandler playerHandler;
     private final TeamQueryHandler teamHandler;
-    private final PlayerCommandHandler playerCommandHandler;
+    private final PlayerCommandLeaveAllService leaveAllService;
 
     public CommandSqsMessageConsumer(
             PlayerQueryHandler playerHandler,
             TeamQueryHandler teamHandler,
-            PlayerCommandHandler playerCommandHandler
+            PlayerCommandLeaveAllService leaveAllService
     ) {
         this.playerHandler = playerHandler;
         this.teamHandler = teamHandler;
-        this.playerCommandHandler = playerCommandHandler;
+        this.leaveAllService = leaveAllService;
     }
 
     @Async
@@ -39,6 +39,6 @@ public class CommandSqsMessageConsumer {
     @Async
     @SqsListener(value = "${spring.cloud.aws.sqs.queue.delete-team}")
     public void listenPlayerTeam(DomainEvent event) {
-        playerCommandHandler.handle(event);
+        leaveAllService.invoke(event);
     }
 }

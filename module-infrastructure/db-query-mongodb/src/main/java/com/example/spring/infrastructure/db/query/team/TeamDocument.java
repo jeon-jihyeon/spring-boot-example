@@ -10,8 +10,17 @@ import java.time.LocalDateTime;
 
 @Document(collection = "teams")
 public class TeamDocument extends BaseQueryDocument {
-    private final String name;
-    private final LocalDateTime startsAt;
+    private String name;
+    private LocalDateTime startsAt;
+
+    public TeamDocument() {
+    }
+
+    private TeamDocument(Long id, String name, LocalDateTime startsAt) {
+        super(id);
+        this.name = name;
+        this.startsAt = startsAt;
+    }
 
     private TeamDocument(Long id, String name, LocalDateTime startsAt, LocalDateTime createdAt) {
         super(id, createdAt);
@@ -19,8 +28,8 @@ public class TeamDocument extends BaseQueryDocument {
         this.startsAt = startsAt;
     }
 
-    public static TeamDocument from(TeamData data) {
-        return new TeamDocument(data.id().value(), data.name().value(), data.startsAt(), null);
+    public static TeamDocument create(TeamData data) {
+        return new TeamDocument(data.id().value(), data.name().value(), data.startsAt());
     }
 
     public TeamDocument update(TeamData data) {

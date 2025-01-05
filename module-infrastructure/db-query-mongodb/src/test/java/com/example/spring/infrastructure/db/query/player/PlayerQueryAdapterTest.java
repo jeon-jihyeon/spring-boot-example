@@ -14,7 +14,7 @@ class PlayerQueryAdapterTest extends BaseEmbeddedDbTest {
     private PlayerQueryAdapter adapter;
 
     void save() {
-        adapter.save(PLAYER_DATA);
+        adapter.create(PLAYER_DATA);
         final PlayerData found = adapter.findById(PLAYER_DATA.id());
         assertThat(found.id().value()).isEqualTo(11L);
         assertThat(found.grade()).isEqualTo(Grade.NOVICE);

@@ -1,6 +1,8 @@
 package com.example.spring.domain.event;
 
 import com.example.spring.domain.BaseUnitTest;
+import com.example.spring.domain.event.model.DomainEvent;
+import com.example.spring.domain.event.model.DomainEventType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

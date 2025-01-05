@@ -1,7 +1,7 @@
 package com.example.spring.application.batch;
 
-import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.event.DomainEventType;
+import com.example.spring.domain.event.model.DomainEvent;
+import com.example.spring.domain.event.model.DomainEventType;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.lang.NonNull;
 

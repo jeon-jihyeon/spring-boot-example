@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public class TeamQueryAdapter implements TeamQueryRepository {
@@ -19,9 +18,13 @@ public class TeamQueryAdapter implements TeamQueryRepository {
     }
 
     @Override
-    public TeamData save(TeamData team) {
-        final Optional<TeamDocument> existing = repository.findById(team.id().value());
-        return repository.save(existing.isPresent() ? existing.get().update(team) : TeamDocument.from(team)).toData();
+    public TeamData create(TeamData team) {
+        return repository.save(TeamDocument.create(team)).toData();
+    }
+
+    @Override
+    public TeamData update(TeamData team) {
+        return repository.save(repository.findById(team.id().value()).orElseThrow(DocumentNotFoundException::new).update(team)).toData();
     }
 
     @Override

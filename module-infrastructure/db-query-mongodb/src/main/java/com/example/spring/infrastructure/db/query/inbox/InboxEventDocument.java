@@ -1,7 +1,7 @@
 package com.example.spring.infrastructure.db.query.inbox;
 
-import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.event.DomainEventType;
+import com.example.spring.domain.event.model.DomainEvent;
+import com.example.spring.domain.event.model.DomainEventType;
 import com.example.spring.infrastructure.db.query.BaseQueryDocument;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -21,10 +21,9 @@ public class InboxEventDocument extends BaseQueryDocument {
             DomainEventType type,
             String queueName,
             Long modelId,
-            LocalDateTime createdAt,
             LocalDateTime completedAt
     ) {
-        super(id, createdAt);
+        super(id);
         this.completed = completed;
         this.type = type;
         this.queueName = queueName;
@@ -39,7 +38,6 @@ public class InboxEventDocument extends BaseQueryDocument {
                 event.type(),
                 event.queueName(),
                 event.modelId(),
-                event.createdAt(),
                 event.completedAt()
         );
     }

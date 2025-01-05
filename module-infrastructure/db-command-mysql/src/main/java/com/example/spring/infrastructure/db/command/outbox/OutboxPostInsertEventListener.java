@@ -17,9 +17,9 @@ public class OutboxPostInsertEventListener implements PostInsertEventListener {
 
     @Async
     @Override
-    public void onPostInsert(PostInsertEvent event) {
-        final Object e = event.getEntity();
-        if (e instanceof OutboxEventEntity) producer.send(((OutboxEventEntity) e).toModel());
+    public void onPostInsert(PostInsertEvent postEvent) {
+        final Object entity = postEvent.getEntity();
+        if (entity instanceof OutboxEventEntity) producer.send(((OutboxEventEntity) entity).toModel());
     }
 
     @Override

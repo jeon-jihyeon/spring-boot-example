@@ -3,7 +3,6 @@ package com.example.spring.application.batch;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,12 +21,12 @@ public class OutboxBatchConfig {
     }
 
     @Bean
-    public DataSource metaDataSource(@Qualifier("metaConfig") HikariConfig config) {
-        return new HikariDataSource(config);
+    public DataSource metaDataSource(HikariConfig metaConfig) {
+        return new HikariDataSource(metaConfig);
     }
 
     @Bean
-    public PlatformTransactionManager metaTransactionManager(@Qualifier("metaDataSource") DataSource dataSource) {
-        return new JdbcTransactionManager(dataSource);
+    public PlatformTransactionManager metaTransactionManager(DataSource metaDataSource) {
+        return new JdbcTransactionManager(metaDataSource);
     }
 }

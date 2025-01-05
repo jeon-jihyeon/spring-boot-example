@@ -18,7 +18,7 @@ public class TeamEntity extends BaseCommandEntity {
     }
 
     public TeamEntity(Long id, String name, LocalDateTime startsAt) {
-        this.id = id;
+        super(id);
         this.name = name;
         this.startsAt = startsAt;
     }
@@ -28,7 +28,7 @@ public class TeamEntity extends BaseCommandEntity {
     }
 
     public TeamData toData() {
-        return TeamData.of(id, name, startsAt);
+        return TeamData.of(getId(), name, startsAt);
     }
 
     public String getName() {

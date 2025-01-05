@@ -1,7 +1,7 @@
 package com.example.spring.infrastructure.db.command.outbox;
 
-import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.event.QueryNewInboxService;
+import com.example.spring.domain.event.InboxCommandApiClient;
+import com.example.spring.domain.event.model.DomainEvent;
 import org.hibernate.event.spi.PostUpdateEvent;
 import org.hibernate.event.spi.PostUpdateEventListener;
 import org.hibernate.persister.entity.EntityPersister;
@@ -10,19 +10,19 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class OutboxPostUpdateEventListener implements PostUpdateEventListener {
-    private final QueryNewInboxService service;
+    private final InboxCommandApiClient client;
 
-    public OutboxPostUpdateEventListener(QueryNewInboxService service) {
-        this.service = service;
+    public OutboxPostUpdateEventListener(InboxCommandApiClient client) {
+        this.client = client;
     }
 
     @Async
     @Override
-    public void onPostUpdate(PostUpdateEvent event) {
-        final Object e = event.getEntity();
-        if (e instanceof OutboxEventEntity) {
-            final DomainEvent outboxEvent = ((OutboxEventEntity) e).toModel();
-            if (outboxEvent.completed()) service.invoke(outboxEvent);
+    public void onPostUpdate(PostUpdateEvent postEvent) {
+        final Object entity = postEvent.getEntity();
+        if (entity instanceof OutboxEventEntity) {
+            final DomainEvent event = ((OutboxEventEntity) entity).toModel();
+            if (event.completed()) client.create(event.copyInbox());
         }
     }
 

@@ -8,7 +8,6 @@ import com.example.spring.infrastructure.db.query.DocumentNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public class PlayerQueryAdapter implements PlayerQueryRepository {
@@ -19,9 +18,13 @@ public class PlayerQueryAdapter implements PlayerQueryRepository {
     }
 
     @Override
-    public PlayerData save(PlayerData player) {
-        final Optional<PlayerDocument> existing = repository.findById(player.id().value());
-        return repository.save(existing.isPresent() ? existing.get().update(player) : PlayerDocument.from(player)).toData();
+    public PlayerData create(PlayerData player) {
+        return repository.save(PlayerDocument.create(player)).toData();
+    }
+
+    @Override
+    public PlayerData update(PlayerData player) {
+        return repository.save(repository.findById(player.id().value()).orElseThrow(DocumentNotFoundException::new).update(player)).toData();
     }
 
     @Override

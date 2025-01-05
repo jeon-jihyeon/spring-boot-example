@@ -1,7 +1,7 @@
 package com.example.spring.infrastructure.db.command.outbox;
 
-import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.event.DomainEventType;
+import com.example.spring.domain.event.model.DomainEvent;
+import com.example.spring.domain.event.model.DomainEventType;
 import com.example.spring.infrastructure.db.command.BaseCommandEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,9 +30,10 @@ public class OutboxEventEntity extends BaseCommandEntity {
             DomainEventType type,
             String queueName,
             Long modelId,
-            LocalDateTime completedAt
+            LocalDateTime completedAt,
+            LocalDateTime createdAt
     ) {
-        this.id = id;
+        super(id, createdAt);
         this.completed = completed;
         this.type = type;
         this.queueName = queueName;
@@ -50,16 +51,13 @@ public class OutboxEventEntity extends BaseCommandEntity {
                 event.type(),
                 event.queueName(),
                 event.modelId(),
-                event.completedAt()
+                event.completedAt(),
+                event.createdAt()
         );
     }
 
     public DomainEvent toModel() {
-        return new DomainEvent(id, completed, type, queueName, modelId, getCreatedAt(), completedAt);
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+        return new DomainEvent(getId(), completed, type, queueName, modelId, getCreatedAt(), completedAt);
     }
 
     public Boolean getCompleted() {

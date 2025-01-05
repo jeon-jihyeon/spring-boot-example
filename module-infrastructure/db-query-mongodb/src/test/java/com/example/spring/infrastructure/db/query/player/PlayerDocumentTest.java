@@ -14,7 +14,7 @@ class PlayerDocumentTest extends BaseUnitTest {
     @Test
     @DisplayName("PlayerDocument 생성 테스트")
     void shouldCreateDocument() {
-        final PlayerDocument document = PlayerDocument.from(PLAYER_DATA);
+        final PlayerDocument document = PlayerDocument.create(PLAYER_DATA);
         assertThat(document.getId()).isEqualTo(11L);
         assertThat(document.getGrade()).isEqualTo(Grade.NOVICE);
         assertThat(document.getFirstName()).isEqualTo("first");
@@ -25,7 +25,7 @@ class PlayerDocumentTest extends BaseUnitTest {
     @Test
     @DisplayName("PlayerDocument 모델 변환 테스트")
     void shouldMapToDomainModel() {
-        final PlayerData data = PlayerDocument.from(PLAYER_DATA).toData();
+        final PlayerData data = PlayerDocument.create(PLAYER_DATA).toData();
         assertThat(data.id().value()).isEqualTo(11L);
         assertThat(data.grade()).isEqualTo(Grade.NOVICE);
         assertThat(data.fullName().firstName()).isEqualTo("first");

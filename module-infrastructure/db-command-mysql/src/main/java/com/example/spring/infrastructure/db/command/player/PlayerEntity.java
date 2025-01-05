@@ -30,7 +30,7 @@ public class PlayerEntity extends BaseCommandEntity {
             String lastName,
             Long teamId
     ) {
-        this.id = id;
+        super(id);
         this.grade = grade;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -48,7 +48,7 @@ public class PlayerEntity extends BaseCommandEntity {
     }
 
     public PlayerData toData() {
-        return PlayerData.of(id, grade, firstName, lastName, teamId);
+        return PlayerData.of(getId(), grade, firstName, lastName, teamId);
     }
 
     public Grade getGrade() {

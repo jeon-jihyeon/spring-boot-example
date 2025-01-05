@@ -15,6 +15,6 @@ public class PlayerCommandFeignClient implements PlayerCommandApiClient {
 
     @Override
     public PlayerData findById(PlayerId id) {
-        return api.getPlayer(id.value()).data().toData();
+        return api.findPlayer(id.value()).data().toData();
     }
 }

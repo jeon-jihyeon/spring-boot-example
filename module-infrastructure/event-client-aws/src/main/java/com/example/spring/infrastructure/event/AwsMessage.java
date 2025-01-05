@@ -1,6 +1,6 @@
 package com.example.spring.infrastructure.event;
 
-import com.example.spring.domain.event.DomainEvent;
+import com.example.spring.domain.event.model.DomainEvent;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

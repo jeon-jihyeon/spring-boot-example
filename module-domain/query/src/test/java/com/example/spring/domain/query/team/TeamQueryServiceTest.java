@@ -3,7 +3,6 @@ package com.example.spring.domain.query.team;
 import com.example.spring.domain.BaseUnitTest;
 import com.example.spring.domain.command.player.dto.PlayerData;
 import com.example.spring.domain.command.player.model.Grade;
-import com.example.spring.domain.command.team.TeamCommandApiClient;
 import com.example.spring.domain.command.team.dto.TeamData;
 import com.example.spring.domain.command.team.model.TeamId;
 import com.example.spring.domain.query.player.PlayerQueryApiClient;
@@ -20,9 +19,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class TeamQueryServiceTest extends BaseUnitTest {
@@ -30,20 +28,9 @@ class TeamQueryServiceTest extends BaseUnitTest {
     @Mock
     private TeamQueryRepository repository;
     @Mock
-    private TeamCommandApiClient client;
-    @Mock
     private PlayerQueryApiClient playerClient;
     @InjectMocks
     private TeamQueryService service;
-
-    @Test
-    void shouldNotSaveWhenClientCausesException() {
-        when(client.findById(any(TeamId.class))).thenThrow(RuntimeException.class);
-        assertThrows(RuntimeException.class, () -> service.save(TEAM_ID));
-
-        verify(repository, never()).save(any());
-        verify(client, times(1)).findById(any());
-    }
 
     @Test
     void shouldFindTeamsWithPlayersGroupedByTeamId() {

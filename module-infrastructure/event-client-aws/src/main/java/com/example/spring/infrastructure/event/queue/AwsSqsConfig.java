@@ -1,6 +1,6 @@
 package com.example.spring.infrastructure.event.queue;
 
-import com.example.spring.domain.event.DomainEvent;
+import com.example.spring.domain.event.model.DomainEvent;
 import io.awspring.cloud.sqs.config.SqsMessageListenerContainerFactory;
 import io.awspring.cloud.sqs.listener.acknowledgement.AcknowledgementOrdering;
 import io.awspring.cloud.sqs.listener.acknowledgement.handler.AcknowledgementMode;

@@ -16,7 +16,7 @@ class TeamDocumentTest extends BaseUnitTest {
     @Test
     @DisplayName("TeamDocument 생성 테스트")
     void shouldCreateEntity() {
-        final TeamDocument entity = TeamDocument.from(TEAM_DATA);
+        final TeamDocument entity = TeamDocument.create(TEAM_DATA);
         assertThat(entity.getId()).isEqualTo(22L);
         assertThat(entity.getName()).isEqualTo("name");
         assertThat(entity.getStartsAt()).isEqualTo(NOW);
@@ -25,7 +25,7 @@ class TeamDocumentTest extends BaseUnitTest {
     @Test
     @DisplayName("TeamDocument 모델 변환 테스트")
     void shouldMapToDomainModel() {
-        final TeamData data = TeamDocument.from(TEAM_DATA).toData();
+        final TeamData data = TeamDocument.create(TEAM_DATA).toData();
         assertThat(data.id().value()).isEqualTo(22L);
         assertThat(data.name().value()).isEqualTo("name");
         assertThat(data.startsAt()).isEqualTo(NOW);

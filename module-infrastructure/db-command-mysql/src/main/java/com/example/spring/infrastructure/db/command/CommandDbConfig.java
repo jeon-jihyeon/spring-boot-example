@@ -10,7 +10,6 @@ import org.hibernate.event.service.spi.EventListenerRegistry;
 import org.hibernate.event.spi.EventType;
 import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.jpa.HibernatePersistenceProvider;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -42,12 +41,12 @@ class CommandDbConfig {
     }
 
     @Bean
-    public DataSource commandDataSource(@Qualifier("commandConfig") HikariConfig config) {
-        return new HikariDataSource(config);
+    public DataSource commandDataSource(HikariConfig commandConfig) {
+        return new HikariDataSource(commandConfig);
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean commandEntityManagerFactory(@Qualifier("commandDataSource") DataSource dataSource) {
+    public LocalContainerEntityManagerFactoryBean commandEntityManagerFactory(DataSource commandDataSource) {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(false);
         vendorAdapter.setShowSql(true);
@@ -56,7 +55,7 @@ class CommandDbConfig {
         properties.put("hibernate.physical_naming_strategy", "org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy");
 
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        em.setDataSource(dataSource);
+        em.setDataSource(commandDataSource);
         em.setPackagesToScan("com.example.spring.infrastructure.db.command");
         em.setPersistenceUnitName("commandUnit");
         em.setPersistenceProvider(new HibernatePersistenceProvider());
@@ -67,11 +66,11 @@ class CommandDbConfig {
 
     @Bean
     public EntityManager commandEntityManager(
-            @Qualifier("commandEntityManagerFactory") EntityManagerFactory factory,
+            EntityManagerFactory commandEntityManagerFactory,
             OutboxPostInsertEventListener outboxPostInsertEventListener,
             OutboxPostUpdateEventListener outboxPostUpdateEventListener
     ) {
-        SessionFactoryImpl sessionFactory = factory.unwrap(SessionFactoryImpl.class);
+        SessionFactoryImpl sessionFactory = commandEntityManagerFactory.unwrap(SessionFactoryImpl.class);
         EventListenerRegistry registry = sessionFactory.getServiceRegistry().getService(EventListenerRegistry.class);
         if (registry != null) {
             registry.getEventListenerGroup(EventType.POST_INSERT).appendListener(outboxPostInsertEventListener);
@@ -81,12 +80,12 @@ class CommandDbConfig {
     }
 
     @Bean
-    public PlatformTransactionManager commandTransactionManager(@Qualifier("commandEntityManagerFactory") EntityManagerFactory factory) {
-        return new JpaTransactionManager(factory);
+    public PlatformTransactionManager commandTransactionManager(EntityManagerFactory commandEntityManagerFactory) {
+        return new JpaTransactionManager(commandEntityManagerFactory);
     }
 
     @Bean
-    public JdbcTemplate jdbcTemplate(@Qualifier("commandDataSource") DataSource dataSource) {
-        return new JdbcTemplate(dataSource);
+    public JdbcTemplate jdbcTemplate(DataSource commandDataSource) {
+        return new JdbcTemplate(commandDataSource);
     }
 }

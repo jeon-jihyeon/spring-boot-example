@@ -1,35 +1,39 @@
 package com.example.spring.domain.query.player;
 
+import com.example.spring.domain.command.player.PlayerCommandApiClient;
 import com.example.spring.domain.command.player.model.PlayerId;
-import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.event.QueryInboxService;
-import com.example.spring.domain.event.QueryOutboxService;
+import com.example.spring.domain.event.model.DomainEvent;
+import com.example.spring.domain.query.InboxQueryService;
+import com.example.spring.domain.query.OutboxQueryApiClient;
 import org.springframework.stereotype.Component;
 
 @Component
 public class PlayerQueryHandler {
-    private final QueryInboxService inboxService;
-    private final QueryOutboxService outboxService;
-    private final PlayerQueryService service;
+    private final InboxQueryService inboxService;
+    private final OutboxQueryApiClient outboxClient;
+    private final PlayerCommandApiClient client;
+    private final PlayerQueryRepository repository;
 
     public PlayerQueryHandler(
-            QueryInboxService inboxService,
-            QueryOutboxService outboxService,
-            PlayerQueryService service
+            InboxQueryService inboxService,
+            OutboxQueryApiClient outboxClient,
+            PlayerCommandApiClient client,
+            PlayerQueryRepository repository
     ) {
         this.inboxService = inboxService;
-        this.outboxService = outboxService;
-        this.service = service;
+        this.outboxClient = outboxClient;
+        this.client = client;
+        this.repository = repository;
     }
 
     public void handle(DomainEvent event) {
         inboxService.receive(event);
-        outboxService.complete(event);
-
+        outboxClient.complete(event);
         final PlayerId playerId = new PlayerId(event.modelId());
         switch (event.type()) {
-            case CREATE, UPDATE -> service.save(playerId);
-            case DELETE -> service.delete(playerId);
+            case CREATE -> repository.create(client.findById(playerId));
+            case UPDATE -> repository.update(client.findById(playerId));
+            case DELETE -> repository.deleteById(playerId);
         }
         inboxService.complete(event);
     }

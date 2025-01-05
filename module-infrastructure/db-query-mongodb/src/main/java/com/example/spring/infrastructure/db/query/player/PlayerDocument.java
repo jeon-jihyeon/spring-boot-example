@@ -12,19 +12,23 @@ import java.time.LocalDateTime;
 
 @Document(collection = "players")
 public class PlayerDocument extends BaseQueryDocument {
-    private final Grade grade;
-    private final String firstName;
-    private final String lastName;
-    private final Long teamId;
+    private Grade grade;
+    private String firstName;
+    private String lastName;
+    private Long teamId;
 
-    private PlayerDocument(
-            Long id,
-            Grade grade,
-            String firstName,
-            String lastName,
-            Long teamId,
-            LocalDateTime createdAt
-    ) {
+    public PlayerDocument() {
+    }
+
+    private PlayerDocument(Long id, Grade grade, String firstName, String lastName, Long teamId) {
+        super(id);
+        this.grade = grade;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.teamId = teamId;
+    }
+
+    private PlayerDocument(Long id, Grade grade, String firstName, String lastName, Long teamId, LocalDateTime createdAt) {
         super(id, createdAt);
         this.grade = grade;
         this.firstName = firstName;
@@ -32,14 +36,13 @@ public class PlayerDocument extends BaseQueryDocument {
         this.teamId = teamId;
     }
 
-    public static PlayerDocument from(PlayerData data) {
+    public static PlayerDocument create(PlayerData data) {
         return new PlayerDocument(
                 data.id().value(),
                 data.grade(),
                 data.fullName().firstName(),
                 data.fullName().lastName(),
-                data.teamId().value(),
-                null
+                data.teamId().value()
         );
     }
 

@@ -1,19 +1,26 @@
 package com.example.spring.infrastructure.db.query;
 
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.domain.Persistable;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDateTime;
 
-public abstract class BaseQueryDocument implements Persistable<Long> {
-    @CreatedDate
-    private final LocalDateTime createdAt;
+public abstract class BaseQueryDocument {
     @Id
-    private final Long id;
+    @Field(value = "_id")
+    private Long id;
+    private LocalDateTime createdAt;
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+    public BaseQueryDocument() {
+    }
+
+    public BaseQueryDocument(Long id) {
+        this.id = id;
+        this.createdAt = LocalDateTime.now();
+    }
 
     public BaseQueryDocument(Long id, LocalDateTime createdAt) {
         this.id = id;
@@ -24,13 +31,12 @@ public abstract class BaseQueryDocument implements Persistable<Long> {
         return id;
     }
 
-    @Override
-    public boolean isNew() {
-        return createdAt == null;
-    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public LocalDateTime getUpdatedAt() {

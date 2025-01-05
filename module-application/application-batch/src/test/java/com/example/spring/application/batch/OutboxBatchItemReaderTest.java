@@ -1,6 +1,6 @@
 package com.example.spring.application.batch;
 
-import com.example.spring.domain.event.DomainEvent;
+import com.example.spring.domain.event.model.DomainEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.batch.item.database.JdbcPagingItemReader;

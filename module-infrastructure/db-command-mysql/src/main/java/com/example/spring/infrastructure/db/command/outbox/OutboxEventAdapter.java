@@ -1,7 +1,7 @@
 package com.example.spring.infrastructure.db.command.outbox;
 
-import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.DomainEventOutboxRepository;
+import com.example.spring.domain.event.model.DomainEvent;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

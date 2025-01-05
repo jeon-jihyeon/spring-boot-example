@@ -1,35 +1,39 @@
 package com.example.spring.domain.query.team;
 
+import com.example.spring.domain.command.team.TeamCommandApiClient;
 import com.example.spring.domain.command.team.model.TeamId;
-import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.event.QueryInboxService;
-import com.example.spring.domain.event.QueryOutboxService;
+import com.example.spring.domain.event.model.DomainEvent;
+import com.example.spring.domain.query.InboxQueryService;
+import com.example.spring.domain.query.OutboxQueryApiClient;
 import org.springframework.stereotype.Component;
 
 @Component
 public class TeamQueryHandler {
-    private final TeamQueryService service;
-    private final QueryInboxService inboxService;
-    private final QueryOutboxService outboxService;
+    private final TeamQueryRepository repository;
+    private final InboxQueryService inboxService;
+    private final OutboxQueryApiClient outboxClient;
+    private final TeamCommandApiClient client;
 
     public TeamQueryHandler(
-            TeamQueryService service,
-            QueryInboxService inboxService,
-            QueryOutboxService outboxService
+            TeamQueryRepository repository,
+            InboxQueryService inboxService,
+            OutboxQueryApiClient outboxClient,
+            TeamCommandApiClient client
     ) {
-        this.service = service;
+        this.repository = repository;
         this.inboxService = inboxService;
-        this.outboxService = outboxService;
+        this.outboxClient = outboxClient;
+        this.client = client;
     }
 
     public void handle(DomainEvent event) {
         inboxService.receive(event);
-        outboxService.complete(event);
-
+        outboxClient.complete(event);
         final TeamId teamId = new TeamId(event.modelId());
         switch (event.type()) {
-            case CREATE, UPDATE -> service.save(teamId);
-            case DELETE -> service.delete(teamId);
+            case CREATE -> repository.create(client.findById(teamId));
+            case UPDATE -> repository.update(client.findById(teamId));
+            case DELETE -> repository.deleteById(teamId);
         }
         inboxService.complete(event);
     }

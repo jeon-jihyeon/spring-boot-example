@@ -1,7 +1,7 @@
 package com.example.spring.infrastructure.db.query.inbox;
 
-import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.event.DomainEventType;
+import com.example.spring.domain.event.model.DomainEvent;
+import com.example.spring.domain.event.model.DomainEventType;
 import com.example.spring.infrastructure.db.query.BaseUnitTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

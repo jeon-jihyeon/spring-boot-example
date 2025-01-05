@@ -7,7 +7,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface TeamQueryRepository {
-    TeamData save(TeamData team);
+    TeamData create(TeamData team);
+
+    TeamData update(TeamData team);
 
     TeamData findById(TeamId id);
 

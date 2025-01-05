@@ -1,7 +1,7 @@
 package com.example.spring.infrastructure.db.query.inbox;
 
-import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.DomainEventInboxRepository;
+import com.example.spring.domain.event.model.DomainEvent;
 import org.springframework.stereotype.Repository;
 
 @Repository
