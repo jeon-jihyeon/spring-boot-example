@@ -7,16 +7,14 @@ import com.example.spring.infrastructure.db.EntityNotFoundException;
 import com.example.spring.infrastructure.db.command.BaseEmbeddedDbTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class PlayerCommandAdapterTest extends BaseEmbeddedDbTest {
-    private final PlayerCommandAdapter adapter;
-
-    public PlayerCommandAdapterTest(PlayerCommandAdapter adapter) {
-        this.adapter = adapter;
-    }
+    @Autowired
+    private PlayerCommandAdapter adapter;
 
     @Test
     @DisplayName("Player DB 생성-조회-삭제 테스트")
