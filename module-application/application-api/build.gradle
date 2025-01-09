@@ -8,6 +8,7 @@ dependencies {
     implementation project(":module-application:application-common")
 
     implementation project(":module-infrastructure:api-client-feign")
+    implementation project(":module-infrastructure:cache-client-redis")
     implementation project(":module-infrastructure:db-command-mysql")
     implementation project(":module-infrastructure:db-query-mongodb")
     implementation project(":module-infrastructure:event-client-aws")

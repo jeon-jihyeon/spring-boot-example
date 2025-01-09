@@ -6,6 +6,7 @@ spring:
     import:
       - batch.yml
       - api-client.yml
+      - cache-client.yml
       - db-command.yml
       - db-query.yml
       - event-aws.yml

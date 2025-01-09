@@ -10,3 +10,6 @@ include 'module-infrastructure:api-client-feign'
 include 'module-infrastructure:db-command-mysql'
 include 'module-infrastructure:db-query-mongodb'
 include 'module-infrastructure:event-client-aws'
+include 'module-infrastructure:cache-client-redis'
+findProject(':module-infrastructure:cache-client-redis')?.name = 'cache-client-redis'
+
