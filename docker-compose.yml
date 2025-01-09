@@ -1,55 +1,58 @@
 version: '3.8'
 services:
   aws:
-    image: "localstack/localstack"
-    container_name: "localstack"
-    env_file: "${LOCALSTACK_VOLUME_BASE}/localstack.env"
-    command: "chmod +x /etc/localstack/init/ready.d/init-aws.sh"
+    image: localstack/localstack
+    container_name: localstack
+    env_file: ${LOCALSTACK_VOLUME_BASE}/localstack.env
+    command: chmod +x /etc/localstack/init/ready.d/init-aws.sh
     volumes:
-      - "./localstack.sh:/etc/localstack/init/ready.d/init-aws.sh"
+      - ./localstack.sh:/etc/localstack/init/ready.d/init-aws.sh
     ports:
-      - "${LOCALSTACK_PORT}:${LOCALSTACK_PORT}"
+      - ${LOCALSTACK_PORT}:${LOCALSTACK_PORT}
   command:
-    image: "${RDB_IMAGE}"
-    container_name: "command"
-    env_file: "${COMMAND_VOLUME_BASE}/command.env"
-    command: "${RDB_OPTION}"
+    image: ${RDB_IMAGE}
+    container_name: command
+    env_file: ${COMMAND_VOLUME_BASE}/command.env
+    command: ${RDB_OPTION}
     ports:
-      - "${COMMAND_DB_PORT}:3306"
+      - ${COMMAND_DB_PORT}:3306
     volumes:
-      - "${COMMAND_VOLUME_BASE}/command-init.sql:/docker-entrypoint-initdb.d/init-rdb.sql"
+      - ${COMMAND_VOLUME_BASE}/command-init.sql:/docker-entrypoint-initdb.d/init-rdb.sql
   batch:
-    image: "${RDB_IMAGE}"
-    container_name: "batch"
-    env_file: "${BATCH_VOLUME_BASE}/batch.env"
-    command: "${RDB_OPTION}"
+    image: ${RDB_IMAGE}
+    container_name: batch
+    env_file: ${BATCH_VOLUME_BASE}/batch.env
+    command: ${RDB_OPTION}
     ports:
-      - "${BATCH_DB_PORT}:3306"
+      - ${BATCH_DB_PORT}:3306
     volumes:
-      - "${BATCH_VOLUME_BASE}/batch-init.sql:/docker-entrypoint-initdb.d/init-rdb.sql"
+      - ${BATCH_VOLUME_BASE}/batch-init.sql:/docker-entrypoint-initdb.d/init-rdb.sql
   query:
-    image: "${QUERY_DB_IMAGE}"
+    image: ${QUERY_DB_IMAGE}
     container_name: query
-    env_file: "${QUERY_VOLUME_BASE}/query.env"
+    env_file: ${QUERY_VOLUME_BASE}/query.env
     ports:
-      - "${QUERY_DB_PORT}:27017"
+      - ${QUERY_DB_PORT}:27017
     volumes:
       - ${QUERY_VOLUME_BASE}/query-init.js:/docker-entrypoint-initdb.d/init-db.js
-#  server:
-#    build: .
-#    container_name: server
-#    env_file: "${ENV_PATH}"
-#    ports:
-#      - "8080:8080"
-#    deploy:
-#      resources:
-#        limits:
-#          cpus: "2.0"
-#          memory: "2g"
-#    depends_on:
-#      - aws
-#      - command
-#      - batch
-#      - inbox
-#      - outbox
-#      - query
+  server:
+    build:
+      context: .
+      args:
+        SERVER_PATH: ${SERVER_PATH}
+        SERVER_PORT: ${SERVER_PORT}
+        SERVER_PROFILE: ${SERVER_PROFILE}
+    container_name: server
+    env_file: ${ENV_PATH}
+    ports:
+      - ${SERVER_PORT}:8080
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4g
+    depends_on:
+      - aws
+      - command
+      - batch
+      - query

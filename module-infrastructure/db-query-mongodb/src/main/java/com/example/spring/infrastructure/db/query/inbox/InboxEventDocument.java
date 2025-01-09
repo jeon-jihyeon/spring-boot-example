@@ -21,9 +21,10 @@ public class InboxEventDocument extends BaseQueryDocument {
             DomainEventType type,
             String queueName,
             Long modelId,
-            LocalDateTime completedAt
+            LocalDateTime completedAt,
+            LocalDateTime createdAt
     ) {
-        super(id);
+        super(id, createdAt);
         this.completed = completed;
         this.type = type;
         this.queueName = queueName;
@@ -38,7 +39,8 @@ public class InboxEventDocument extends BaseQueryDocument {
                 event.type(),
                 event.queueName(),
                 event.modelId(),
-                event.completedAt()
+                event.completedAt(),
+                event.createdAt()
         );
     }
 

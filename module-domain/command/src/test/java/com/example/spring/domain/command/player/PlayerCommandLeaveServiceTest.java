@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 class PlayerCommandLeaveServiceTest extends BaseUnitTest {
     private static final PlayerLeaveCommand LEAVE_COMMAND = new PlayerLeaveCommand(new PlayerId(1L));
     private static final PlayerData DATA = PlayerData.of(1L, Grade.C, "first", "last", 2L);
-    
+
     @Mock
     DomainEventOutboxRepository outboxRepository;
     @Mock
@@ -44,7 +44,7 @@ class PlayerCommandLeaveServiceTest extends BaseUnitTest {
         assertThrows(RuntimeException.class, () -> service.invoke(LEAVE_COMMAND));
 
         // then
-        verify(outboxRepository, times(1)).save(any());
+        verify(outboxRepository, never()).save(any());
         verify(repository, never()).save(any());
     }
 }

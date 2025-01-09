@@ -1,6 +1,7 @@
 package com.example.spring.domain.query.team;
 
 import com.example.spring.domain.BaseUnitTest;
+import com.example.spring.domain.command.team.TeamCommandApiClient;
 import com.example.spring.domain.event.EventAlreadyExistsException;
 import com.example.spring.domain.event.model.DomainEvent;
 import com.example.spring.domain.query.InboxQueryService;
@@ -25,6 +26,8 @@ class TeamQueryHandlerTest extends BaseUnitTest {
     private OutboxQueryApiClient outboxClient;
     @Mock
     private TeamQueryRepository repository;
+    @Mock
+    private TeamCommandApiClient client;
     @InjectMocks
     private TeamQueryHandler handler;
 
@@ -35,6 +38,7 @@ class TeamQueryHandlerTest extends BaseUnitTest {
 
         verify(inboxService, times(1)).receive(any());
         verify(outboxClient, never()).complete(any());
+        verify(client, never()).findById(any());
         verify(repository, never()).create(any());
         verify(inboxService, never()).complete(any());
     }
@@ -46,6 +50,7 @@ class TeamQueryHandlerTest extends BaseUnitTest {
         verify(inboxService, times(1)).receive(any());
         verify(outboxClient, times(1)).complete(any());
         verify(repository, times(1)).create(any());
+        verify(client, times(1)).findById(any());
         verify(repository, never()).deleteById(any());
         verify(inboxService, times(1)).complete(any());
     }
@@ -57,6 +62,7 @@ class TeamQueryHandlerTest extends BaseUnitTest {
         verify(inboxService, times(1)).receive(any());
         verify(outboxClient, times(1)).complete(any());
         verify(repository, never()).create(any());
+        verify(client, never()).findById(any());
         verify(repository, times(1)).deleteById(any());
         verify(inboxService, times(1)).complete(any());
     }

@@ -1,5 +1,6 @@
 package com.example.spring.domain.command.player.model;
 
+import com.example.spring.domain.command.player.PlayerHasNoTeamException;
 import com.example.spring.domain.command.player.dto.PlayerCreateCommand;
 import com.example.spring.domain.command.team.model.TeamId;
 
@@ -34,6 +35,7 @@ public class Player {
     }
 
     public Player leaveTeam() {
+        if (teamId.equals(TeamId.NoTeam)) throw new PlayerHasNoTeamException();
         return new Player(id, grade, fullName, TeamId.NoTeam);
     }
 

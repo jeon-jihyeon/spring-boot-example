@@ -20,7 +20,8 @@ public class PlayerCommandLeaveService {
 
     @Transactional(transactionManager = "commandTransactionManager")
     public PlayerData invoke(PlayerLeaveCommand command) {
+        final PlayerData data = PlayerData.from(repository.findById(command.playerId()).toModel().leaveTeam());
         outboxRepository.save(DomainEvent.updateType(DomainEventQueue.COMMAND_PLAYER.getName(), command.playerId().value()));
-        return repository.save(PlayerData.from(repository.findById(command.playerId()).toModel().leaveTeam()));
+        return repository.save(data);
     }
 }

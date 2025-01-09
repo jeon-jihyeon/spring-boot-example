@@ -4,4 +4,9 @@ COPY . .
 RUN chmod +x ./gradlew
 RUN ./gradlew clean build
 
-ENTRYPOINT [ "java", "-jar", "-Dspring.profiles.active=local", "/build/libs/app.jar" ]
+ARG SERVER_PATH
+ARG SERVER_PORT
+ARG SERVER_PROFILE
+
+ENTRYPOINT exec java -jar -Dspring.profiles.active=${SERVER_PROFILE} /${SERVER_PATH}/build/libs/app.jar
+EXPOSE $SERVER_PORT

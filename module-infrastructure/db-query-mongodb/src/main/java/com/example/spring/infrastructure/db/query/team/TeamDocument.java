@@ -10,11 +10,8 @@ import java.time.LocalDateTime;
 
 @Document(collection = "teams")
 public class TeamDocument extends BaseQueryDocument {
-    private String name;
-    private LocalDateTime startsAt;
-
-    public TeamDocument() {
-    }
+    private final String name;
+    private final LocalDateTime startsAt;
 
     private TeamDocument(Long id, String name, LocalDateTime startsAt) {
         super(id);
