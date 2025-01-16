@@ -1,7 +1,7 @@
 package com.example.spring.application.api.player;
 
 import com.example.spring.application.api.BaseUnitTest;
-import com.example.spring.application.api.player.data.PlayerQueryResponse;
+import com.example.spring.application.api.player.response.PlayerQueryResponse;
 import com.example.spring.application.common.ResponseModel;
 import com.example.spring.domain.command.player.model.Grade;
 import com.example.spring.domain.query.player.PlayerQueryService;

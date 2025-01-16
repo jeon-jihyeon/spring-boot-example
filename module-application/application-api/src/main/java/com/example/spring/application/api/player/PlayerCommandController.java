@@ -1,14 +1,15 @@
 package com.example.spring.application.api.player;
 
-import com.example.spring.application.api.player.data.PlayerCommandResponse;
-import com.example.spring.application.api.player.data.PlayerCreateRequest;
-import com.example.spring.application.api.player.data.PlayerJoinRequest;
+import com.example.spring.application.api.player.request.PlayerCreateRequest;
+import com.example.spring.application.api.player.request.PlayerJoinRequest;
+import com.example.spring.application.api.player.response.PlayerCommandResponse;
 import com.example.spring.application.common.ResponseModel;
 import com.example.spring.domain.command.player.PlayerCommandJoinService;
 import com.example.spring.domain.command.player.PlayerCommandLeaveService;
 import com.example.spring.domain.command.player.PlayerCommandService;
 import com.example.spring.domain.command.player.dto.PlayerLeaveCommand;
 import com.example.spring.domain.command.player.model.PlayerId;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,7 +25,7 @@ public class PlayerCommandController {
     }
 
     @PostMapping("/api/players")
-    public ResponseModel<PlayerCommandResponse> create(final @RequestBody PlayerCreateRequest data) {
+    public ResponseModel<PlayerCommandResponse> create(final @Valid @RequestBody PlayerCreateRequest data) {
         return ResponseModel.ok(PlayerCommandResponse.from(service.create(data.toCommand())));
     }
 
@@ -34,7 +35,7 @@ public class PlayerCommandController {
     }
 
     @PatchMapping("/api/players/{id}/teams")
-    public ResponseModel<PlayerCommandResponse> joinTeam(final @PathVariable Long id, final @RequestBody PlayerJoinRequest data) {
+    public ResponseModel<PlayerCommandResponse> joinTeam(final @PathVariable Long id, final @Valid @RequestBody PlayerJoinRequest data) {
         return ResponseModel.ok(PlayerCommandResponse.from(joinService.invoke(data.toCommand(id))));
     }
 

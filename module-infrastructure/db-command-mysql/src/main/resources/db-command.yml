@@ -1,11 +1,9 @@
-spring:
-  datasource.initialize: false
-  jpa:
-    open-in-view: false
-    hibernate.ddl-auto: validate
-    properties:
-      hibernate.default_batch_fetch_size: 100
-      hibernate.jdbc.batch_size: 100
+spring.jpa:
+  open-in-view: false
+  hibernate.ddl-auto: validate
+  properties:
+    hibernate.default_batch_fetch_size: 100
+    hibernate.jdbc.batch_size: 100
 
 ---
 spring:

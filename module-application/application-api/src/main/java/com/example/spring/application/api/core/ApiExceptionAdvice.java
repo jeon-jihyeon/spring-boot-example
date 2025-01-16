@@ -1,11 +1,14 @@
 package com.example.spring.application.api.core;
 
 import com.example.spring.application.common.ApiException;
+import com.example.spring.application.common.InvalidValueException;
 import com.example.spring.application.common.ResponseModel;
 import com.example.spring.domain.BaseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -23,5 +26,10 @@ public class ApiExceptionAdvice {
             default -> log.info("ApiException : {}", e.getMessage(), e);
         }
         return ResponseEntity.status(e.getHttpStatus()).body(ResponseModel.error(e));
+    }
+
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    public ResponseEntity<ResponseModel<?>> methodArgumentNotValidException(MethodArgumentNotValidException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseModel.error(new InvalidValueException(e.getBindingResult().getAllErrors().stream().toList())));
     }
 }

@@ -1,4 +1,4 @@
-package com.example.spring.application.api.team.data;
+package com.example.spring.application.api.team.response;
 
 import com.example.spring.domain.command.team.dto.TeamData;
 

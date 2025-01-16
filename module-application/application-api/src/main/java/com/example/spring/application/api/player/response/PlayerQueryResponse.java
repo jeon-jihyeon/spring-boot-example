@@ -1,4 +1,4 @@
-package com.example.spring.application.api.player.data;
+package com.example.spring.application.api.player.response;
 
 import com.example.spring.domain.command.player.model.Grade;
 import com.example.spring.domain.query.player.dto.PlayerQuery;

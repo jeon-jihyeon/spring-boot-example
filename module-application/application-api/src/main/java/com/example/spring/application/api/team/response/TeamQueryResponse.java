@@ -1,6 +1,6 @@
-package com.example.spring.application.api.team.data;
+package com.example.spring.application.api.team.response;
 
-import com.example.spring.application.api.player.data.PlayerQueryResponse;
+import com.example.spring.application.api.player.response.PlayerQueryResponse;
 import com.example.spring.domain.query.team.dto.TeamQuery;
 
 import java.time.LocalDateTime;

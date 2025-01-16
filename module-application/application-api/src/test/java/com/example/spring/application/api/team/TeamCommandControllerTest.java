@@ -1,8 +1,8 @@
 package com.example.spring.application.api.team;
 
 import com.example.spring.application.api.BaseUnitTest;
-import com.example.spring.application.api.team.data.TeamCommandResponse;
-import com.example.spring.application.api.team.data.TeamCreateRequest;
+import com.example.spring.application.api.team.request.TeamCreateRequest;
+import com.example.spring.application.api.team.response.TeamCommandResponse;
 import com.example.spring.application.common.ResponseModel;
 import com.example.spring.domain.command.team.TeamCommandService;
 import com.example.spring.domain.command.team.dto.TeamData;

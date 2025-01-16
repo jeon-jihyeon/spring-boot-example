@@ -1,8 +1,8 @@
 package com.example.spring.application.api.player;
 
 import com.example.spring.application.api.BaseUnitTest;
-import com.example.spring.application.api.player.data.PlayerCommandResponse;
-import com.example.spring.application.api.player.data.PlayerCreateRequest;
+import com.example.spring.application.api.player.request.PlayerCreateRequest;
+import com.example.spring.application.api.player.response.PlayerCommandResponse;
 import com.example.spring.application.common.ResponseModel;
 import com.example.spring.domain.command.player.PlayerCommandJoinService;
 import com.example.spring.domain.command.player.PlayerCommandLeaveService;
