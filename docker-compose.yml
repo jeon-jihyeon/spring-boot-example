@@ -35,24 +35,24 @@ services:
       - ${QUERY_DB_PORT}:27017
     volumes:
       - ${QUERY_VOLUME_BASE}/query-init.js:/docker-entrypoint-initdb.d/init-db.js
-  server:
-    build:
-      context: .
-      args:
-        SERVER_PATH: ${SERVER_PATH}
-        SERVER_PORT: ${SERVER_PORT}
-        SERVER_PROFILE: ${SERVER_PROFILE}
-    container_name: server
-    env_file: ${ENV_PATH}
-    ports:
-      - ${SERVER_PORT}:8080
-    deploy:
-      resources:
-        limits:
-          cpus: '2.0'
-          memory: 4g
-    depends_on:
-      - aws
-      - command
-      - batch
-      - query
+#  server:
+#    build:
+#      context: .
+#      args:
+#        SERVER_PATH: ${SERVER_PATH}
+#        SERVER_PORT: ${SERVER_PORT}
+#        SERVER_PROFILE: ${SERVER_PROFILE}
+#    container_name: server
+#    env_file: ${ENV_PATH}
+#    ports:
+#      - ${SERVER_PORT}:8080
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: '2.0'
+#          memory: 4g
+#    depends_on:
+#      - aws
+#      - command
+#      - batch
+#      - query

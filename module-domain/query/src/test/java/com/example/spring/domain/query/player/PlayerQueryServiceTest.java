@@ -26,10 +26,10 @@ class PlayerQueryServiceTest extends BaseUnitTest {
 
     @Test
     void shouldFindPlayers() {
-        var players = List.of(PlayerData.of(1L, Grade.C, "f", "l", 1L),
-                PlayerData.of(2L, Grade.C, "f", "l", 2L),
-                PlayerData.of(3L, Grade.C, "f", "l", 2L),
-                PlayerData.of(4L, Grade.C, "f", "l", 3L));
+        var players = List.of(PlayerData.of(1L, Grade.C, 0, "f", "l", 1L),
+                PlayerData.of(2L, Grade.C, 0, "f", "l", 2L),
+                PlayerData.of(3L, Grade.C, 0, "f", "l", 2L),
+                PlayerData.of(4L, Grade.C, 0, "f", "l", 3L));
         when(repository.findAllByTeamIds(any())).thenReturn(players);
 
         var res = service.findPlayers(new PlayerQueryCondition(List.of()));

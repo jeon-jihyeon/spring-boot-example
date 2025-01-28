@@ -27,7 +27,7 @@ class RepositoryConcurrencyTest extends BaseEmbeddedDbTest {
         var latch = new CountDownLatch(HUNDRED);
         var executor = Executors.newFixedThreadPool(HUNDRED);
         var now = LocalDateTime.now();
-        playerRepository.save(new PlayerEntity(1L, Grade.C, "f", "l", 1L));
+        playerRepository.save(new PlayerEntity(1L, Grade.C, 0, "f", "l", 1L));
         for (int i = 0; i < HUNDRED; i++) {
             executor.submit(() -> {
                 try {

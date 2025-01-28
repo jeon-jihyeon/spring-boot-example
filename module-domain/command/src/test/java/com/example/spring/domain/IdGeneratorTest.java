@@ -5,10 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.LongStream;
 
@@ -35,18 +32,21 @@ class IdGeneratorTest extends BaseUnitTest {
 
     @Test
     @DisplayName("100개의 스레드에서 동시에 TSID 생성 시, 중복이 발생하지 않음을 검증")
-    void noDuplicateTsidWith100Threads() throws InterruptedException, ExecutionException {
+    void noDuplicateTsidWith100Threads() throws InterruptedException {
         // given
-        final CountDownLatch latch = new CountDownLatch(HUNDRED);
-        final ExecutorService executor = Executors.newFixedThreadPool(HUNDRED);
-        final Set<Long> set = Collections.synchronizedSet(new HashSet<>());
+        var latch = new CountDownLatch(HUNDRED);
+        var executor = Executors.newFixedThreadPool(HUNDRED);
+        var set = Collections.synchronizedSet(new HashSet<>());
 
         // when
         for (int i = 0; i < HUNDRED; i++) {
             executor.submit(() -> {
-                set.add(IdGenerator.newId());
-            }).get();
-            latch.countDown();
+                try {
+                    set.add(IdGenerator.newId());
+                } finally {
+                    latch.countDown();
+                }
+            });
         }
         latch.await();
         executor.shutdown();

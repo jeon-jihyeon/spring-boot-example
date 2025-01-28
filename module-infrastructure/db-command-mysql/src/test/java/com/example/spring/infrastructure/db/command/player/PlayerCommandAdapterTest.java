@@ -19,7 +19,7 @@ class PlayerCommandAdapterTest extends BaseEmbeddedDbTest {
     @Test
     @DisplayName("Player DB 생성-조회-삭제 테스트")
     void shouldBeSavedAndFoundAndDeleted() {
-        final PlayerData saved = adapter.save(PlayerData.of(11L, Grade.NOVICE, "first", "last", 22L));
+        final PlayerData saved = adapter.save(PlayerData.of(11L, Grade.NOVICE, 0, "first", "last", 22L));
         assertThat(saved.id().value()).isEqualTo(11L);
 
         final PlayerData found = adapter.findById(saved.id());
@@ -35,9 +35,9 @@ class PlayerCommandAdapterTest extends BaseEmbeddedDbTest {
 
     @Test
     void shouldLeaveAll() {
-        adapter.save(PlayerData.of(1L, Grade.NOVICE, "first", "last", 22L));
-        adapter.save(PlayerData.of(2L, Grade.NOVICE, "first", "last", 22L));
-        adapter.save(PlayerData.of(3L, Grade.NOVICE, "first", "last", 22L));
+        adapter.save(PlayerData.of(1L, Grade.NOVICE, 0, "first", "last", 22L));
+        adapter.save(PlayerData.of(2L, Grade.NOVICE, 0, "first", "last", 22L));
+        adapter.save(PlayerData.of(3L, Grade.NOVICE, 0, "first", "last", 22L));
 
         var teamId = new TeamId(22L);
         assertThat(adapter.findIdsByTeamId(teamId).size()).isEqualTo(3);

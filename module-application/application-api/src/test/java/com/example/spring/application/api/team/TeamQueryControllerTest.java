@@ -55,8 +55,8 @@ class TeamQueryControllerTest extends BaseUnitTest {
     @Test
     void shouldReturnValidResponse() throws Exception {
         var now = LocalDateTime.now();
-        var data = List.of(new TeamQuery(1L, "n", now, List.of(new PlayerQuery(1L, Grade.C, "f", "l", 1L))),
-                new TeamQuery(2L, "n", now, List.of(new PlayerQuery(2L, Grade.C, "f", "l", 2L))));
+        var data = List.of(new TeamQuery(1L, "n", now, List.of(new PlayerQuery(1L, Grade.C, 0, "f", "l", 1L))),
+                new TeamQuery(2L, "n", now, List.of(new PlayerQuery(2L, Grade.C, 0, "f", "l", 2L))));
         when(service.findTeams(any(TeamQueryCondition.class))).thenReturn(data);
 
         var expected = objectMapper.writeValueAsString(ResponseModel.ok(data.stream().map(TeamQueryResponse::from).toList()));

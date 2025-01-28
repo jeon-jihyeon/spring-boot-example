@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PlayerQueryAdapterTest extends BaseEmbeddedDbTest {
-    private static final PlayerData PLAYER_DATA = PlayerData.of(11L, Grade.NOVICE, "first", "last", 22L);
+    private static final PlayerData PLAYER_DATA = PlayerData.of(11L, Grade.NOVICE, 11, "first", "last", 22L);
 
     @Autowired
     private PlayerQueryAdapter adapter;

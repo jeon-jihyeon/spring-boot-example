@@ -51,8 +51,8 @@ class PlayerQueryControllerTest extends BaseUnitTest {
 
     @Test
     void shouldFindPlayers() throws Exception {
-        var data = List.of(new PlayerQuery(1L, Grade.C, "f", "l", 1L),
-                new PlayerQuery(2L, Grade.C, "f", "l", 2L));
+        var data = List.of(new PlayerQuery(1L, Grade.C, 0, "f", "l", 1L),
+                new PlayerQuery(2L, Grade.C, 0, "f", "l", 2L));
         when(service.findPlayers(any(PlayerQueryCondition.class))).thenReturn(data);
 
         var expected = objectMapper.writeValueAsString(ResponseModel.ok(data.stream().map(PlayerQueryResponse::from).toList()));

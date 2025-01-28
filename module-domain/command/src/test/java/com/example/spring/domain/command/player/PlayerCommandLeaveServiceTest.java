@@ -20,7 +20,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class PlayerCommandLeaveServiceTest extends BaseUnitTest {
     private static final PlayerLeaveCommand LEAVE_COMMAND = new PlayerLeaveCommand(new PlayerId(1L));
-    private static final PlayerData DATA = PlayerData.of(1L, Grade.C, "first", "last", 2L);
+    private static final PlayerData DATA = PlayerData.of(1L, Grade.C, 0, "first", "last", 2L);
 
     @Mock
     DomainEventOutboxRepository outboxRepository;

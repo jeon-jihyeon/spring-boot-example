@@ -13,21 +13,24 @@ import java.time.LocalDateTime;
 @Document(collection = "players")
 public class PlayerDocument extends BaseQueryDocument {
     private final Grade grade;
+    private final Integer point;
     private final String firstName;
     private final String lastName;
     private final Long teamId;
 
-    private PlayerDocument(Long id, Grade grade, String firstName, String lastName, Long teamId) {
+    private PlayerDocument(Long id, Grade grade, Integer point, String firstName, String lastName, Long teamId) {
         super(id);
         this.grade = grade;
+        this.point = point;
         this.firstName = firstName;
         this.lastName = lastName;
         this.teamId = teamId;
     }
 
-    private PlayerDocument(Long id, Grade grade, String firstName, String lastName, Long teamId, LocalDateTime createdAt) {
+    private PlayerDocument(Long id, Grade grade, Integer point, String firstName, String lastName, Long teamId, LocalDateTime createdAt) {
         super(id, createdAt);
         this.grade = grade;
+        this.point = point;
         this.firstName = firstName;
         this.lastName = lastName;
         this.teamId = teamId;
@@ -37,6 +40,7 @@ public class PlayerDocument extends BaseQueryDocument {
         return new PlayerDocument(
                 data.id().value(),
                 data.grade(),
+                data.point(),
                 data.fullName().firstName(),
                 data.fullName().lastName(),
                 data.teamId().value()
@@ -47,6 +51,7 @@ public class PlayerDocument extends BaseQueryDocument {
         return new PlayerDocument(
                 data.id().value(),
                 data.grade(),
+                data.point(),
                 data.fullName().firstName(),
                 data.fullName().lastName(),
                 data.teamId().value(),
@@ -55,11 +60,15 @@ public class PlayerDocument extends BaseQueryDocument {
     }
 
     public PlayerData toData() {
-        return new PlayerData(new PlayerId(getId()), grade, new FullName(firstName, lastName), new TeamId(teamId));
+        return new PlayerData(new PlayerId(getId()), grade, point, new FullName(firstName, lastName), new TeamId(teamId));
     }
 
     public Grade getGrade() {
         return grade;
+    }
+
+    public Integer getPoint() {
+        return point;
     }
 
     public String getFirstName() {

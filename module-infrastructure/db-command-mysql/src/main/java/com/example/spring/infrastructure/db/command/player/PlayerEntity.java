@@ -13,6 +13,8 @@ public class PlayerEntity extends BaseCommandEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 1, columnDefinition = "varchar(1)")
     private Grade grade;
+    @Column(nullable = false)
+    private Integer point;
     @Column(length = 30, nullable = false)
     private String firstName;
     @Column(length = 30, nullable = false)
@@ -26,12 +28,14 @@ public class PlayerEntity extends BaseCommandEntity {
     public PlayerEntity(
             Long id,
             Grade grade,
+            Integer point,
             String firstName,
             String lastName,
             Long teamId
     ) {
         super(id);
         this.grade = grade;
+        this.point = point;
         this.firstName = firstName;
         this.lastName = lastName;
         this.teamId = teamId;
@@ -41,6 +45,7 @@ public class PlayerEntity extends BaseCommandEntity {
         return new PlayerEntity(
                 data.id().value(),
                 data.grade(),
+                data.point(),
                 data.fullName().firstName(),
                 data.fullName().lastName(),
                 data.teamId().value()
@@ -48,11 +53,15 @@ public class PlayerEntity extends BaseCommandEntity {
     }
 
     public PlayerData toData() {
-        return PlayerData.of(getId(), grade, firstName, lastName, teamId);
+        return PlayerData.of(getId(), grade, point, firstName, lastName, teamId);
     }
 
     public Grade getGrade() {
         return grade;
+    }
+
+    public Integer getPoint() {
+        return point;
     }
 
     public String getFirstName() {

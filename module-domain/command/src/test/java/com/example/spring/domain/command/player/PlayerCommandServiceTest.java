@@ -23,7 +23,6 @@ import static org.mockito.Mockito.*;
 class PlayerCommandServiceTest extends BaseUnitTest {
     private static final PlayerCreateCommand CREATE_COMMAND = new PlayerCreateCommand(new FullName("first", "last"));
     private static final PlayerData DATA = PlayerData.from(Player.create(CREATE_COMMAND));
-    private static final PlayerId PLAYER_ID = new PlayerId(22L);
     @Mock
     private PlayerCommandRepository commandRepository;
     @Mock

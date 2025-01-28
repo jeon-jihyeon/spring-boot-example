@@ -38,10 +38,10 @@ class TeamQueryServiceTest extends BaseUnitTest {
         var teams = List.of(TeamData.of(1L, "n", now),
                 TeamData.of(2L, "n", now),
                 TeamData.of(3L, "n", now));
-        var players = List.of(PlayerData.of(1L, Grade.C, "f", "l", 1L),
-                PlayerData.of(2L, Grade.C, "f", "l", 2L),
-                PlayerData.of(3L, Grade.C, "f", "l", 2L),
-                PlayerData.of(4L, Grade.C, "f", "l", 3L));
+        var players = List.of(PlayerData.of(1L, Grade.C, 0, "f", "l", 1L),
+                PlayerData.of(2L, Grade.C, 0, "f", "l", 2L),
+                PlayerData.of(3L, Grade.C, 0, "f", "l", 2L),
+                PlayerData.of(4L, Grade.C, 0, "f", "l", 3L));
         when(repository.findTeamsAfter(any())).thenReturn(teams);
         when(playerClient.findAllByTeamIds(any())).thenReturn(players);
 
