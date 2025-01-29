@@ -8,7 +8,7 @@ public record PlayerQuery(Long id, Grade grade, Integer point, String firstName,
         return new PlayerQuery(
                 data.id().value(),
                 data.grade(),
-                data.point(),
+                data.point().value(),
                 data.fullName().firstName(),
                 data.fullName().lastName(),
                 data.teamId().value()

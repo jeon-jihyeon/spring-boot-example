@@ -28,7 +28,7 @@ class PlayerEntityTest extends BaseUnitTest {
         final PlayerData data = PlayerEntity.from(PlayerData.of(11L, Grade.NOVICE, 11, "first", "last", 22L)).toData();
         assertThat(data.id().value()).isEqualTo(11L);
         assertThat(data.grade()).isEqualTo(Grade.NOVICE);
-        assertThat(data.point()).isEqualTo(11);
+        assertThat(data.point().value()).isEqualTo(11);
         assertThat(data.fullName().firstName()).isEqualTo("first");
         assertThat(data.fullName().lastName()).isEqualTo("last");
         assertThat(data.teamId().value()).isEqualTo(22L);

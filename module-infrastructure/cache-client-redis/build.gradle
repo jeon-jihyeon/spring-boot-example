@@ -1,3 +1,6 @@
 dependencies {
+    implementation project(":module-domain:command")
+    
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
     implementation 'org.redisson:redisson-spring-boot-starter:3.41.0'
 }

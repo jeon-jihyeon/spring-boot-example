@@ -1,17 +1,19 @@
 package com.example.spring.domain.command.player.model;
 
 import com.example.spring.domain.command.player.PlayerHasNoTeamException;
+import com.example.spring.domain.command.player.PlayerInvalidPointException;
 import com.example.spring.domain.command.player.dto.PlayerCreateCommand;
+import com.example.spring.domain.command.player.dto.PlayerPointCommand;
 import com.example.spring.domain.command.team.model.TeamId;
 
 public class Player {
     private final PlayerId id;
     private final Grade grade;
-    private final Integer point;
+    private final PlayerPoint point;
     private final FullName fullName;
     private final TeamId teamId;
 
-    private Player(PlayerId id, Grade grade, Integer point, FullName fullName, TeamId teamId) {
+    private Player(PlayerId id, Grade grade, PlayerPoint point, FullName fullName, TeamId teamId) {
         this.id = id;
         this.grade = grade;
         this.point = point;
@@ -23,13 +25,13 @@ public class Player {
         return new Player(
                 PlayerId.newId(),
                 Grade.NOVICE,
-                0,
+                PlayerPoint.ZERO,
                 command.fullName(),
                 TeamId.NoTeam
         );
     }
 
-    public static Player of(PlayerId id, Grade grade, Integer point, FullName fullName, TeamId teamId) {
+    public static Player of(PlayerId id, Grade grade, PlayerPoint point, FullName fullName, TeamId teamId) {
         return new Player(id, grade, point, fullName, teamId);
     }
 
@@ -42,6 +44,12 @@ public class Player {
         return new Player(id, grade, point, fullName, TeamId.NoTeam);
     }
 
+    public Player addPoint(PlayerPointCommand command) {
+        if (command.playerPoint().value() < 0) throw new PlayerInvalidPointException();
+        final PlayerPoint computed = new PlayerPoint(point.value() + command.playerPoint().value());
+        return new Player(id, grade, computed, fullName, teamId);
+    }
+
     public PlayerId getId() {
         return id;
     }
@@ -50,7 +58,7 @@ public class Player {
         return grade;
     }
 
-    public Integer getPoint() {
+    public PlayerPoint getPoint() {
         return point;
     }
 

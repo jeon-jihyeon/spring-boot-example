@@ -20,7 +20,7 @@ class PlayerTest extends BaseUnitTest {
         final Player model = Player.create(new PlayerCreateCommand(new FullName(first, last)));
         assertThat(model.getId().value()).isGreaterThan(0L);
         assertThat(model.getGrade()).isEqualTo(Grade.NOVICE);
-        assertThat(model.getPoint()).isEqualTo(0);
+        assertThat(model.getPoint().value()).isEqualTo(0);
         assertThat(model.getTeamId()).isEqualTo(TeamId.NoTeam);
         assertThat(model.getFullName().firstName()).isEqualTo(first);
         assertThat(model.getFullName().lastName()).isEqualTo(last);

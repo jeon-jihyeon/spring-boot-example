@@ -4,6 +4,7 @@ import com.example.spring.domain.command.player.dto.PlayerData;
 import com.example.spring.domain.command.player.model.FullName;
 import com.example.spring.domain.command.player.model.Grade;
 import com.example.spring.domain.command.player.model.PlayerId;
+import com.example.spring.domain.command.player.model.PlayerPoint;
 import com.example.spring.domain.command.team.model.TeamId;
 import com.example.spring.infrastructure.db.query.BaseQueryDocument;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -40,7 +41,7 @@ public class PlayerDocument extends BaseQueryDocument {
         return new PlayerDocument(
                 data.id().value(),
                 data.grade(),
-                data.point(),
+                data.point().value(),
                 data.fullName().firstName(),
                 data.fullName().lastName(),
                 data.teamId().value()
@@ -51,7 +52,7 @@ public class PlayerDocument extends BaseQueryDocument {
         return new PlayerDocument(
                 data.id().value(),
                 data.grade(),
-                data.point(),
+                data.point().value(),
                 data.fullName().firstName(),
                 data.fullName().lastName(),
                 data.teamId().value(),
@@ -60,7 +61,7 @@ public class PlayerDocument extends BaseQueryDocument {
     }
 
     public PlayerData toData() {
-        return new PlayerData(new PlayerId(getId()), grade, point, new FullName(firstName, lastName), new TeamId(teamId));
+        return new PlayerData(new PlayerId(getId()), grade, new PlayerPoint(point), new FullName(firstName, lastName), new TeamId(teamId));
     }
 
     public Grade getGrade() {

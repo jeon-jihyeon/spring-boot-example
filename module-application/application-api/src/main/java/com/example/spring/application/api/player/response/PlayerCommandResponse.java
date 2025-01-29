@@ -15,7 +15,7 @@ public record PlayerCommandResponse(
         return new PlayerCommandResponse(
                 data.id().value(),
                 data.grade(),
-                data.point(),
+                data.point().value(),
                 data.fullName().firstName(),
                 data.fullName().lastName(),
                 data.teamId().value()

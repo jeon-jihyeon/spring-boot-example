@@ -1,7 +1,9 @@
 package com.example.spring.domain.command.player;
 
+import com.example.spring.domain.DistributedLock;
 import com.example.spring.domain.command.player.dto.PlayerCreateCommand;
 import com.example.spring.domain.command.player.dto.PlayerData;
+import com.example.spring.domain.command.player.dto.PlayerPointCommand;
 import com.example.spring.domain.command.player.model.Player;
 import com.example.spring.domain.command.player.model.PlayerId;
 import com.example.spring.domain.event.DomainEventOutboxRepository;
@@ -29,5 +31,18 @@ public class PlayerCommandService {
         final PlayerData data = repository.save(PlayerData.from(Player.create(command)));
         outboxRepository.save(DomainEvent.createType(DomainEventQueue.COMMAND_PLAYER.getName(), data.id().value()));
         return data;
+    }
+
+    @Transactional(transactionManager = "commandTransactionManager")
+    public void delete(PlayerId id) {
+        repository.deleteById(id);
+        outboxRepository.save(DomainEvent.deleteType(DomainEventQueue.COMMAND_PLAYER.getName(), id.value()));
+    }
+
+    @DistributedLock(key = "#command.getKey()")
+    public void addPoint(PlayerPointCommand command) {
+        final Player player = repository.findById(command.playerId()).toModel();
+        repository.save(PlayerData.from(player.addPoint(command)));
+        outboxRepository.save(DomainEvent.updateType(DomainEventQueue.COMMAND_PLAYER.getName(), command.playerId().value()));
     }
 }
