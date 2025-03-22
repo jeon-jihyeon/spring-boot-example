@@ -29,18 +29,4 @@ subprojects {
 
     bootJar.enabled = false
     jar.enabled = true
-
-    tasks.register('unitTest', Test) {
-        group = "verification"
-        useJUnitPlatform {
-            includeTags('unit')
-        }
-    }
-
-    tasks.register('contextTest', Test) {
-        group = "verification"
-        useJUnitPlatform {
-            includeTags('embedded-db')
-        }
-    }
 }
