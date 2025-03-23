@@ -44,7 +44,7 @@ class TeamCommandControllerTest extends BaseUnitTest {
     @Test
     @DisplayName("Team 생성 API 테스트")
     void shouldReturnValidResponseForTeamCreation() throws Exception {
-        var request = new TeamCreateRequest("name");
+        var request = new TeamCreateRequest("abcd1234");
         var data = TeamData.from(Team.create(request.toCommand()));
 
         when(service.create(any())).thenReturn(data);

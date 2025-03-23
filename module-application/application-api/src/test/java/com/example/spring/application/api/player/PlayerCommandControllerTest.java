@@ -26,6 +26,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @ExtendWith(MockitoExtension.class)
 class PlayerCommandControllerTest extends BaseUnitTest {
@@ -49,7 +50,7 @@ class PlayerCommandControllerTest extends BaseUnitTest {
     @Test
     @DisplayName("Player 생성 API 테스트")
     void shouldReturnValidResponseForPlayerCreation() throws Exception {
-        var request = new PlayerCreateRequest("first", "last");
+        var request = new PlayerCreateRequest("abcd1234", "abcd1234");
         var data = PlayerData.from(Player.create(request.toCommand()));
 
         when(service.create(any())).thenReturn(data);
@@ -60,6 +61,7 @@ class PlayerCommandControllerTest extends BaseUnitTest {
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(expected))
                 .andReturn();
