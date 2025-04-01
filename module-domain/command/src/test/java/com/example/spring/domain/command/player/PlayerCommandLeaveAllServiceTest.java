@@ -1,5 +1,6 @@
 package com.example.spring.domain.command.player;
 
+import com.example.spring.domain.BaseUnitTest;
 import com.example.spring.domain.command.player.model.PlayerId;
 import com.example.spring.domain.command.team.model.TeamId;
 import com.example.spring.domain.event.DomainEventOutboxRepository;
@@ -17,7 +18,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class PlayerCommandLeaveAllServiceTest {
+class PlayerCommandLeaveAllServiceTest extends BaseUnitTest {
     private static final DomainEvent EVENT = DomainEvent.updateType("team", 1L);
     private static final List<PlayerId> PLAYER_IDS = List.of(new PlayerId(1L));
     @Mock

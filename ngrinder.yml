@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  example-prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+  example-grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+  example-ngrinder-controller:
+    image: ngrinder/controller:3.5.5
+    restart: always
+    ports:
+      - "9000:80"
+      - "16001:16001"
+      - "12000-12009:12000-12009"
+    volumes:
+      - ./volumes/ngrinder-controller:/opt/ngrinder-controller
+  example-ngrinder-agent:
+    image: ngrinder/agent:3.5.5
+    restart: always
+    links:
+      - example-ngrinder-controller

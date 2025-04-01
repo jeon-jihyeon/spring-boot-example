@@ -35,8 +35,6 @@ services:
       - ${QUERY_DB_PORT}:27017
     volumes:
       - ${QUERY_VOLUME_BASE}/query-init.js:/docker-entrypoint-initdb.d/init-db.js
-
-  # 서비스명
   redis:
     image: redis:latest
     container_name: redis

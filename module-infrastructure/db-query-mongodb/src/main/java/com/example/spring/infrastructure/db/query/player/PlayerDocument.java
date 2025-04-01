@@ -13,11 +13,14 @@ import java.time.LocalDateTime;
 
 @Document(collection = "players")
 public class PlayerDocument extends BaseQueryDocument {
-    private final Grade grade;
-    private final Integer point;
-    private final String firstName;
-    private final String lastName;
-    private final Long teamId;
+    private Grade grade;
+    private Integer point;
+    private String firstName;
+    private String lastName;
+    private Long teamId;
+
+    protected PlayerDocument() {
+    }
 
     private PlayerDocument(Long id, Grade grade, Integer point, String firstName, String lastName, Long teamId) {
         super(id);

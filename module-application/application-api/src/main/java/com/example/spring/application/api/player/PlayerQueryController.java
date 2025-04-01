@@ -1,11 +1,14 @@
 package com.example.spring.application.api.player;
 
 import com.example.spring.application.api.player.request.PlayerQueryParam;
+import com.example.spring.application.api.player.response.PlayerCommandResponse;
 import com.example.spring.application.api.player.response.PlayerQueryResponse;
 import com.example.spring.application.common.ResponseModel;
+import com.example.spring.domain.command.player.model.PlayerId;
 import com.example.spring.domain.query.player.PlayerQueryService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -21,5 +24,10 @@ public class PlayerQueryController {
     @GetMapping("/api/players")
     public ResponseModel<List<PlayerQueryResponse>> findPlayers(final @Valid PlayerQueryParam param) {
         return ResponseModel.ok(service.findPlayers(param.toCondition()).stream().map(PlayerQueryResponse::from).toList());
+    }
+
+    @GetMapping("/api/players/{id}/query")
+    public ResponseModel<PlayerCommandResponse> findPlayer(final @PathVariable Long id) {
+        return ResponseModel.ok(PlayerCommandResponse.from(service.query(new PlayerId(id))));
     }
 }

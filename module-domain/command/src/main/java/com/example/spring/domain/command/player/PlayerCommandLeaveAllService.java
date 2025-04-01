@@ -36,7 +36,7 @@ public class PlayerCommandLeaveAllService {
         if (playerIds.isEmpty()) return;
         repository.leaveAll(teamId);
 
-        final List<DomainEvent> events = DomainEvent.updateTypes(DomainEventQueue.COMMAND_PLAYER.getName(), playerIds);
+        final List<DomainEvent> events = playerIds.stream().map(modelId -> DomainEvent.updateType(DomainEventQueue.COMMAND_PLAYER.getName(), modelId)).toList();
         outboxRepository.createAll(events);
         batchProducer.sendBatch(events);
     }
