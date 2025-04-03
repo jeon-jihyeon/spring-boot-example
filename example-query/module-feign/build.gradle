@@ -1,0 +1,9 @@
+dependencies {
+    implementation project(':module-common')
+    implementation project(':module-domain')
+
+    implementation 'org.springframework:spring-context'
+    implementation platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation 'io.github.openfeign:feign-httpclient'
+}

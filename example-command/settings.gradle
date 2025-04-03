@@ -1,0 +1,8 @@
+rootProject.name = 'example-command'
+
+include 'module-api'
+include 'module-domain'
+include 'module-mysql'
+include 'module-redis'
+include 'module-sqs'
+

@@ -26,19 +26,22 @@ replay_pid*
 # mac
 .DS_Store
 *.env
-/volumes
+**/volumes
 
 # build
 .gradle
 .run
-build/
-!gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
-backup/
+**/backup/
+**/build/
+!src/**/build/
+gradle-app.setting
+!gradle-wrapper.jar
+!gradle-wrapper.properties
 
 # IntelliJ
 .idea

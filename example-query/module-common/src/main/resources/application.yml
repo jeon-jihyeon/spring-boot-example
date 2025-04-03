@@ -1,0 +1,50 @@
+spring:
+  application.name: application-api
+  profiles.active: local
+  web.resources.add-mappings: false
+  config:
+    import:
+      - batch.yml
+      - api-client.yml
+      - cache-client.yml
+      - db-command.yml
+      - db-query.yml
+      - event-aws.yml
+  task.execution.pool:
+    core-size: 10
+    max-size: 10
+    queue-capacity: 1000
+
+server:
+  tomcat:
+    threads:
+      max: 200
+      min-spare: 100
+    max-connections: 10000
+    accept-count: 100
+    connection-timeout: 20000
+  port: 8080
+
+logging:
+  level:
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+    org.springframework.boot.autoconfigure: WARN
+
+management:
+  server.port: 8081
+  endpoint:
+    info.enabled: true
+    health.enabled: true
+    prometheus.enabled: true
+    threaddump.enabled: true
+    heapdump.enabled: true
+    metrics.enabled: true
+  endpoints:
+    enabled-by-default: false
+    web.exposure.include: health, info, prometheus, threaddump, heapdump, metrics
+
+---
+spring.config.activate.on-profile: test
+
+---
+spring.config.activate.on-profile: local
