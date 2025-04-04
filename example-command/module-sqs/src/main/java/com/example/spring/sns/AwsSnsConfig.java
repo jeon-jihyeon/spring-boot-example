@@ -1,4 +1,4 @@
-package com.example.spring.sqs.command;
+package com.example.spring.sns;
 
 import io.awspring.cloud.sns.core.TopicArnResolver;
 import io.awspring.cloud.sns.core.TopicsListingTopicArnResolver;

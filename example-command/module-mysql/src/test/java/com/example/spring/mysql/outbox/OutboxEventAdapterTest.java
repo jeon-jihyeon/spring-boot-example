@@ -20,12 +20,12 @@ class OutboxEventAdapterTest extends BaseEmbeddedDbTest {
     @Test
     @DisplayName("OutboxEvent DB 생성-조회-삭제 테스트")
     void shouldBeSavedAndFound() {
-        var event = OutboxEvent.of(OutboxEventType.CREATE_PLAYER, 2L);
+        var event = OutboxEvent.of(OutboxEventType.PLAYER_CREATED, 2L);
         adapter.save(event);
         var found = repository.findById(event.id()).orElseThrow(RuntimeException::new);
         assertThat(found.getId()).isEqualTo(event.id());
         assertThat(found.getCompleted()).isFalse();
-        assertThat(found.getType()).isEqualTo(OutboxEventType.CREATE_PLAYER);
+        assertThat(found.getType()).isEqualTo(OutboxEventType.PLAYER_CREATED);
         assertThat(found.getEntityId()).isEqualTo(2L);
     }
 }

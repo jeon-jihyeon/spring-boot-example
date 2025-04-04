@@ -1,6 +1,6 @@
 package com.example.spring.mysql;
 
-import com.example.spring.domain.outbox.OutboxMessageProducer;
+import com.example.spring.domain.outbox.OutboxEventProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,7 +29,7 @@ public class CommandContextTestConfig {
     }
 
     @Bean
-    public OutboxMessageProducer messageProducer() {
+    public OutboxEventProducer messageProducer() {
         return event -> log.debug("[Message] {}", event);
     }
 }

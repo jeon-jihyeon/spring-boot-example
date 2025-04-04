@@ -1,7 +1,7 @@
 package com.example.spring.domain;
 
-import com.example.spring.domain.event.DomainEvent;
+import com.example.spring.domain.event.InboxEvent;
 
 public interface OutboxQueryApiClient {
-    void complete(DomainEvent event);
+    void complete(InboxEvent event);
 }

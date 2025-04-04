@@ -1,4 +1,4 @@
-package com.example.spring.sqs.command;
+package com.example.spring.sns;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import software.amazon.awssdk.auth.credentials.AwsCredentials;

@@ -1,7 +1,7 @@
 package com.example.spring.feign;
 
 import com.example.spring.common.ResponseModel;
-import com.example.spring.domain.event.DomainEvent;
+import com.example.spring.domain.event.InboxEvent;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +14,6 @@ public interface CommandFeignApi {
     @GetMapping(value = "/players/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseModel<PlayerApiResponse> findPlayer(final @PathVariable Long id);
 
-    @PatchMapping(value = "/events/outbox", consumes = MediaType.APPLICATION_JSON_VALUE)
-    ResponseModel<?> completeOutboxEvent(final @RequestBody DomainEvent event);
+    @PatchMapping(value = "/outbox", consumes = MediaType.APPLICATION_JSON_VALUE)
+    ResponseModel<?> completeOutboxEvent(final @RequestBody InboxEvent event);
 }

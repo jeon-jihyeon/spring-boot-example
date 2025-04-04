@@ -4,13 +4,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import software.amazon.awssdk.auth.credentials.AwsCredentials;
 
 @ConfigurationProperties(prefix = "spring.cloud.aws.sqs")
-public record AwsSqsProperties(
+public record SqsProperties(
         String endPoint,
         String region,
         String accessKey,
-        String secretKey,
-        String commandQueue,
-        String teamQueue
+        String secretKey
 ) {
     public AwsCredentials toCredentials() {
         return new AwsCredentialsValue(accessKey, secretKey);

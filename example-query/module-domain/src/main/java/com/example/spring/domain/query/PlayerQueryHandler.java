@@ -2,7 +2,7 @@ package com.example.spring.domain.query;
 
 import com.example.spring.domain.InboxQueryService;
 import com.example.spring.domain.OutboxQueryApiClient;
-import com.example.spring.domain.event.DomainEvent;
+import com.example.spring.domain.event.InboxEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,18 +21,18 @@ public class PlayerQueryHandler {
     ) {
         this.inboxService = inboxService;
         this.outboxClient = outboxClient;
-        this.client = client;
         this.repository = repository;
+        this.client = client;
     }
 
     @Transactional
-    public void handle(DomainEvent event) {
+    public void handle(InboxEvent event) {
         inboxService.receive(event);
         outboxClient.complete(event);
         switch (event.type()) {
-            case CREATE -> repository.create(client.findById(event.modelId()));
-            case UPDATE -> repository.update(client.findById(event.modelId()));
-            case DELETE -> repository.deleteById(event.modelId());
+            case PLAYER_CREATED -> repository.create(client.findById(event.entityId()));
+            case PLAYER_POINT_ADDED -> repository.update(client.findById(event.entityId()));
+            case PLAYER_DELETED -> repository.deleteById(event.entityId());
         }
         inboxService.complete(event);
     }

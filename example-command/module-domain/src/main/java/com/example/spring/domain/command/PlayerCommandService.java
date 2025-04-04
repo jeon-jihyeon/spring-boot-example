@@ -26,9 +26,9 @@ public class PlayerCommandService {
 
     @Transactional
     public PlayerData create(PlayerCreateCommand command) {
-        final PlayerData data = playerCommandRepository.save(PlayerData.from(Player.create(command)));
-        outboxEventSaveService.savePlayerCreatedEvent(data.id());
-        return data;
+        final PlayerData created = playerCommandRepository.save(PlayerData.from(Player.create(command)));
+        outboxEventSaveService.savePlayerCreatedEvent(created.id());
+        return created;
     }
 
     @Transactional
@@ -42,6 +42,6 @@ public class PlayerCommandService {
     public void addPoint(PlayerAddPointCommand command) {
         final Player player = playerCommandRepository.findById(command.playerId()).toModel();
         playerCommandRepository.save(PlayerData.from(player.addPoint(command)));
-        outboxEventSaveService.savePlayerAddedPointEvent(command.playerId());
+        outboxEventSaveService.savePlayerPointAddedEvent(command.playerId());
     }
 }

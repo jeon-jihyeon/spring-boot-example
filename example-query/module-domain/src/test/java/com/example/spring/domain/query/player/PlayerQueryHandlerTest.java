@@ -3,8 +3,8 @@ package com.example.spring.domain.query.player;
 import com.example.spring.domain.BaseUnitTest;
 import com.example.spring.domain.InboxQueryService;
 import com.example.spring.domain.OutboxQueryApiClient;
-import com.example.spring.domain.event.DomainEvent;
 import com.example.spring.domain.event.EventAlreadyExistsException;
+import com.example.spring.domain.event.InboxEvent;
 import com.example.spring.domain.query.PlayerCommandApiClient;
 import com.example.spring.domain.query.PlayerQueryHandler;
 import com.example.spring.domain.query.PlayerQueryRepository;
@@ -33,7 +33,7 @@ class PlayerQueryHandlerTest extends BaseUnitTest {
 
     @Test
     void shouldNotHandleWhenInboxCausesException() {
-        doThrow(EventAlreadyExistsException.class).when(inboxService).receive(any(DomainEvent.class));
+        doThrow(EventAlreadyExistsException.class).when(inboxService).receive(any(InboxEvent.class));
         assertThrows(EventAlreadyExistsException.class, () -> handler.handle(any()));
 
         verify(inboxService, times(1)).receive(any());

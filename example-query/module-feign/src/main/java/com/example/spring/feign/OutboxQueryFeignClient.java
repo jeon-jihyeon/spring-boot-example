@@ -1,7 +1,7 @@
 package com.example.spring.feign;
 
 import com.example.spring.domain.OutboxQueryApiClient;
-import com.example.spring.domain.event.DomainEvent;
+import com.example.spring.domain.event.InboxEvent;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -13,7 +13,7 @@ public class OutboxQueryFeignClient implements OutboxQueryApiClient {
     }
 
     @Override
-    public void complete(DomainEvent event) {
+    public void complete(InboxEvent event) {
         api.completeOutboxEvent(event);
     }
 }

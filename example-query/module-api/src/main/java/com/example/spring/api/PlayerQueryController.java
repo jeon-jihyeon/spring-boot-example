@@ -22,7 +22,7 @@ public class PlayerQueryController {
         return ResponseModel.ok(service.findPlayers(param.toCondition()).stream().map(PlayerQueryResponse::from).toList());
     }
 
-    @GetMapping("/api/players/{id}/query")
+    @GetMapping("/api/players/{id}")
     public ResponseModel<PlayerQueryResponse> findPlayer(final @PathVariable Long id) {
         return ResponseModel.ok(PlayerQueryResponse.from(service.query(id)));
     }

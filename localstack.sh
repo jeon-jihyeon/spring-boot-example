@@ -82,6 +82,4 @@ function create_sns() {
 # fixme: fixing to FilterPolicy of localstack
 # create_sns "$TOPIC_TEAM" "create" "command"
 # create_sns "$TOPIC_PLAYER" "command"
-create_sqs_with_dlq "team"
 create_sqs_with_dlq "player"
-create_sqs_with_dlq "delete-team"

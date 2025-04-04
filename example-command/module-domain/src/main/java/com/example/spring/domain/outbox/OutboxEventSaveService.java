@@ -14,16 +14,16 @@ public class OutboxEventSaveService {
 
     @Transactional
     public void savePlayerCreatedEvent(PlayerId id) {
-        outboxRepository.save(OutboxEvent.of(OutboxEventType.CREATE_PLAYER, id.value()));
+        outboxRepository.save(OutboxEvent.of(OutboxEventType.PLAYER_CREATED, id.value()));
     }
 
     @Transactional
     public void savePlayerDeletedEvent(PlayerId id) {
-        outboxRepository.save(OutboxEvent.of(OutboxEventType.DELETE_PLAYER, id.value()));
+        outboxRepository.save(OutboxEvent.of(OutboxEventType.PLAYER_DELETED, id.value()));
     }
 
     @Transactional
-    public void savePlayerAddedPointEvent(PlayerId id) {
-        outboxRepository.save(OutboxEvent.of(OutboxEventType.ADD_POINT, id.value()));
+    public void savePlayerPointAddedEvent(PlayerId id) {
+        outboxRepository.save(OutboxEvent.of(OutboxEventType.PLAYER_POINT_ADDED, id.value()));
     }
 }

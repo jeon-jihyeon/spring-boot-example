@@ -2,8 +2,8 @@ package com.example.spring.domain.query;
 
 import com.example.spring.domain.BaseUnitTest;
 import com.example.spring.domain.InboxQueryService;
-import com.example.spring.domain.event.DomainEventInboxRepository;
 import com.example.spring.domain.event.EventAlreadyExistsException;
+import com.example.spring.domain.event.InboxEventRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class InboxQueryServiceTest extends BaseUnitTest {
     @Mock
-    private DomainEventInboxRepository inbox;
+    private InboxEventRepository inbox;
     @InjectMocks
     private InboxQueryService service;
 
