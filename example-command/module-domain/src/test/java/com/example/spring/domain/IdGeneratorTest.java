@@ -35,23 +35,23 @@ class IdGeneratorTest extends BaseUnitTest {
     void noDuplicateTsidWith100Threads() throws InterruptedException {
         // given
         var latch = new CountDownLatch(HUNDRED);
-        var executor = Executors.newFixedThreadPool(HUNDRED);
-        var set = Collections.synchronizedSet(new HashSet<>());
+        try (var executor = Executors.newFixedThreadPool(HUNDRED)) {
+            var set = Collections.synchronizedSet(new HashSet<>());
 
-        // when
-        for (int i = 0; i < HUNDRED; i++) {
-            executor.submit(() -> {
-                try {
-                    set.add(IdGenerator.newId());
-                } finally {
-                    latch.countDown();
-                }
-            });
+            // when
+            for (int i = 0; i < HUNDRED; i++) {
+                executor.submit(() -> {
+                    try {
+                        set.add(IdGenerator.newId());
+                    } finally {
+                        latch.countDown();
+                    }
+                });
+            }
+            latch.await();
+            executor.shutdown();
+            // then
+            assertThat(set.size()).isEqualTo(HUNDRED);
         }
-        latch.await();
-        executor.shutdown();
-
-        // then
-        assertThat(set.size()).isEqualTo(HUNDRED);
     }
 }

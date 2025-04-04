@@ -1,6 +1,6 @@
 package com.example.spring.sqs.queue;
 
-import com.example.spring.domain.event.DomainEvent;
+import com.example.spring.domain.outbox.OutboxEvent;
 import io.awspring.cloud.sqs.config.SqsMessageListenerContainerFactory;
 import io.awspring.cloud.sqs.listener.acknowledgement.AcknowledgementOrdering;
 import io.awspring.cloud.sqs.listener.acknowledgement.handler.AcknowledgementMode;
@@ -55,7 +55,7 @@ public class AwsSqsConfig {
     @Bean
     public SqsMessagingMessageConverter messageConverter() {
         SqsMessagingMessageConverter messageConverter = new SqsMessagingMessageConverter();
-        messageConverter.setPayloadTypeHeader(DomainEvent.class.getTypeName());
+        messageConverter.setPayloadTypeHeader(OutboxEvent.class.getTypeName());
         MappingJackson2MessageConverter payloadConverter = new MappingJackson2MessageConverter();
         payloadConverter.setPrettyPrint(true);
         messageConverter.setPayloadMessageConverter(payloadConverter);

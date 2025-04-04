@@ -1,6 +1,6 @@
 package com.example.spring.sqs.command;
 
-import com.example.spring.domain.event.DomainEvent;
+import com.example.spring.domain.outbox.OutboxEvent;
 import com.example.spring.sqs.AwsMessage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,17 +34,17 @@ public class SnsMessageProducer {
                 "contentType", MessageAttributeValue.builder().stringValue("application/json").dataType("String").build());
     }
 
-    public void send(DomainEvent event) throws JsonProcessingException {
+    public void send(OutboxEvent event) throws JsonProcessingException {
         // TODO: restoration
         final AwsMessage message = AwsMessage.from(event);
         snsAsyncClient.publish(PublishRequest.builder()
                 .topicArn(properties.topicArn())
-                .messageAttributes(getMessageAttributes(message.type()))
+                .messageAttributes(getMessageAttributes(message.queueName()))
                 .message(objectMapper.writeValueAsString(message))
                 .build());
     }
 
-    public void sendBatch(List<DomainEvent> events) throws JsonProcessingException {
+    public void sendBatch(List<OutboxEvent> events) throws JsonProcessingException {
         // TODO: restoration
         if (events != null && !events.isEmpty()) {
             final List<AwsMessage> messages = events.stream().map(AwsMessage::from).toList();

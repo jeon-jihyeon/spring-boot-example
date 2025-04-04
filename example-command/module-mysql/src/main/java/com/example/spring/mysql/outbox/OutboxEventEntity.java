@@ -1,7 +1,7 @@
 package com.example.spring.mysql.outbox;
 
-import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.event.DomainEventType;
+import com.example.spring.domain.outbox.OutboxEvent;
+import com.example.spring.domain.outbox.OutboxEventType;
 import com.example.spring.mysql.BaseCommandEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,49 +15,44 @@ public class OutboxEventEntity extends BaseCommandEntity {
     @Column(nullable = false)
     private Boolean completed;
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 10)
-    private DomainEventType type;
-    @Column(length = 64, nullable = false)
-    private String queueName;
+    @Column(nullable = false, length = 16)
+    private OutboxEventType type;
     @Column(nullable = false)
-    private Long modelId;
+    private Long entityId;
     @Column
     private LocalDateTime completedAt;
 
     public OutboxEventEntity(
             Long id,
             Boolean completed,
-            DomainEventType type,
-            String queueName,
-            Long modelId,
+            OutboxEventType type,
+            Long entityId,
             LocalDateTime completedAt,
             LocalDateTime createdAt
     ) {
         super(id, createdAt);
         this.completed = completed;
         this.type = type;
-        this.queueName = queueName;
-        this.modelId = modelId;
+        this.entityId = entityId;
         this.completedAt = completedAt;
     }
 
     public OutboxEventEntity() {
     }
 
-    public static OutboxEventEntity from(DomainEvent event) {
+    public static OutboxEventEntity from(OutboxEvent event) {
         return new OutboxEventEntity(
                 event.id(),
                 event.completed(),
                 event.type(),
-                event.queueName(),
-                event.modelId(),
+                event.entityId(),
                 event.completedAt(),
                 event.createdAt()
         );
     }
 
-    public DomainEvent toModel() {
-        return new DomainEvent(getId(), completed, type, queueName, modelId, getCreatedAt(), completedAt);
+    public OutboxEvent toModel() {
+        return new OutboxEvent(getId(), completed, type, entityId, getCreatedAt(), completedAt);
     }
 
     public Boolean getCompleted() {
@@ -68,28 +63,20 @@ public class OutboxEventEntity extends BaseCommandEntity {
         this.completed = completed;
     }
 
-    public DomainEventType getType() {
+    public OutboxEventType getType() {
         return type;
     }
 
-    public void setType(DomainEventType type) {
+    public void setType(OutboxEventType type) {
         this.type = type;
     }
 
-    public String getQueueName() {
-        return queueName;
+    public Long getEntityId() {
+        return entityId;
     }
 
-    public void setQueueName(String model) {
-        this.queueName = model;
-    }
-
-    public Long getModelId() {
-        return modelId;
-    }
-
-    public void setModelId(Long modelId) {
-        this.modelId = modelId;
+    public void setEntityId(Long modelId) {
+        this.entityId = modelId;
     }
 
     public LocalDateTime getCompletedAt() {

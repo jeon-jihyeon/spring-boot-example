@@ -6,7 +6,7 @@ import com.example.spring.domain.command.dto.PlayerData;
 import com.example.spring.domain.command.model.FullName;
 import com.example.spring.domain.command.model.Player;
 import com.example.spring.domain.command.model.PlayerId;
-import com.example.spring.domain.event.DomainEventOutboxRepository;
+import com.example.spring.domain.outbox.OutboxEventSaveService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +26,7 @@ class PlayerCommandServiceTest extends BaseUnitTest {
     @Mock
     private PlayerCommandRepository commandRepository;
     @Mock
-    private DomainEventOutboxRepository outboxRepository;
+    private OutboxEventSaveService outboxEventSaveService;
     @InjectMocks
     private PlayerCommandService service;
 
@@ -55,6 +55,6 @@ class PlayerCommandServiceTest extends BaseUnitTest {
         assertThrows(RuntimeException.class, () -> service.create(CREATE_COMMAND));
 
         verify(commandRepository, times(1)).save(any());
-        verify(outboxRepository, never()).save(any());
+        verify(outboxEventSaveService, never()).savePlayerCreatedEvent(any());
     }
 }

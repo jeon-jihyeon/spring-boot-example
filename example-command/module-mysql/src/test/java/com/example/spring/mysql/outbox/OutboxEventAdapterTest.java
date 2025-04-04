@@ -1,7 +1,7 @@
 package com.example.spring.mysql.outbox;
 
-import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.event.DomainEventType;
+import com.example.spring.domain.outbox.OutboxEvent;
+import com.example.spring.domain.outbox.OutboxEventType;
 import com.example.spring.mysql.BaseEmbeddedDbTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,13 +20,12 @@ class OutboxEventAdapterTest extends BaseEmbeddedDbTest {
     @Test
     @DisplayName("OutboxEvent DB 생성-조회-삭제 테스트")
     void shouldBeSavedAndFound() {
-        var event = DomainEvent.createType("model", 2L);
+        var event = OutboxEvent.of(OutboxEventType.CREATE_PLAYER, 2L);
         adapter.save(event);
         var found = repository.findById(event.id()).orElseThrow(RuntimeException::new);
         assertThat(found.getId()).isEqualTo(event.id());
         assertThat(found.getCompleted()).isFalse();
-        assertThat(found.getType()).isEqualTo(DomainEventType.CREATE);
-        assertThat(found.getQueueName()).isEqualTo("model");
-        assertThat(found.getModelId()).isEqualTo(2L);
+        assertThat(found.getType()).isEqualTo(OutboxEventType.CREATE_PLAYER);
+        assertThat(found.getEntityId()).isEqualTo(2L);
     }
 }

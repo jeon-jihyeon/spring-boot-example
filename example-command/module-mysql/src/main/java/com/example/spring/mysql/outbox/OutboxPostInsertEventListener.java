@@ -1,6 +1,6 @@
 package com.example.spring.mysql.outbox;
 
-import com.example.spring.domain.event.MessageProducer;
+import com.example.spring.domain.outbox.OutboxMessageProducer;
 import org.hibernate.event.spi.PostInsertEvent;
 import org.hibernate.event.spi.PostInsertEventListener;
 import org.hibernate.persister.entity.EntityPersister;
@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class OutboxPostInsertEventListener implements PostInsertEventListener {
-    private final MessageProducer producer;
+    private final OutboxMessageProducer producer;
 
-    public OutboxPostInsertEventListener(MessageProducer producer) {
+    public OutboxPostInsertEventListener(OutboxMessageProducer producer) {
         this.producer = producer;
     }
 

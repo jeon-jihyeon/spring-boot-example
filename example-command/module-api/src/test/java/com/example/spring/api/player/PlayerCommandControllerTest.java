@@ -1,9 +1,10 @@
 package com.example.spring.api.player;
 
 import com.example.spring.api.BaseUnitTest;
-import com.example.spring.api.common.ResponseModel;
-import com.example.spring.api.player.request.PlayerCreateRequest;
-import com.example.spring.api.player.response.PlayerCommandResponse;
+import com.example.spring.api.PlayerCommandController;
+import com.example.spring.common.ResponseModel;
+import com.example.spring.api.request.PlayerCreateRequest;
+import com.example.spring.api.response.PlayerCommandResponse;
 import com.example.spring.domain.command.PlayerCommandService;
 import com.example.spring.domain.command.dto.PlayerData;
 import com.example.spring.domain.command.model.Player;

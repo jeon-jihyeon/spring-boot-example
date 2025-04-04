@@ -6,43 +6,42 @@ import com.example.spring.domain.command.dto.PlayerCreateCommand;
 import com.example.spring.domain.command.dto.PlayerData;
 import com.example.spring.domain.command.model.Player;
 import com.example.spring.domain.command.model.PlayerId;
-import com.example.spring.domain.event.DomainEvent;
-import com.example.spring.domain.event.DomainEventOutboxRepository;
-import com.example.spring.domain.event.DomainEventQueue;
+import com.example.spring.domain.outbox.OutboxEventSaveService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PlayerCommandService {
-    private final PlayerCommandRepository repository;
-    private final DomainEventOutboxRepository outboxRepository;
+    private final PlayerCommandRepository playerCommandRepository;
+    private final OutboxEventSaveService outboxEventSaveService;
 
-    public PlayerCommandService(PlayerCommandRepository repository, DomainEventOutboxRepository outboxRepository) {
-        this.repository = repository;
-        this.outboxRepository = outboxRepository;
+    public PlayerCommandService(PlayerCommandRepository playerCommandRepository, OutboxEventSaveService outboxEventSaveService) {
+        this.playerCommandRepository = playerCommandRepository;
+        this.outboxEventSaveService = outboxEventSaveService;
     }
 
     public PlayerData read(PlayerId id) {
-        return repository.findById(id);
+        return playerCommandRepository.findById(id);
     }
 
-    @Transactional(transactionManager = "commandTransactionManager")
+    @Transactional
     public PlayerData create(PlayerCreateCommand command) {
-        final PlayerData data = repository.save(PlayerData.from(Player.create(command)));
-        outboxRepository.save(DomainEvent.createType(DomainEventQueue.COMMAND_PLAYER.getName(), data.id().value()));
+        final PlayerData data = playerCommandRepository.save(PlayerData.from(Player.create(command)));
+        outboxEventSaveService.savePlayerCreatedEvent(data.id());
         return data;
     }
 
-    @Transactional(transactionManager = "commandTransactionManager")
+    @Transactional
     public void delete(PlayerId id) {
-        repository.deleteById(id);
-        outboxRepository.save(DomainEvent.deleteType(DomainEventQueue.COMMAND_PLAYER.getName(), id.value()));
+        playerCommandRepository.deleteById(id);
+        outboxEventSaveService.savePlayerDeletedEvent(id);
     }
 
+    @Transactional
     @DistributedLock(key = "#command.getKey()")
     public void addPoint(PlayerAddPointCommand command) {
-        final Player player = repository.findById(command.playerId()).toModel();
-        repository.save(PlayerData.from(player.addPoint(command)));
-        outboxRepository.save(DomainEvent.updateType(DomainEventQueue.COMMAND_PLAYER.getName(), command.playerId().value()));
+        final Player player = playerCommandRepository.findById(command.playerId()).toModel();
+        playerCommandRepository.save(PlayerData.from(player.addPoint(command)));
+        outboxEventSaveService.savePlayerAddedPointEvent(command.playerId());
     }
 }

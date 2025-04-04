@@ -25,29 +25,31 @@ public class PlayerCommandAdapter implements PlayerCommandRepository {
     }
 
     @Override
-    @Transactional(transactionManager = "commandTransactionManager")
+    @Transactional
     public PlayerData save(PlayerData player) {
         return repository.save(PlayerEntity.from(player)).toData();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PlayerData findById(PlayerId id) {
         return repository.findById(id.value()).orElseThrow(EntityNotFoundException::new).toData();
     }
 
     @Override
-    @Transactional(transactionManager = "commandTransactionManager")
+    @Transactional
     public void deleteById(PlayerId id) {
         repository.deleteById(id.value());
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<PlayerId> findIdsByTeamId(TeamId teamId) {
         return repository.findAllByTeamId(teamId.value()).stream().map(PlayerEntity::getId).map(PlayerId::new).toList();
     }
 
     @Override
-    @Transactional(transactionManager = "commandTransactionManager")
+    @Transactional
     public void leaveAll(TeamId teamId) {
         queryFactory.update(playerEntity)
                 .set(playerEntity.teamId, TeamId.NoTeam.value())

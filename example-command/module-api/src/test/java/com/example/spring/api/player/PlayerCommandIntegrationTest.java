@@ -1,8 +1,9 @@
 package com.example.spring.api.player;
 
 import com.example.spring.api.BaseIntegrationTest;
-import com.example.spring.api.player.request.PlayerAddPointRequest;
-import com.example.spring.api.player.request.PlayerCreateRequest;
+import com.example.spring.api.PlayerCommandController;
+import com.example.spring.api.request.PlayerAddPointRequest;
+import com.example.spring.api.request.PlayerCreateRequest;
 import com.example.spring.mysql.EntityNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
