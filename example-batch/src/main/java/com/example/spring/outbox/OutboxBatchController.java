@@ -1,4 +1,4 @@
-package com.example.spring.batch;
+package com.example.spring.outbox;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParametersBuilder;

@@ -1,7 +1,7 @@
 package com.example.spring.application.batch;
 
-import com.example.spring.batch.DomainEvent;
-import com.example.spring.batch.MessageBatchProducer;
+import com.example.spring.outbox.OutboxEvent;
+import com.example.spring.outbox.OutboxEventBatchProducer;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +20,7 @@ class OutboxBatchIntegrationTest extends BaseEmbeddedDbTest {
     private final JobLauncherTestUtils jobLauncherTestUtils;
     private final JdbcTemplate jdbcTemplate;
     @SpyBean
-    private MessageProducerSpy playerProducer;
+    private OutboxEventProducerSpy playerProducer;
 
     public OutboxBatchIntegrationTest(JobLauncherTestUtils jobLauncherTestUtils, JdbcTemplate jdbcTemplate) {
         this.jobLauncherTestUtils = jobLauncherTestUtils;
@@ -44,11 +44,11 @@ class OutboxBatchIntegrationTest extends BaseEmbeddedDbTest {
         assertThat(jdbcTemplate.queryForObject(select, Integer.class)).isEqualTo(0);
     }
 
-    private final static class MessageProducerSpy implements MessageBatchProducer {
+    private final static class OutboxEventProducerSpy implements OutboxEventBatchProducer {
         private final Logger log = LoggerFactory.getLogger(getClass());
 
         @Override
-        public void sendBatch(List<DomainEvent> events) {
+        public void sendBatch(List<OutboxEvent> events) {
             log.info("[Spy Message] {}", events);
         }
     }

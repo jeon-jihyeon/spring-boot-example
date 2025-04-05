@@ -1,5 +1,6 @@
-package com.example.spring.batch;
+package com.example.spring.sqs;
 
+import com.example.spring.outbox.OutboxEvent;
 import io.awspring.cloud.sqs.config.SqsMessageListenerContainerFactory;
 import io.awspring.cloud.sqs.listener.acknowledgement.AcknowledgementOrdering;
 import io.awspring.cloud.sqs.listener.acknowledgement.handler.AcknowledgementMode;
@@ -15,10 +16,10 @@ import java.net.URI;
 import java.time.Duration;
 
 @Configuration
-public class AwsSqsConfig {
-    private final AwsSqsProperties properties;
+public class SqsConfig {
+    private final SqsProperties properties;
 
-    public AwsSqsConfig(AwsSqsProperties properties) {
+    public SqsConfig(SqsProperties properties) {
         this.properties = properties;
     }
 
@@ -54,7 +55,7 @@ public class AwsSqsConfig {
     @Bean
     public SqsMessagingMessageConverter messageConverter() {
         SqsMessagingMessageConverter messageConverter = new SqsMessagingMessageConverter();
-        messageConverter.setPayloadTypeHeader(DomainEvent.class.getTypeName());
+        messageConverter.setPayloadTypeHeader(OutboxEvent.class.getTypeName());
         MappingJackson2MessageConverter payloadConverter = new MappingJackson2MessageConverter();
         payloadConverter.setPrettyPrint(true);
         messageConverter.setPayloadMessageConverter(payloadConverter);

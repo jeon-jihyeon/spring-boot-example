@@ -1,4 +1,4 @@
-package com.example.spring.batch;
+package com.example.spring.outbox;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,10 +27,10 @@ import java.util.List;
 @Configuration
 public class OutboxBatchJobConfig {
     private final Logger log = LoggerFactory.getLogger(getClass());
-    private final MessageBatchProducer messageProducer;
+    private final OutboxEventBatchProducer messageProducer;
     private final OutboxBatchJobProperties properties;
 
-    public OutboxBatchJobConfig(MessageBatchProducer messageProducer, OutboxBatchJobProperties properties) {
+    public OutboxBatchJobConfig(OutboxEventBatchProducer messageProducer, OutboxBatchJobProperties properties) {
         this.messageProducer = messageProducer;
         this.properties = properties;
     }
@@ -43,13 +43,13 @@ public class OutboxBatchJobConfig {
     @Bean
     public Step outboxBatchStep(
             JobRepository jobRepository,
-            ItemProcessor<DomainEvent, DomainEvent> itemProcessor,
-            CompositeItemWriter<DomainEvent> compositeItemWriter,
-            ItemReader<DomainEvent> itemReader,
+            ItemProcessor<OutboxEvent, OutboxEvent> itemProcessor,
+            CompositeItemWriter<OutboxEvent> compositeItemWriter,
+            ItemReader<OutboxEvent> itemReader,
             PlatformTransactionManager commandTransactionManager
     ) {
         return new StepBuilder("step", jobRepository)
-                .<DomainEvent, DomainEvent>chunk(properties.chunkSize(), commandTransactionManager)
+                .<OutboxEvent, OutboxEvent>chunk(properties.chunkSize(), commandTransactionManager)
                 .reader(itemReader)
                 .processor(itemProcessor)
                 .writer(compositeItemWriter)
@@ -58,18 +58,18 @@ public class OutboxBatchJobConfig {
 
     @Bean
     @StepScope
-    public ItemProcessor<DomainEvent, DomainEvent> itemProcessor(@Value("#{jobParameters['now']}") LocalDateTime now) {
+    public ItemProcessor<OutboxEvent, OutboxEvent> itemProcessor(@Value("#{jobParameters['now']}") LocalDateTime now) {
         return model -> model.complete(now);
     }
 
     @Bean
-    public CompositeItemWriter<DomainEvent> compositeItemWriter(ItemWriter<DomainEvent> itemWriter, ItemWriter<DomainEvent> messageProducer) {
+    public CompositeItemWriter<OutboxEvent> compositeItemWriter(ItemWriter<OutboxEvent> itemWriter, ItemWriter<OutboxEvent> messageProducer) {
         return new CompositeItemWriter<>(Arrays.asList(itemWriter, messageProducer));
     }
 
     @Bean
-    public ItemWriter<DomainEvent> itemWriter(DataSource commandDataSource) {
-        return new JdbcBatchItemWriterBuilder<DomainEvent>()
+    public ItemWriter<OutboxEvent> itemWriter(DataSource commandDataSource) {
+        return new JdbcBatchItemWriterBuilder<OutboxEvent>()
                 .dataSource(commandDataSource)
                 .sql("UPDATE outbox_events SET completed=:completed, completed_at=:completedAt, updated_at=:completedAt WHERE id=:id;")
                 .beanMapped()
@@ -78,10 +78,10 @@ public class OutboxBatchJobConfig {
     }
 
     @Bean
-    public ItemWriter<DomainEvent> messageProducer() {
+    public ItemWriter<OutboxEvent> messageProducer() {
         return chunk -> {
-            final List<DomainEvent> events = new ArrayList<>();
-            for (DomainEvent e : chunk) events.add(e);
+            final List<OutboxEvent> events = new ArrayList<>();
+            for (OutboxEvent e : chunk) events.add(e);
             if (!events.isEmpty()) messageProducer.sendBatch(events);
         };
     }

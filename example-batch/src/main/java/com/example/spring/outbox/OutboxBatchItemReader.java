@@ -1,4 +1,4 @@
-package com.example.spring.batch;
+package com.example.spring.outbox;
 
 import org.springframework.batch.item.database.JdbcPagingItemReader;
 import org.springframework.batch.item.database.Order;
@@ -18,8 +18,8 @@ public class OutboxBatchItemReader {
     }
 
     @Bean
-    public JdbcPagingItemReader<DomainEvent> itemReader(DataSource commandDataSource) {
-        return new JdbcPagingItemReaderBuilder<DomainEvent>()
+    public JdbcPagingItemReader<OutboxEvent> itemReader(DataSource commandDataSource) {
+        return new JdbcPagingItemReaderBuilder<OutboxEvent>()
                 .name("jdbcPagingItemReader")
                 .fetchSize(properties.chunkSize())
                 .dataSource(commandDataSource)
@@ -27,7 +27,7 @@ public class OutboxBatchItemReader {
                 .fromClause("from outbox_events")
                 .whereClause("where completed = false")
                 .sortKeys(Map.of("created_at", Order.DESCENDING))
-                .rowMapper(new DomainEventRowMapper())
+                .rowMapper(new OutboxEventRowMapper())
                 .build();
     }
 }

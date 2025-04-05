@@ -1,8 +1,8 @@
 package com.example.spring.application.batch;
 
-import com.example.spring.batch.DomainEvent;
-import com.example.spring.batch.OutboxBatchItemReader;
-import com.example.spring.batch.OutboxBatchJobProperties;
+import com.example.spring.outbox.OutboxBatchItemReader;
+import com.example.spring.outbox.OutboxBatchJobProperties;
+import com.example.spring.outbox.OutboxEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.batch.item.database.JdbcPagingItemReader;
@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class OutboxBatchItemReaderTest extends BaseUnitTest {
     private JdbcTemplate jdbcTemplate;
-    private JdbcPagingItemReader<DomainEvent> reader;
+    private JdbcPagingItemReader<OutboxEvent> reader;
 
     @BeforeEach
     public void setUp() {
@@ -40,7 +40,7 @@ class OutboxBatchItemReaderTest extends BaseUnitTest {
         for (int i = 1; i < 11; i++) jdbcTemplate.update(insert, i, false, i, now, now);
         for (int i = 11; i < 21; i++) jdbcTemplate.update(insert, i, true, i, now, now);
 
-        DomainEvent e;
+        OutboxEvent e;
         reader.afterPropertiesSet();
         for (int i = 1; i < 11; i++) {
             e = reader.read();

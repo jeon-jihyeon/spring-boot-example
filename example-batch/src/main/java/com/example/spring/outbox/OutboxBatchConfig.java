@@ -1,4 +1,4 @@
-package com.example.spring.batch;
+package com.example.spring.outbox;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
