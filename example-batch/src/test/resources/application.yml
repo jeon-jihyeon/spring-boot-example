@@ -1,4 +1,0 @@
-spring:
-  application.name: batch-test
-  config.import:
-    - batch.yml

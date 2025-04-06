@@ -11,9 +11,12 @@ import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
+import org.springframework.batch.item.support.CompositeItemProcessor;
 import org.springframework.batch.item.support.CompositeItemWriter;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -22,6 +25,7 @@ import javax.sql.DataSource;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Configuration
@@ -36,6 +40,11 @@ public class OutboxBatchJobConfig {
     }
 
     @Bean
+    public static BeanDefinitionRegistryPostProcessor jobRegistryBeanPostProcessorRemover() {
+        return registry -> registry.removeBeanDefinition("jobRegistryBeanPostProcessor");
+    }
+
+    @Bean
     public Job outboxBatchJob(JobRepository jobRepository, Step outboxBatchStep) {
         return new JobBuilder(properties.name(), jobRepository).start(outboxBatchStep).build();
     }
@@ -43,7 +52,7 @@ public class OutboxBatchJobConfig {
     @Bean
     public Step outboxBatchStep(
             JobRepository jobRepository,
-            ItemProcessor<OutboxEvent, OutboxEvent> itemProcessor,
+            CompositeItemProcessor<OutboxEvent, OutboxEvent> compositeItemProcessor,
             CompositeItemWriter<OutboxEvent> compositeItemWriter,
             ItemReader<OutboxEvent> itemReader,
             PlatformTransactionManager commandTransactionManager
@@ -51,9 +60,14 @@ public class OutboxBatchJobConfig {
         return new StepBuilder("step", jobRepository)
                 .<OutboxEvent, OutboxEvent>chunk(properties.chunkSize(), commandTransactionManager)
                 .reader(itemReader)
-                .processor(itemProcessor)
+                .processor(compositeItemProcessor)
                 .writer(compositeItemWriter)
                 .build();
+    }
+
+    @Bean
+    public CompositeItemProcessor<OutboxEvent, OutboxEvent> compositeItemProcessor(ItemProcessor<OutboxEvent, OutboxEvent> itemProcessor) {
+        return new CompositeItemProcessor<>(Collections.singletonList(itemProcessor));
     }
 
     @Bean
@@ -68,7 +82,7 @@ public class OutboxBatchJobConfig {
     }
 
     @Bean
-    public ItemWriter<OutboxEvent> itemWriter(DataSource commandDataSource) {
+    public JdbcBatchItemWriter<OutboxEvent> itemWriter(DataSource commandDataSource) {
         return new JdbcBatchItemWriterBuilder<OutboxEvent>()
                 .dataSource(commandDataSource)
                 .sql("UPDATE outbox_events SET completed=:completed, completed_at=:completedAt, updated_at=:completedAt WHERE id=:id;")
