@@ -10,6 +10,7 @@ spring:
     job:
       name: ${BATCH_JOB_NAME:batch}
       chunk-size: 100
+      enabled: true
 ---
 spring:
   config.activate.on-profile: test

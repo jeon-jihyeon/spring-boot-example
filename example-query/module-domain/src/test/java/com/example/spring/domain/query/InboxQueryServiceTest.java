@@ -25,7 +25,7 @@ class InboxQueryServiceTest extends BaseUnitTest {
     @Test
     @DisplayName("Inbox 중복 실행 방지 테스트")
     void shouldPreventDuplicationForExistingEventInInbox() {
-        when(inbox.exists(any(Long.class))).thenReturn(true);
+        when(inbox.exists(any())).thenReturn(true);
         assertThrows(EventAlreadyExistsException.class, () -> service.receive(any()));
     }
 }

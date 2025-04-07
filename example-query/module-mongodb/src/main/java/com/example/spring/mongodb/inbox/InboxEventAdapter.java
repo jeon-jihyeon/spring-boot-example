@@ -18,7 +18,7 @@ public class InboxEventAdapter implements InboxEventRepository {
     }
 
     @Override
-    public boolean exists(Long id) {
-        return repository.existsById(id);
+    public boolean exists(InboxEvent event) {
+        return repository.existsById(event.id());
     }
 }

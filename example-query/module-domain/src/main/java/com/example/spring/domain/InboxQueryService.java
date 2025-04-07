@@ -14,7 +14,7 @@ public class InboxQueryService {
     }
 
     public void receive(InboxEvent event) {
-        if (inbox.exists(event.id())) {
+        if (inbox.exists(event)) {
             throw new EventAlreadyExistsException();
         }
     }

@@ -5,6 +5,7 @@ import com.example.spring.domain.InboxQueryService;
 import com.example.spring.domain.OutboxQueryApiClient;
 import com.example.spring.domain.event.EventAlreadyExistsException;
 import com.example.spring.domain.event.InboxEvent;
+import com.example.spring.domain.event.InboxEventType;
 import com.example.spring.domain.query.PlayerCommandApiClient;
 import com.example.spring.domain.query.PlayerQueryHandler;
 import com.example.spring.domain.query.PlayerQueryRepository;
@@ -13,6 +14,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -33,7 +36,7 @@ class PlayerQueryHandlerTest extends BaseUnitTest {
 
     @Test
     void shouldNotHandleWhenInboxCausesException() {
-        doThrow(EventAlreadyExistsException.class).when(inboxService).receive(any(InboxEvent.class));
+        doThrow(EventAlreadyExistsException.class).when(inboxService).receive(any());
         assertThrows(EventAlreadyExistsException.class, () -> handler.handle(any()));
 
         verify(inboxService, times(1)).receive(any());
@@ -45,7 +48,9 @@ class PlayerQueryHandlerTest extends BaseUnitTest {
 
     @Test
     void shouldCallSaveService() {
-        handler.handle(any());
+        var now = LocalDateTime.now();
+        var event = new InboxEvent(1L, false, InboxEventType.PLAYER_CREATED, 2L, now, now);
+        handler.handle(event);
 
         verify(inboxService, times(1)).receive(any());
         verify(outboxClient, times(1)).complete(any());
@@ -57,7 +62,9 @@ class PlayerQueryHandlerTest extends BaseUnitTest {
 
     @Test
     void shouldCallDeleteService() {
-        handler.handle(any());
+        var now = LocalDateTime.now();
+        var event = new InboxEvent(1L, false, InboxEventType.PLAYER_DELETED, 2L, now, now);
+        handler.handle(event);
 
         verify(inboxService, times(1)).receive(any());
         verify(outboxClient, times(1)).complete(any());

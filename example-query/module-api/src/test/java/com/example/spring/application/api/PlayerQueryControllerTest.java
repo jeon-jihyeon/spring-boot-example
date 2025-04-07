@@ -51,12 +51,12 @@ class PlayerQueryControllerTest extends BaseUnitTest {
     @Test
     void shouldFindPlayers() throws Exception {
         var data = List.of(new PlayerQuery(1L, "C", 0, "f", "l", 1L),
-                new PlayerQuery(2L, "C", 0, "f", "l", 2L));
+                new PlayerQuery(2L, "C", 0, "f", "l", 1L));
         when(service.findPlayers(any(PlayerQueryCondition.class))).thenReturn(data);
 
         var expected = objectMapper.writeValueAsString(ResponseModel.ok(data.stream().map(PlayerQueryResponse::from).toList()));
         var response = mapResponse(mvc.perform(MockMvcRequestBuilders.get("/api/players")
-                        .param("teamIds", "1", "2"))
+                        .param("teamId", "1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(expected))
                 .andReturn()).data();

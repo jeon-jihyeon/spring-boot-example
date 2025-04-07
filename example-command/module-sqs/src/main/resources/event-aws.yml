@@ -10,8 +10,8 @@ spring:
         queue:
           player: ${MESSAGE_PLAYER_QUEUE}
       sns:
-        topic-arn: ${TEAM_TOPIC_ARN}
+        topic-arn: ${TEAM_TOPIC_ARN:topic}
         region: ${MESSAGE_DEFAULT_REGION}
         access-key: ${MESSAGE_ACCESS_KEY_ID}
         secret-key: ${MESSAGE_SECRET_ACCESS_KEY}
-        type-key: ${MESSAGE_TYPE_KEY}
+        type-key: ${MESSAGE_TYPE_KEY:message-type-key}
