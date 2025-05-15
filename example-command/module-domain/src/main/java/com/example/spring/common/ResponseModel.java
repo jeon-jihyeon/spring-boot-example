@@ -9,7 +9,7 @@ public record ResponseModel<T>(T data, ResponseError error) {
         return new ResponseModel<>(data, null);
     }
 
-    public static ResponseModel<?> error(ApiException e) {
+    public static ResponseModel<?> error(BaseException e) {
         return new ResponseModel<>(null, ResponseError.from(e));
     }
 }

@@ -1,10 +1,10 @@
 package com.example.spring.mysql.player;
 
+import com.example.spring.common.EntityNotFoundException;
 import com.example.spring.domain.command.dto.PlayerData;
 import com.example.spring.domain.command.model.Grade;
 import com.example.spring.domain.command.model.TeamId;
 import com.example.spring.mysql.BaseEmbeddedDbTest;
-import com.example.spring.mysql.EntityNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

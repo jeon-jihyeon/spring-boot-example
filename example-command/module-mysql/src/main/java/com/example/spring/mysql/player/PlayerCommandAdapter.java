@@ -1,10 +1,10 @@
 package com.example.spring.mysql.player;
 
+import com.example.spring.common.EntityNotFoundException;
 import com.example.spring.domain.command.PlayerCommandRepository;
 import com.example.spring.domain.command.dto.PlayerData;
 import com.example.spring.domain.command.model.PlayerId;
 import com.example.spring.domain.command.model.TeamId;
-import com.example.spring.mysql.EntityNotFoundException;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

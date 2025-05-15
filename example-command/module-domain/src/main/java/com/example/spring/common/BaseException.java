@@ -1,4 +1,4 @@
-package com.example.spring.domain;
+package com.example.spring.common;
 
 public abstract class BaseException extends RuntimeException {
     private final ErrorCode code;

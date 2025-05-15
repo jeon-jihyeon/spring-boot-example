@@ -1,7 +1,7 @@
 package com.example.spring.domain.command;
 
-import com.example.spring.domain.BaseException;
-import com.example.spring.domain.ErrorCode;
+import com.example.spring.common.BaseException;
+import com.example.spring.common.ErrorCode;
 
 public class PlayerHasNoTeamException extends BaseException {
     public PlayerHasNoTeamException() {
