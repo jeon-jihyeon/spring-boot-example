@@ -1,9 +1,0 @@
-rootProject.name = 'example-query'
-
-include 'module-api'
-include 'module-common'
-include 'module-domain'
-include 'module-feign'
-include 'module-mongodb'
-include 'module-sqs'
-

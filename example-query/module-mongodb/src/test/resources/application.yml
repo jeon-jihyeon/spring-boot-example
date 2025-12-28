@@ -1,4 +1,0 @@
-spring:
-  application.name: db-query-test
-  config.import:
-    - db-query.yml
