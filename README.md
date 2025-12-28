@@ -13,11 +13,11 @@
 
 ### example-command
 
-![alt text](https://github.com/jeon-jihyeon/spring-boot-example/blob/main/images/example-command.png?raw=true)
+![alt text](https://github.com/jeon-jihyeon/spring-boot-example/blob/cqrs/images/example-command.png?raw=true)
 
 ### example-query
 
-![alt text](https://github.com/jeon-jihyeon/spring-boot-example/blob/main/images/example-query.png?raw=true)
+![alt text](https://github.com/jeon-jihyeon/spring-boot-example/blob/cqrs/images/example-query.png?raw=true)
 
 ### example-batch
 
