@@ -1,0 +1,33 @@
+spring:
+  application.name: spring-boot-example
+  profiles.active: local
+  web:
+    resources:
+      add-mappings: false
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+  config:
+    import:
+      - infra.yml
+  task.execution.pool:
+    core-size: 10
+    max-size: 10
+    queue-capacity: 1000
+server:
+  tomcat:
+    threads:
+      max: 200
+      min-spare: 100
+    max-connections: 10000
+    accept-count: 100
+    connection-timeout: 20000
+  port: 8080
+
+logging:
+  level:
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+    org.springframework.boot.autoconfigure: WARN
+
+---
+spring.config.activate.on-profile: local

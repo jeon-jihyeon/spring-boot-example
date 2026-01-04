@@ -1,0 +1,19 @@
+rootProject.name = 'spring-boot-example'
+
+// Bounded Contexts
+include 'modules:bounded-context:acquisition:domain'
+include 'modules:bounded-context:acquisition:application'
+include 'modules:bounded-context:acquisition:infra'
+include 'modules:bounded-context:acquisition:api'
+
+include 'modules:bounded-context:analysis:domain'
+include 'modules:bounded-context:analysis:application'
+include 'modules:bounded-context:analysis:infra'
+include 'modules:bounded-context:analysis:api'
+
+
+// Common Modules
+include 'modules:common:app'
+include 'modules:common:infra'
+include 'modules:common:contracts'
+include 'modules:common:core'

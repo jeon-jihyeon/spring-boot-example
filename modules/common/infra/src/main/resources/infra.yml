@@ -1,0 +1,35 @@
+spring:
+  config.activate.on-profile: local
+  jpa:
+    open-in-view: false
+    hibernate.ddl-auto: validate
+    properties.hibernate:
+      show_log: true
+      highlight_sql: true
+      show_sql: true
+      default_batch_fetch_size: 100
+      jdbc.batch_size: 200
+  datasource:
+    rdb:
+      driver-class-name: ${RDB_DRIVER}
+      jdbc-url: jdbc:mysql://${RDB_URL}
+      username: ${RDB_USERNAME}
+      password: ${RDB_PASSWORD}
+      pool-name: hikari-command-pool
+      maximum-pool-size: 10
+      validation-timeout: 1000
+      connection-timeout: 1500
+      keepalive-time: 30000
+      max-lifetime: 300000
+      leak-detection-threshold: 2000
+      data-source-properties:
+        cachePrepStmts: true
+        useServerPrepStmts: true
+        prepStmtCacheSize: 300
+        prepStmtCacheSqlLimit: 2048
+        socketTimeout: 3000
+        cacheResultSetMetadata: true
+        cacheServerConfiguration: true
+        elideSetAutoCommits: true
+        maintainTimeStats: false
+        rewriteBatchedStatements: true

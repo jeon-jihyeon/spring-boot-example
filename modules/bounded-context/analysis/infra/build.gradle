@@ -1,0 +1,7 @@
+dependencies {
+    implementation project(':modules:bounded-context:analysis:application')
+    implementation project(':modules:bounded-context:analysis:domain')
+    implementation project(':modules:common:infra')
+    implementation project(':modules:common:contracts')
+    implementation project(':modules:common:core')
+}

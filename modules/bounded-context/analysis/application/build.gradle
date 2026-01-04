@@ -1,0 +1,6 @@
+dependencies {
+    implementation project(':modules:bounded-context:analysis:domain')
+    implementation project(':modules:common:core')
+
+    implementation 'org.springframework:spring-context'
+}
