@@ -1,7 +1,7 @@
 dependencies {
     implementation project(':modules:bounded-context:acquisition:application')
     implementation project(':modules:bounded-context:acquisition:domain')
-    implementation project(':modules:common:contracts')
+    implementation project(':modules:common:contract')
     implementation project(':modules:common:core')
 
     implementation 'org.springframework:spring-context'

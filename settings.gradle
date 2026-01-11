@@ -14,6 +14,6 @@ include 'modules:bounded-context:analysis:api'
 
 // Common Modules
 include 'modules:common:app'
-include 'modules:common:infra'
-include 'modules:common:contracts'
+include 'modules:common:contract'
 include 'modules:common:core'
+include 'modules:common:infrastructure'

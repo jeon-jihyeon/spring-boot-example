@@ -3,9 +3,9 @@ package com.example.acquisition.api;
 import com.example.acquisition.application.GetCandles;
 import com.example.acquisition.application.GetCandlesRequest;
 import com.example.acquisition.domain.Candle;
-import com.example.contracts.acquisition.AcquisitionCandleResponse;
-import com.example.contracts.acquisition.AcquisitionCandlesRequest;
-import com.example.contracts.acquisition.AcquisitionContract;
+import com.example.contract.acquisition.AcquisitionCandleResponse;
+import com.example.contract.acquisition.AcquisitionCandlesRequest;
+import com.example.contract.acquisition.AcquisitionContract;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

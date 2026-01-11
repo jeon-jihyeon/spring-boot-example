@@ -1,4 +1,4 @@
-package com.example.infra;
+package com.example.infrastructure;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;

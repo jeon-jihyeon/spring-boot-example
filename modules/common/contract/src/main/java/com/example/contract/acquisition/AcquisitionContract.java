@@ -1,4 +1,4 @@
-package com.example.contracts.acquisition;
+package com.example.contract.acquisition;
 
 import java.util.List;
 

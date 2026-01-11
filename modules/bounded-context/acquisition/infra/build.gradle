@@ -2,7 +2,7 @@ dependencies {
     implementation project(':modules:bounded-context:acquisition:application')
     implementation project(':modules:bounded-context:acquisition:domain')
     implementation project(':modules:common:core')
-    implementation project(':modules:common:infra')
+    implementation project(':modules:common:infrastructure')
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 }

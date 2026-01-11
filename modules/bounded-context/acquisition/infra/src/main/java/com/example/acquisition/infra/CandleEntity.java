@@ -3,7 +3,7 @@ package com.example.acquisition.infra;
 import com.example.acquisition.domain.Candle;
 import com.example.core.enums.Timeframe;
 import com.example.core.values.*;
-import com.example.infra.BaseJpaEntity;
+import com.example.infrastructure.BaseJpaEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 

@@ -1,4 +1,4 @@
-package com.example.contracts.acquisition;
+package com.example.contract.acquisition;
 
 import com.example.core.values.EpochMillis;
 import com.example.core.values.Symbol;

@@ -6,12 +6,12 @@ Bounded Context를 `acquisition`, `analysis`로 나누고, 각 컨텍스트를 `
 ## 모듈
 
 - `modules/common:core` 핵심 값 객체, enum, 예외 등 공통 도메인 요소
-- `modules/common:contracts` Bounded Context 간 통신을 위한 계약
+- `modules/common:contract` Bounded Context 간 통신을 위한 계약
 - `modules/common:infra` 공통 인프라 설정
 - `modules/common:app` 스프링 부트 엔트리 포인트 및 AOP/웹 설정
 
 - `modules/bounded-context/acquisition:domain` 수집 도메인 모델, 집계 로직
-- `modules/bounded-context/acquisition:application` 유스케이스, 인프라 인터페이스 
+- `modules/bounded-context/acquisition:application` 유스케이스, 인프라 인터페이스
 - `modules/bounded-context/acquisition:infra` JPA 등 인프라 구현체
 - `modules/bounded-context/acquisition:api` 계약 구현체(Facade)
 
@@ -29,5 +29,5 @@ Bounded Context를 `acquisition`, `analysis`로 나누고, 각 컨텍스트를 `
 
 ## Bounded Context 간 통신
 
-현재는 `common:contracts`에 정의된 계약을 `acquisition:api`의 Facade가 구현하는 방식으로 통신합니다.  
+현재는 `common:contract`에 정의된 계약을 `acquisition:api`의 Facade가 구현하는 방식으로 통신합니다.  
 필요 시 REST API, 메시지 기반 통신(Kafka/RabbitMQ 등), gRPC 같은 대안도 사용할 수 있습니다.
