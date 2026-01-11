@@ -1,5 +1,6 @@
 dependencies {
     implementation project(':modules:bounded-context:acquisition:application')
+    implementation project(':modules:bounded-context:acquisition:domain')
     implementation project(':modules:common:contracts')
     implementation project(':modules:common:core')
 

@@ -1,42 +1,39 @@
 package com.example.acquisition.api;
 
-import com.example.acquisition.application.DailyItem;
-import com.example.acquisition.application.DailyItemsCriteria;
-import com.example.acquisition.application.GetDailyItems;
-import com.example.acquisition.application.HourlyCandle;
+import com.example.acquisition.application.GetCandles;
+import com.example.acquisition.application.GetCandlesRequest;
+import com.example.acquisition.domain.Candle;
+import com.example.contracts.acquisition.AcquisitionCandleResponse;
+import com.example.contracts.acquisition.AcquisitionCandlesRequest;
 import com.example.contracts.acquisition.AcquisitionContract;
-import com.example.contracts.acquisition.DailyAcquisitionRequest;
-import com.example.contracts.acquisition.DailyAcquisitionResponse;
-import com.example.contracts.acquisition.HourlyCandleResponse;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
 public class AcquisitionFacade implements AcquisitionContract {
-    private final GetDailyItems getDailyItems;
+    private final GetCandles getCandles;
 
-    public AcquisitionFacade(GetDailyItems getDailyItems) {
-        this.getDailyItems = getDailyItems;
+    public AcquisitionFacade(GetCandles getCandles) {
+        this.getCandles = getCandles;
     }
 
-    private static DailyItemsCriteria toCriteria(DailyAcquisitionRequest request) {
-        return new DailyItemsCriteria(request.symbol(), request.currency(), request.start(), request.end());
+    private static GetCandlesRequest toCriteria(AcquisitionCandlesRequest request) {
+        return new GetCandlesRequest(request.symbol(), request.currency(), request.start(), request.end());
     }
 
-    private HourlyCandleResponse toCandleResponse(HourlyCandle data) {
-        return new HourlyCandleResponse(data.symbol(), data.currency(), data.startTime(), data.ohlcv());
-    }
-
-    private DailyAcquisitionResponse toResponse(DailyItem data) {
-        return new DailyAcquisitionResponse(
-                data.symbol(), data.currency(),
-                data.hourlyCandles().stream().map(this::toCandleResponse).toList()
+    private AcquisitionCandleResponse toResponse(Candle model) {
+        return new AcquisitionCandleResponse(
+                model.symbol(),
+                model.currency(),
+                model.startTime(),
+                model.ohlcv(),
+                model.timeframe()
         );
     }
 
     @Override
-    public List<DailyAcquisitionResponse> findDailyAcquisitions(DailyAcquisitionRequest request) {
-        return getDailyItems.execute(toCriteria(request)).stream().map(this::toResponse).toList();
+    public List<AcquisitionCandleResponse> findAcquisitionCandles(AcquisitionCandlesRequest request) {
+        return getCandles.execute(toCriteria(request)).stream().map(this::toResponse).toList();
     }
 }

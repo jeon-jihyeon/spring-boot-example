@@ -4,6 +4,6 @@ import com.example.acquisition.domain.Candle;
 
 import java.util.List;
 
-public interface PeriodCandlesFinder {
-    List<Candle> find(PeriodCandlesQuery query);
+public interface CandlesFinder {
+    List<Candle> find(CandlesQuery query);
 }

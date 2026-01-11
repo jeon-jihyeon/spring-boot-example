@@ -1,14 +1,14 @@
 package com.example.acquisition.infra;
 
-import com.example.acquisition.application.PeriodCandlesFinder;
-import com.example.acquisition.application.PeriodCandlesQuery;
+import com.example.acquisition.application.CandlesFinder;
+import com.example.acquisition.application.CandlesQuery;
 import com.example.acquisition.domain.Candle;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public class CandleJpaAdapter implements PeriodCandlesFinder {
+public class CandleJpaAdapter implements CandlesFinder {
     private final CandleJpaRepository jpaRepository;
 
     public CandleJpaAdapter(CandleJpaRepository jpaRepository) {
@@ -16,7 +16,7 @@ public class CandleJpaAdapter implements PeriodCandlesFinder {
     }
 
     @Override
-    public List<Candle> find(PeriodCandlesQuery query) {
+    public List<Candle> find(CandlesQuery query) {
         return jpaRepository.findAllBySymbolAndCurrencyAndStartTimeBetween(
                 query.symbol().value(),
                 query.currency().getCurrencyCode(),
