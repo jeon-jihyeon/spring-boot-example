@@ -10,9 +10,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class CandleAggregatorTest {
+class CandleCandleAggregatorTest {
 
-    private static final Aggregator<Candle> candleAggregator = new Aggregator<>();
+    private static final CandleAggregator candleAggregator = new CandleAggregator();
 
     private static Candle candle(
             Symbol symbol,

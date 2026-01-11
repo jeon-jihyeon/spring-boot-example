@@ -13,15 +13,14 @@ public record Candle(
         EpochMillis startTime,
         OHLCV ohlcv,
         Timeframe timeframe
-) implements Aggregatable<Candle> {
+) implements Comparable<Candle> {
     public Candle {
         if (symbol == null || currency == null || startTime == null || ohlcv == null || timeframe == null) {
             throw new IllegalArgumentException("Candle fields cannot be null");
         }
     }
 
-    @Override
-    public Candle aggregate(Candle other) {
+    public Candle merge(Candle other) {
         Candle before = this.startTime().value() < other.startTime().value() ? this : other;
         Candle after = before == this ? other : this;
         OHLCV aggregated = new OHLCV(
@@ -35,13 +34,7 @@ public record Candle(
         return new Candle(before.symbol, before.currency, before.startTime, aggregated, this.timeframe);
     }
 
-    @Override
     public int compareTo(Candle other) {
         return Long.compare(this.startTime().value(), other.startTime().value());
-    }
-
-    @Override
-    public Long epochMillis() {
-        return startTime.value();
     }
 }

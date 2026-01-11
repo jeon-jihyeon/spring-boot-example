@@ -6,35 +6,35 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public final class Aggregator<T extends Aggregatable<T>> {
-    public Aggregator() {
+public final class CandleAggregator {
+    public CandleAggregator() {
     }
 
-    public List<T> aggregate(List<T> aggregatables, Timeframe target) {
-        if (aggregatables == null || aggregatables.isEmpty()) {
+    public List<Candle> aggregate(List<Candle> candles, Timeframe target) {
+        if (candles == null || candles.isEmpty()) {
             return List.of();
         }
 
-        Timeframe first = aggregatables.get(0).timeframe();
+        Timeframe first = candles.get(0).timeframe();
         if (first.getSeconds() >= target.getSeconds()) {
             throw new TimeframeHierarchyException(target, first);
         }
 
-        for (T aggregatable : aggregatables) {
-            if (aggregatable.timeframe() != first) {
-                throw new TimeframeMismatchException(first, aggregatable.timeframe());
+        for (Candle candle : candles) {
+            if (candle.timeframe() != first) {
+                throw new TimeframeMismatchException(first, candle.timeframe());
             }
         }
 
         long bucketMillis = target.getSeconds() * 1000L;
-        return aggregatables.stream()
+        return candles.stream()
                 .sorted()
                 .collect(Collectors.groupingBy(
-                        c -> c.epochMillis() / bucketMillis,
+                        c -> c.startTime().value() / bucketMillis,
                         LinkedHashMap::new,
                         Collectors.toList()
                 )).values().stream()
-                .map(bucket -> bucket.stream().reduce(Aggregatable::aggregate).orElseThrow())
+                .map(bucket -> bucket.stream().reduce(Candle::merge).orElseThrow())
                 .toList();
     }
 }

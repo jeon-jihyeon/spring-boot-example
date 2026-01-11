@@ -1,7 +1,7 @@
 package com.example.acquisition.application;
 
-import com.example.acquisition.domain.Aggregator;
 import com.example.acquisition.domain.Candle;
+import com.example.acquisition.domain.CandleAggregator;
 import com.example.core.enums.Timeframe;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +12,10 @@ import java.util.stream.Collectors;
 
 @Service
 public class GetDailyItems {
-    private final Aggregator<Candle> candleAggregator;
+    private final CandleAggregator candleAggregator;
     private final PeriodCandlesFinder periodCandlesFinder;
 
-    public GetDailyItems(
-            Aggregator<Candle> candleAggregator,
-            PeriodCandlesFinder periodCandlesFinder
-    ) {
+    public GetDailyItems(CandleAggregator candleAggregator, PeriodCandlesFinder periodCandlesFinder) {
         this.candleAggregator = candleAggregator;
         this.periodCandlesFinder = periodCandlesFinder;
     }

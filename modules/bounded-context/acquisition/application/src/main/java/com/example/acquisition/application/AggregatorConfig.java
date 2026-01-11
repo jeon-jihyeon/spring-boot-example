@@ -1,14 +1,13 @@
 package com.example.acquisition.application;
 
-import com.example.acquisition.domain.Aggregator;
-import com.example.acquisition.domain.Candle;
+import com.example.acquisition.domain.CandleAggregator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AggregatorConfig {
     @Bean
-    public Aggregator<Candle> candleAggregator() {
-        return new Aggregator<>();
+    public CandleAggregator candleAggregator() {
+        return new CandleAggregator();
     }
 }
