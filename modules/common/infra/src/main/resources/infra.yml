@@ -12,7 +12,7 @@ spring:
   datasource:
     rdb:
       driver-class-name: ${RDB_DRIVER}
-      jdbc-url: jdbc:mysql://${RDB_URL}
+      jdbc-url: ${RDB_URL}
       username: ${RDB_USERNAME}
       password: ${RDB_PASSWORD}
       pool-name: hikari-command-pool
