@@ -1,15 +1,11 @@
 package com.example.acquisition.infra;
 
 import com.example.acquisition.domain.Candle;
-import com.example.acquisition.domain.Exchange;
-import com.example.core.enums.AssetClass;
 import com.example.core.enums.Timeframe;
 import com.example.core.values.*;
 import com.example.infra.BaseJpaEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -22,18 +18,6 @@ import java.util.Currency;
  */
 @Entity
 public class CandleEntity extends BaseJpaEntity {
-    /**
-     * 자산 클래스 (예: CRYPTO, STOCK 등)
-     */
-    @Column(name = "asset_class", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private AssetClass assetClass;
-    /**
-     * 거래소 이름
-     */
-    @Column(name = "exchange", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Exchange exchange;
     /**
      * 자산 심볼 (BTC, AAPL, GOLD 등)
      */
@@ -84,10 +68,6 @@ public class CandleEntity extends BaseJpaEntity {
     }
 
     public CandleEntity(Candle model) {
-        // Note: 현재는 CRYPTO 자산 클래스와 UPBIT 거래소만 지원
-        this.assetClass = AssetClass.CRYPTO;
-        this.exchange = Exchange.UPBIT;
-        
         this.symbol = model.symbol().value();
         this.currency = model.currency().getCurrencyCode();
         this.startTime = model.startTime().toDateTime();
