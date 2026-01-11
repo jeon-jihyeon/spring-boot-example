@@ -3,4 +3,6 @@ dependencies {
     implementation project(':modules:bounded-context:analysis:domain')
     implementation project(':modules:common:contract')
     implementation project(':modules:common:core')
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 }
