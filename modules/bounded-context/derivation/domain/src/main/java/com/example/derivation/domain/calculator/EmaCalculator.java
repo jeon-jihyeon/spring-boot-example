@@ -1,7 +1,6 @@
 package com.example.derivation.domain.calculator;
 
 import com.example.derivation.domain.Candle;
-import com.example.derivation.domain.indicator.Core;
 import com.example.derivation.domain.indicator.Ema;
 import com.example.derivation.domain.indicator.EmaParams;
 
@@ -58,7 +57,6 @@ public final class EmaCalculator {
         }
 
         Candle latest = candles.get(candles.size() - 1);
-        var core = new Core(latest.symbol(), latest.timeframe(), latest.startTime());
-        return new Ema(core, ema, period);
+        return new Ema(latest.symbol(), latest.timeframe(), latest.startTime(), ema, period);
     }
 }

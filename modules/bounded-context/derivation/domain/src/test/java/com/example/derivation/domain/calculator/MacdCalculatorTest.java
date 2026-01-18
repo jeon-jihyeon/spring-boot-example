@@ -3,7 +3,6 @@ package com.example.derivation.domain.calculator;
 import com.example.core.enums.Timeframe;
 import com.example.core.values.*;
 import com.example.derivation.domain.Candle;
-import com.example.derivation.domain.indicator.Code;
 import com.example.derivation.domain.indicator.MacdParams;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,10 +32,9 @@ class MacdCalculatorTest {
         var result = calculator.calculate(candles);
 
         // then
-        assertThat(result.code()).isEqualTo(Code.MACD);
         assertThat(result.value()).isNotNull(); // MACD Line
-        assertThat(result.core().symbol().value()).isEqualTo("KRW-BTC");
-        assertThat(result.core().timeframe()).isEqualTo(Timeframe.DAYS);
+        assertThat(result.symbol().value()).isEqualTo("KRW-BTC");
+        assertThat(result.timeframe()).isEqualTo(Timeframe.DAYS);
         assertThat(result.params().fast()).isEqualTo(12);
         assertThat(result.params().slow()).isEqualTo(26);
         assertThat(result.params().signal()).isEqualTo(9);
@@ -174,7 +172,7 @@ class MacdCalculatorTest {
         );
 
         // when & then
-        assertThat(calculator.calculate(candles).core().timestamp().value()).isEqualTo(34000L);
+        assertThat(calculator.calculate(candles).timestamp().value()).isEqualTo(34000L);
     }
 
     @Test

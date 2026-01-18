@@ -1,7 +1,6 @@
 package com.example.derivation.domain.calculator;
 
 import com.example.derivation.domain.Candle;
-import com.example.derivation.domain.indicator.Core;
 import com.example.derivation.domain.indicator.Macd;
 import com.example.derivation.domain.indicator.MacdParams;
 
@@ -60,8 +59,7 @@ public final class MacdCalculator {
         var histogram = macdLine.subtract(signalLine);
 
         Candle latest = candles.get(candles.size() - 1);
-        var core = new Core(latest.symbol(), latest.timeframe(), latest.startTime());
-        return new Macd(core, macdLine, signalLine, histogram, params);
+        return new Macd(latest.symbol(), latest.timeframe(), latest.startTime(), macdLine, signalLine, histogram, params);
     }
 
     private List<BigDecimal> calculateMacdLines(MacdParams params, List<Candle> candles) {

@@ -3,7 +3,6 @@ package com.example.derivation.domain.calculator;
 import com.example.core.enums.Timeframe;
 import com.example.core.values.*;
 import com.example.derivation.domain.Candle;
-import com.example.derivation.domain.indicator.Code;
 import com.example.derivation.domain.indicator.EmaParams;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,10 +31,9 @@ class EmaCalculatorTest {
         var result = calculator.calculate(candles);
 
         // then
-        assertThat(result.code()).isEqualTo(Code.EMA);
         assertThat(result.value()).isEqualByComparingTo("140.00000000");
-        assertThat(result.core().symbol().value()).isEqualTo("KRW-BTC");
-        assertThat(result.core().timeframe()).isEqualTo(Timeframe.DAYS);
+        assertThat(result.symbol().value()).isEqualTo("KRW-BTC");
+        assertThat(result.timeframe()).isEqualTo(Timeframe.DAYS);
         assertThat(result.period()).isEqualTo(9);
     }
 
@@ -132,7 +130,7 @@ class EmaCalculatorTest {
         );
 
         // when & then
-        assertThat(calculator.calculate(candles).core().timestamp().value()).isEqualTo(9000L);
+        assertThat(calculator.calculate(candles).timestamp().value()).isEqualTo(9000L);
     }
 
     @Test
