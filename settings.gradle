@@ -6,10 +6,10 @@ include 'modules:bounded-context:acquisition:application'
 include 'modules:bounded-context:acquisition:infra'
 include 'modules:bounded-context:acquisition:api'
 
-include 'modules:bounded-context:analysis:domain'
-include 'modules:bounded-context:analysis:application'
-include 'modules:bounded-context:analysis:infra'
-include 'modules:bounded-context:analysis:api'
+include 'modules:bounded-context:derivation:domain'
+include 'modules:bounded-context:derivation:application'
+include 'modules:bounded-context:derivation:infra'
+include 'modules:bounded-context:derivation:api'
 
 
 // Common Modules

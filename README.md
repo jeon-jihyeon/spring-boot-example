@@ -1,7 +1,7 @@
 # DDD 예제
 
 이 프로젝트는 멀티 모듈 기반의 스프링 부트 서버 아키텍처를 DDD 방식으로 구성한 예시입니다.  
-Bounded Context를 `acquisition`, `analysis`로 나누고, 각 컨텍스트를 `domain / application / infra / api` 레이어로 분리했습니다.
+Bounded Context를 `acquisition`, `derivation`로 나누고, 각 컨텍스트를 `domain / application / infra / api` 레이어로 분리했습니다.
 
 ## 모듈
 
@@ -15,10 +15,10 @@ Bounded Context를 `acquisition`, `analysis`로 나누고, 각 컨텍스트를 `
 - `modules/bounded-context/acquisition:infra` JPA 등 인프라 구현체
 - `modules/bounded-context/acquisition:api` 계약 구현체(Facade)
 
-- `modules/bounded-context/analysis:domain` 분석 지표/계산 로직
-- `modules/bounded-context/analysis:application` 분석 유스케이스와 포트
-- `modules/bounded-context/analysis:infra` 인프라 구현(미구현)
-- `modules/bounded-context/analysis:api` API/Facade(미구현)
+- `modules/bounded-context/derivation:domain` 분석 지표/계산 로직
+- `modules/bounded-context/derivation:application` 분석 유스케이스와 포트
+- `modules/bounded-context/derivation:infra` 인프라 구현(미구현)
+- `modules/bounded-context/derivation:api` API/Facade(미구현)
 
 ## 주요 의존성
 

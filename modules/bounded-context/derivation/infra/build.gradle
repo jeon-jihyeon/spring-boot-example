@@ -1,0 +1,8 @@
+dependencies {
+    implementation project(':modules:bounded-context:derivation:application')
+    implementation project(':modules:bounded-context:derivation:domain')
+    implementation project(':modules:common:contract')
+    implementation project(':modules:common:core')
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+}
