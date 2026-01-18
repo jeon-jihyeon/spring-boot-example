@@ -3,14 +3,14 @@ package com.example.acquisition.api;
 import com.example.acquisition.application.GetCandles;
 import com.example.acquisition.application.GetCandlesRequest;
 import com.example.acquisition.domain.Candle;
+import com.example.app.annotation.Facade;
 import com.example.contract.acquisition.AcquisitionCandleResponse;
 import com.example.contract.acquisition.AcquisitionCandlesRequest;
 import com.example.contract.acquisition.AcquisitionContract;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
+@Facade(boundedContext = "acquisition")
 public class AcquisitionFacade implements AcquisitionContract {
     private final GetCandles getCandles;
 
