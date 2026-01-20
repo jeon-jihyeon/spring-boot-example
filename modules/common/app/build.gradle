@@ -5,6 +5,13 @@ dependencies {
     implementation project(':modules:common:core')
     implementation project(':modules:common:infrastructure')
 
+    implementation project(':modules:bounded-context:acquisition-api')
+    implementation project(':modules:bounded-context:acquisition-application')
+    implementation project(':modules:bounded-context:acquisition-infra')
+    implementation project(':modules:bounded-context:derivation-api')
+    implementation project(':modules:bounded-context:derivation-application')
+    implementation project(':modules:bounded-context:derivation-infra')
+
     implementation 'org.springframework.boot:spring-boot-starter-aop'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 }
