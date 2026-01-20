@@ -11,10 +11,10 @@ spring:
       jdbc.batch_size: 200
   datasource:
     rdb:
-      driver-class-name: ${RDB_DRIVER}
-      jdbc-url: ${RDB_URL}
-      username: ${RDB_USERNAME}
-      password: ${RDB_PASSWORD}
+      driver-class-name: ${RDB_DRIVER:org.h2.Driver}
+      jdbc-url: ${RDB_URL:jdbc:h2:mem:testdb;MODE=MySQL}
+      username: ${RDB_USERNAME:sa}
+      password: ${RDB_PASSWORD:}
       pool-name: hikari-command-pool
       maximum-pool-size: 10
       validation-timeout: 1000

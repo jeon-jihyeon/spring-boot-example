@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 @ConfigurationPropertiesScan
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.example")
 public class ExampleApplication {
     public static void main(String[] args) {
         SpringApplication.run(ExampleApplication.class, args);
