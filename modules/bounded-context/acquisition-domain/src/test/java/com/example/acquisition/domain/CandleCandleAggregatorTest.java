@@ -14,6 +14,37 @@ class CandleCandleAggregatorTest {
 
     private static final CandleAggregator candleAggregator = new CandleAggregator();
 
+    @Test
+    void aggregate_emptyList_returnsEmptyList() {
+        // when
+        var result = candleAggregator.aggregate(List.of(), Timeframe.HOURS);
+
+        // then
+        assertEquals(0, result.size());
+    }
+
+    @Test
+    void aggregate_nullList_returnsEmptyList() {
+        // when
+        var result = candleAggregator.aggregate(null, Timeframe.HOURS);
+
+        // then
+        assertEquals(0, result.size());
+    }
+
+    @Test
+    void aggregate_sameTimeframe_throwsException() {
+        // given
+        var symbol = Symbol.from("BTC");
+        var currency = Currency.getInstance("USD");
+
+        // when & then
+        assertThrows(TimeframeHierarchyException.class, () -> candleAggregator.aggregate(
+                List.of(candle(symbol, currency, 0L, "1", "1", "1", "1", "1", "1", Timeframe.HOURS)),
+                Timeframe.HOURS
+        ));
+    }
+
     private static Candle candle(
             Symbol symbol,
             Currency currency,

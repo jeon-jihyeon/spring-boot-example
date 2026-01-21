@@ -1,6 +1,5 @@
-package com.example.derivation.infra;
+package com.example.derivation.application;
 
-import com.example.derivation.application.CalculatorConfig;
 import com.example.derivation.domain.calculator.EmaCalculator;
 import com.example.derivation.domain.calculator.MacdCalculator;
 import org.junit.jupiter.api.DisplayName;
@@ -13,18 +12,24 @@ class CalculatorConfigTest {
     private final CalculatorConfig config = new CalculatorConfig();
 
     @Test
-    @DisplayName("emaCalculator bean 생성")
+    @DisplayName("emaCalculator 빈 생성")
     void emaCalculator_createsBean() {
+        // when
         EmaCalculator calculator = config.emaCalculator();
 
+        // then
         assertThat(calculator).isNotNull();
+        assertThat(calculator).isInstanceOf(EmaCalculator.class);
     }
 
     @Test
-    @DisplayName("macdCalculator bean 생성")
+    @DisplayName("macdCalculator 빈 생성")
     void macdCalculator_createsBean() {
+        // when
         MacdCalculator calculator = config.macdCalculator();
 
+        // then
         assertThat(calculator).isNotNull();
+        assertThat(calculator).isInstanceOf(MacdCalculator.class);
     }
 }
