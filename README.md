@@ -5,9 +5,9 @@
 
 ```
 Acquisition BC ──(implements)──▶ Contract ◀──(uses)── Derivation BC
-      │                                                     │
-      └──────────────▶ Common Modules ◀─────────────────────┘
-                     (Core, Infra, App)
+       │                                                    │
+       └─────────────────▶ Common Modules ◀─────────────────┘
+                         (Core, Infra, App)
 ```
 
 ---
@@ -136,8 +136,8 @@ modules/
 
 | 계층 | 주요 클래스 | 설명 |
 |------|------------|------|
-| domain | `Indicator`, `Ema`, `Macd` | 기술 지표 모델 |
-| application | `GetIndicators`, `CandleFetcher` | 지표 계산 유스케이스 |
+| domain | `Indicator`, `Ema`, `Macd`, `EmaCalculator`, `MacdCalculator` | 기술 지표 모델 및 계산기 |
+| application | `GetStandardMacd`, `CandleFetcher`, `IndicatorParam`, `CandlesRequest` | 지표 유스케이스, 포트, 파라미터 |
 | infra | `AcquisitionCandleFetcher` | Acquisition BC 연동 어댑터 |
 | api | `DerivationController` | REST API 엔드포인트 |
 
@@ -158,12 +158,13 @@ Request → AcquisitionFacade → GetCandles → CandlesFinder → CandleJpaAdap
 ### Derivation BC 플로우
 
 ```
-Request → DerivationController → GetIndicators → CandleFetcher
-                                       ↓              ↓
-                                  Calculators    AcquisitionContract
-                                  (EMA/MACD)          ↓
-                                       ↓         AcquisitionFacade
-                                 List<Indicator> → Response
+Request → DerivationController  →  GetStandardMacd  →  CandleFetcher
+              (IndicatorRequest)   (IndicatorParam)   (CandlesRequest)
+                                        ↓                   ↓
+                                  MacdCalculator     AcquisitionContract
+                               (MacdParams.STANDARD)        ↓
+                                        ↓            AcquisitionFacade
+                                    Indicator  →  Response
 ```
 
 ### BC 간 통신
