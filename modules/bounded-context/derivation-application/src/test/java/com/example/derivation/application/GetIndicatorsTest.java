@@ -3,10 +3,7 @@ package com.example.derivation.application;
 import com.example.core.enums.Timeframe;
 import com.example.core.values.*;
 import com.example.derivation.domain.Candle;
-import com.example.derivation.domain.calculator.EmaCalculator;
-import com.example.derivation.domain.calculator.MacdCalculator;
 import com.example.derivation.domain.indicator.Code;
-import com.example.derivation.domain.indicator.MacdParams;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,9 +30,7 @@ class GetIndicatorsTest {
 
     @BeforeEach
     void setUp() {
-        var emaCalculator = new EmaCalculator(12);
-        var macdCalculator = new MacdCalculator(MacdParams.STANDARD);
-        getIndicators = new GetIndicators(candleFetcher, emaCalculator, macdCalculator);
+        getIndicators = new GetIndicators(candleFetcher);
     }
 
     @Test
