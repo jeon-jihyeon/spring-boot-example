@@ -8,14 +8,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 class MacdParamsTest {
 
     @Test
-    @DisplayName("SHORT - fast 5, slow 13, signal 5")
-    void short_params() {
-        assertThat(MacdParams.SHORT.fast()).isEqualTo(5);
-        assertThat(MacdParams.SHORT.slow()).isEqualTo(13);
-        assertThat(MacdParams.SHORT.signal()).isEqualTo(5);
-    }
-
-    @Test
     @DisplayName("STANDARD - fast 12, slow 26, signal 9")
     void standard_params() {
         assertThat(MacdParams.STANDARD.fast()).isEqualTo(12);
@@ -24,10 +16,11 @@ class MacdParamsTest {
     }
 
     @Test
-    @DisplayName("LONG - fast 19, slow 39, signal 9")
-    void long_params() {
-        assertThat(MacdParams.LONG.fast()).isEqualTo(19);
-        assertThat(MacdParams.LONG.slow()).isEqualTo(39);
-        assertThat(MacdParams.LONG.signal()).isEqualTo(9);
+    @DisplayName("커스텀 파라미터 생성")
+    void custom_params() {
+        var params = new MacdParams(5, 13, 5);
+        assertThat(params.fast()).isEqualTo(5);
+        assertThat(params.slow()).isEqualTo(13);
+        assertThat(params.signal()).isEqualTo(5);
     }
 }

@@ -46,7 +46,7 @@ class MacdCalculatorTest {
     @DisplayName("MACD 단기 기간 계산 - SHORT(5, 13, 5)")
     void calculate_macd_shortPeriod() {
         // given
-        var calculator = new MacdCalculator(MacdParams.SHORT);
+        var calculator = new MacdCalculator(new MacdParams(5, 13, 5));
         var candles = createCandles(
                 100.0, 102.0, 104.0, 103.0, 105.0, 107.0, 106.0, 108.0, 110.0, 109.0,
                 111.0, 113.0, 112.0, 114.0, 116.0, 115.0, 117.0, 119.0, 118.0, 120.0
@@ -65,7 +65,7 @@ class MacdCalculatorTest {
     @DisplayName("MACD 장기 기간 계산 - LONG(19, 39, 9)")
     void calculate_macd_longPeriod() {
         // given - LONG은 39 + 9 - 1 = 47개 필요
-        var calculator = new MacdCalculator(MacdParams.LONG);
+        var calculator = new MacdCalculator(new MacdParams(19, 39, 9));
         var candles = createCandles(IntStream.rangeClosed(1, 50).mapToDouble(i -> 100.0 + i).toArray());
 
         // when
