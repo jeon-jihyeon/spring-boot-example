@@ -3,7 +3,6 @@ package com.example.derivation.domain.calculator;
 import com.example.core.enums.Timeframe;
 import com.example.core.values.*;
 import com.example.derivation.domain.Candle;
-import com.example.derivation.domain.indicator.EmaParams;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class EmaCalculatorTest {
 
-    private final EmaCalculator calculator = new EmaCalculator(EmaParams.SHORT);
+    private final EmaCalculator calculator = new EmaCalculator(9);
 
     @Test
     @DisplayName("EMA(9) 정상 계산 - 지수 이동 평균이 정확히 계산")
@@ -137,7 +136,6 @@ class EmaCalculatorTest {
     @DisplayName("candles가 null이면 예외 발생")
     void calculate_nullCandles_throwsException() {
         // when & then
-        var calculator = new EmaCalculator(EmaParams.SHORT);
         assertThatThrownBy(() -> calculator.calculate(null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Candles cannot be null or empty");
@@ -147,7 +145,6 @@ class EmaCalculatorTest {
     @DisplayName("candles가 empty면 예외 발생")
     void calculate_emptyCandles_throwsException() {
         // when & then
-        var calculator = new EmaCalculator(EmaParams.SHORT);
         assertThatThrownBy(() -> calculator.calculate(List.of()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Candles cannot be null or empty");
@@ -158,7 +155,6 @@ class EmaCalculatorTest {
     void calculate_notEnoughData_throwsException() {
         // given
         var candles = createCandles(100.0, 110.0, 120.0, 130.0, 140.0, 150.0, 160.0, 170.0);  // 8개
-        var calculator = new EmaCalculator(EmaParams.SHORT);
 
         // when & then
         assertThatThrownBy(() -> calculator.calculate(candles))

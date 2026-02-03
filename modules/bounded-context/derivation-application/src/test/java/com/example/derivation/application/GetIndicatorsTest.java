@@ -6,7 +6,6 @@ import com.example.derivation.domain.Candle;
 import com.example.derivation.domain.calculator.EmaCalculator;
 import com.example.derivation.domain.calculator.MacdCalculator;
 import com.example.derivation.domain.indicator.Code;
-import com.example.derivation.domain.indicator.EmaParams;
 import com.example.derivation.domain.indicator.MacdParams;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -34,7 +33,7 @@ class GetIndicatorsTest {
 
     @BeforeEach
     void setUp() {
-        var emaCalculator = new EmaCalculator(EmaParams.STANDARD);
+        var emaCalculator = new EmaCalculator(12);
         var macdCalculator = new MacdCalculator(MacdParams.STANDARD);
         getIndicators = new GetIndicators(candleFetcher, emaCalculator, macdCalculator);
     }

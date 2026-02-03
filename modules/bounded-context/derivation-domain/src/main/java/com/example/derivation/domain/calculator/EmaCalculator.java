@@ -2,7 +2,6 @@ package com.example.derivation.domain.calculator;
 
 import com.example.derivation.domain.Candle;
 import com.example.derivation.domain.indicator.Ema;
-import com.example.derivation.domain.indicator.EmaParams;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -23,10 +22,6 @@ public final class EmaCalculator {
 
     public EmaCalculator(int period) {
         this.period = period;
-    }
-
-    public EmaCalculator(EmaParams params) {
-        this.period = params.period();
     }
 
     public Ema calculate(List<Candle> candles) {
