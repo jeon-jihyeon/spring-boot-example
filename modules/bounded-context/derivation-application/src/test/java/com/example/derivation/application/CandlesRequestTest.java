@@ -10,7 +10,7 @@ import java.util.Currency;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class IndicatorParamTest {
+class CandlesRequestTest {
 
     private static final Symbol SYMBOL = new Symbol("KRW-BTC");
     private static final Currency CURRENCY = Currency.getInstance("KRW");
@@ -20,18 +20,18 @@ class IndicatorParamTest {
     @Test
     @DisplayName("정상 생성")
     void create_success() {
-        var param = new IndicatorParam(SYMBOL, CURRENCY, START, END);
+        var request = new CandlesRequest(SYMBOL, CURRENCY, START, END);
 
-        assertThat(param.symbol()).isEqualTo(SYMBOL);
-        assertThat(param.currency()).isEqualTo(CURRENCY);
-        assertThat(param.start()).isEqualTo(START);
-        assertThat(param.end()).isEqualTo(END);
+        assertThat(request.symbol()).isEqualTo(SYMBOL);
+        assertThat(request.currency()).isEqualTo(CURRENCY);
+        assertThat(request.start()).isEqualTo(START);
+        assertThat(request.end()).isEqualTo(END);
     }
 
     @Test
     @DisplayName("symbol이 null이면 예외 발생")
     void create_nullSymbol_throwsException() {
-        assertThatThrownBy(() -> new IndicatorParam(null, CURRENCY, START, END))
+        assertThatThrownBy(() -> new CandlesRequest(null, CURRENCY, START, END))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("symbol and range cannot be null");
     }
@@ -39,7 +39,7 @@ class IndicatorParamTest {
     @Test
     @DisplayName("currency가 null이면 예외 발생")
     void create_nullCurrency_throwsException() {
-        assertThatThrownBy(() -> new IndicatorParam(SYMBOL, null, START, END))
+        assertThatThrownBy(() -> new CandlesRequest(SYMBOL, null, START, END))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("symbol and range cannot be null");
     }
@@ -47,7 +47,7 @@ class IndicatorParamTest {
     @Test
     @DisplayName("start가 null이면 예외 발생")
     void create_nullStart_throwsException() {
-        assertThatThrownBy(() -> new IndicatorParam(SYMBOL, CURRENCY, null, END))
+        assertThatThrownBy(() -> new CandlesRequest(SYMBOL, CURRENCY, null, END))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("symbol and range cannot be null");
     }
@@ -55,7 +55,7 @@ class IndicatorParamTest {
     @Test
     @DisplayName("end가 null이면 예외 발생")
     void create_nullEnd_throwsException() {
-        assertThatThrownBy(() -> new IndicatorParam(SYMBOL, CURRENCY, START, null))
+        assertThatThrownBy(() -> new CandlesRequest(SYMBOL, CURRENCY, START, null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("symbol and range cannot be null");
     }

@@ -16,61 +16,67 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class GetIndicatorsTest {
+class GetStandardMacdTest {
 
     @Mock
     private CandleFetcher candleFetcher;
 
-    private GetIndicators getIndicators;
+    private GetStandardMacd getStandardMacd;
 
     @BeforeEach
     void setUp() {
-        getIndicators = new GetIndicators(candleFetcher);
+        getStandardMacd = new GetStandardMacd(candleFetcher);
     }
 
     @Test
-    @DisplayName("execute - EMA와 MACD 지표를 반환")
-    void execute_returnsEmaAndMacd() {
+    @DisplayName("execute - 표준 MACD 지표를 반환")
+    void execute_returnsStandardMacd() {
         // given
-        var request = new CandlesRequest(
+        var param = new IndicatorParam(
                 new Symbol("KRW-BTC"),
                 Currency.getInstance("KRW"),
                 new EpochMillis(1000L),
                 new EpochMillis(50000L)
         );
-        when(candleFetcher.find(any())).thenReturn(createCandles());
+        when(candleFetcher.find(argThat(q -> q.symbol().value().equals("KRW-BTC"))))
+                .thenReturn(createCandles());
 
         // when
-        var result = getIndicators.execute(request);
+        var result = getStandardMacd.execute(param);
 
         // then
-        assertThat(result).hasSize(2);
-        assertThat(result.get(0).code()).isEqualTo(Code.EMA);
-        assertThat(result.get(1).code()).isEqualTo(Code.MACD);
+        assertThat(result.code()).isEqualTo(Code.MACD);
     }
 
     @Test
-    @DisplayName("execute - CandleFetcher에 올바른 request 전달")
-    void execute_passesRequestToCandleFetcher() {
+    @DisplayName("execute - CandleFetcher에 올바른 CandlesRequest 전달")
+    void execute_passesCandlesRequestToCandleFetcher() {
         // given
-        var request = new CandlesRequest(
+        var param = new IndicatorParam(
                 new Symbol("KRW-ETH"),
                 Currency.getInstance("USD"),
                 new EpochMillis(5000L),
                 new EpochMillis(10000L)
         );
-        when(candleFetcher.find(any())).thenReturn(createCandles());
+        when(candleFetcher.find(argThat(q -> q.symbol().value().equals("KRW-ETH"))))
+                .thenReturn(createCandles());
 
         // when
-        getIndicators.execute(request);
+        getStandardMacd.execute(param);
 
         // then
-        verify(candleFetcher).find(request);
+        verify(candleFetcher).find(argThat(query -> {
+            assertThat(query.symbol().value()).isEqualTo("KRW-ETH");
+            assertThat(query.currency()).isEqualTo(Currency.getInstance("USD"));
+            assertThat(query.start().value()).isEqualTo(5000L);
+            assertThat(query.end().value()).isEqualTo(10000L);
+            return true;
+        }));
     }
 
     private List<Candle> createCandles() {

@@ -2,31 +2,31 @@ package com.example.derivation.api;
 
 import com.example.core.values.EpochMillis;
 import com.example.core.values.Symbol;
-import com.example.derivation.application.CandlesRequest;
-import com.example.derivation.application.GetIndicators;
+import com.example.derivation.application.GetStandardMacd;
+import com.example.derivation.application.IndicatorParam;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Currency;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/derivation")
 public class DerivationController {
-    private final GetIndicators getIndicators;
+    private final GetStandardMacd getStandardMacd;
 
-    public DerivationController(GetIndicators getIndicators) {
-        this.getIndicators = getIndicators;
+    public DerivationController(GetStandardMacd getStandardMacd) {
+        this.getStandardMacd = getStandardMacd;
     }
 
-    @GetMapping("/indicators")
-    public List<IndicatorResponse> getIndicators(IndicatorRequest request) {
-        return getIndicators.execute(new CandlesRequest(
+    @GetMapping("/macd")
+    public IndicatorResponse getMacd(IndicatorRequest request) {
+        var indicator = getStandardMacd.execute(new IndicatorParam(
                 new Symbol(request.symbol()),
                 Currency.getInstance(request.currency()),
                 new EpochMillis(request.start()),
                 new EpochMillis(request.end())
-        )).stream().map(IndicatorResponse::from).toList();
+        ));
+        return IndicatorResponse.from(indicator);
     }
 }

@@ -34,7 +34,7 @@ class AcquisitionCandleFetcherTest {
     @DisplayName("find - AcquisitionContract를 호출하고 Candle로 변환")
     void find_callsContractAndConvertsToCandle() {
         // given
-        var request = new CandlesRequest(
+        var query = new CandlesRequest(
                 new Symbol("KRW-BTC"),
                 Currency.getInstance("KRW"),
                 new EpochMillis(1000L),
@@ -51,7 +51,7 @@ class AcquisitionCandleFetcherTest {
                 )));
 
         // when
-        var result = fetcher.find(request);
+        var result = fetcher.find(query);
 
         // then
         assertThat(result).hasSize(1);
@@ -64,7 +64,7 @@ class AcquisitionCandleFetcherTest {
     @DisplayName("find - 올바른 AcquisitionCandlesRequest로 변환")
     void find_convertsToAcquisitionRequest() {
         // given
-        var request = new CandlesRequest(
+        var query = new CandlesRequest(
                 new Symbol("KRW-ETH"),
                 Currency.getInstance("USD"),
                 new EpochMillis(5000L),
@@ -75,7 +75,7 @@ class AcquisitionCandleFetcherTest {
                 .thenReturn(List.of());
 
         // when
-        fetcher.find(request);
+        fetcher.find(query);
 
         // then
         verify(acquisitionContract).findAcquisitionCandles(argThat(req -> {
@@ -91,7 +91,7 @@ class AcquisitionCandleFetcherTest {
     @DisplayName("find - 빈 응답 처리")
     void find_handlesEmptyResponse() {
         // given
-        var request = new CandlesRequest(
+        var query = new CandlesRequest(
                 new Symbol("KRW-BTC"),
                 Currency.getInstance("KRW"),
                 new EpochMillis(1000L),
@@ -102,7 +102,7 @@ class AcquisitionCandleFetcherTest {
                 .thenReturn(List.of());
 
         // when
-        var result = fetcher.find(request);
+        var result = fetcher.find(query);
 
         // then
         assertThat(result).isEmpty();

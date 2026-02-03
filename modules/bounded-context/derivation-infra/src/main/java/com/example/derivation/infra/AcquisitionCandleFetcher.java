@@ -19,12 +19,9 @@ public class AcquisitionCandleFetcher implements CandleFetcher {
     }
 
     @Override
-    public List<Candle> find(CandlesRequest request) {
-        return acquisitionContract.findAcquisitionCandles(toRequest(request)).stream().map(this::toCandle).toList();
-    }
-
-    private AcquisitionCandlesRequest toRequest(CandlesRequest request) {
-        return new AcquisitionCandlesRequest(request.symbol(), request.currency(), request.start(), request.end());
+    public List<Candle> find(CandlesRequest candlesRequest) {
+        var request = new AcquisitionCandlesRequest(candlesRequest.symbol(), candlesRequest.currency(), candlesRequest.start(), candlesRequest.end());
+        return acquisitionContract.findAcquisitionCandles(request).stream().map(this::toCandle).toList();
     }
 
     private Candle toCandle(AcquisitionCandleResponse response) {
