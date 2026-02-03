@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class MacdCalculatorTest {
-    private static final MacdCalculator calculator = new MacdCalculator(MacdParams.STANDARD);
+    private static final MacdCalculator calculator = new MacdCalculator();
 
     @Test
     @DisplayName("MACD 기본 계산 - 표준 기간(12, 26, 9)")
@@ -29,7 +29,7 @@ class MacdCalculatorTest {
         );
 
         // when
-        var result = calculator.calculate(candles);
+        var result = calculator.calculate(MacdParams.STANDARD, candles);
 
         // then
         assertThat(result.value()).isNotNull(); // MACD Line
@@ -46,14 +46,14 @@ class MacdCalculatorTest {
     @DisplayName("MACD 단기 기간 계산 - SHORT(5, 13, 5)")
     void calculate_macd_shortPeriod() {
         // given
-        var calculator = new MacdCalculator(new MacdParams(5, 13, 5));
+        var shortParams = new MacdParams(5, 13, 5);
         var candles = createCandles(
                 100.0, 102.0, 104.0, 103.0, 105.0, 107.0, 106.0, 108.0, 110.0, 109.0,
                 111.0, 113.0, 112.0, 114.0, 116.0, 115.0, 117.0, 119.0, 118.0, 120.0
         );
 
         // when
-        var result = calculator.calculate(candles);
+        var result = calculator.calculate(shortParams, candles);
 
         // then
         assertThat(result.params().fast()).isEqualTo(5);
@@ -65,11 +65,11 @@ class MacdCalculatorTest {
     @DisplayName("MACD 장기 기간 계산 - LONG(19, 39, 9)")
     void calculate_macd_longPeriod() {
         // given - LONG은 39 + 9 - 1 = 47개 필요
-        var calculator = new MacdCalculator(new MacdParams(19, 39, 9));
+        var longParams = new MacdParams(19, 39, 9);
         var candles = createCandles(IntStream.rangeClosed(1, 50).mapToDouble(i -> 100.0 + i).toArray());
 
         // when
-        var result = calculator.calculate(candles);
+        var result = calculator.calculate(longParams, candles);
 
         // then
         assertThat(result.params().fast()).isEqualTo(19);
@@ -89,7 +89,7 @@ class MacdCalculatorTest {
         );
 
         // when & then - 강한 상승장에서는 MACD Line이 양수
-        assertThat(calculator.calculate(candles).value()).isGreaterThan(BigDecimal.ZERO);
+        assertThat(calculator.calculate(MacdParams.STANDARD, candles).value()).isGreaterThan(BigDecimal.ZERO);
     }
 
     @Test
@@ -104,7 +104,7 @@ class MacdCalculatorTest {
         );
 
         // when & then - 강한 하락장에서는 MACD Line이 음수
-        assertThat(calculator.calculate(candles).value()).isLessThan(BigDecimal.ZERO);
+        assertThat(calculator.calculate(MacdParams.STANDARD, candles).value()).isLessThan(BigDecimal.ZERO);
     }
 
     @Test
@@ -119,7 +119,7 @@ class MacdCalculatorTest {
         );
 
         // when
-        var result = calculator.calculate(candles);
+        var result = calculator.calculate(MacdParams.STANDARD, candles);
 
         // then
         var macdLine = result.value();
@@ -142,7 +142,7 @@ class MacdCalculatorTest {
         );
 
         // when & then
-        assertThat(calculator.calculate(candles).value()).isNotNull();
+        assertThat(calculator.calculate(MacdParams.STANDARD, candles).value()).isNotNull();
     }
 
     @Test
@@ -152,7 +152,7 @@ class MacdCalculatorTest {
         var candles = createCandles(IntStream.rangeClosed(1, 100).mapToDouble(i -> 100.0 + i).toArray());
 
         // when
-        var result = calculator.calculate(candles);
+        var result = calculator.calculate(MacdParams.STANDARD, candles);
 
         // then
         assertThat(result.value()).isNotNull();
@@ -172,13 +172,13 @@ class MacdCalculatorTest {
         );
 
         // when & then
-        assertThat(calculator.calculate(candles).timestamp().value()).isEqualTo(34000L);
+        assertThat(calculator.calculate(MacdParams.STANDARD, candles).timestamp().value()).isEqualTo(34000L);
     }
 
     @Test
     @DisplayName("candles가 null이면 예외 발생")
     void calculate_nullCandles_throwsException() {
-        assertThatThrownBy(() -> calculator.calculate(null))
+        assertThatThrownBy(() -> calculator.calculate(MacdParams.STANDARD, null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Candles cannot be null or empty");
     }
@@ -186,7 +186,7 @@ class MacdCalculatorTest {
     @Test
     @DisplayName("candles가 empty면 예외 발생")
     void calculate_emptyCandles_throwsException() {
-        assertThatThrownBy(() -> calculator.calculate(List.of()))
+        assertThatThrownBy(() -> calculator.calculate(MacdParams.STANDARD, List.of()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Candles cannot be null or empty");
     }
@@ -198,7 +198,7 @@ class MacdCalculatorTest {
         var candles = createCandles(100.0, 101.0, 102.0, 103.0, 104.0, 105.0, 106.0, 107.0, 108.0, 109.0);
 
         // when & then
-        assertThatThrownBy(() -> calculator.calculate(candles))
+        assertThatThrownBy(() -> calculator.calculate(MacdParams.STANDARD, candles))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("Not enough data")
                 .hasMessageContaining("Required: 34")
@@ -217,7 +217,7 @@ class MacdCalculatorTest {
         );
 
         // when
-        var result = calculator.calculate(candles);
+        var result = calculator.calculate(MacdParams.STANDARD, candles);
 
         // then - 소수점 8자리까지 정확히 계산
         assertThat(result.value().scale()).isLessThanOrEqualTo(8);
@@ -237,7 +237,7 @@ class MacdCalculatorTest {
         );
 
         // when & then - Histogram이 존재하고 계산됨
-        var histogram = calculator.calculate(candles).histogram();
+        var histogram = calculator.calculate(MacdParams.STANDARD, candles).histogram();
         assertThat(histogram).isNotNull();
     }
 

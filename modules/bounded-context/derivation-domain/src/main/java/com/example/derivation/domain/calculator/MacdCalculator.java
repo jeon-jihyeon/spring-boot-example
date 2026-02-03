@@ -27,17 +27,9 @@ import java.util.List;
  */
 public final class MacdCalculator {
     private static final int SCALE = 8;
-    private final MacdParams params;
-    private final EmaCalculator fastEmaCalculator;
-    private final EmaCalculator slowEmaCalculator;
+    private final EmaCalculator emaCalculator = new EmaCalculator();
 
-    public MacdCalculator(MacdParams params) {
-        this.params = params;
-        this.fastEmaCalculator = new EmaCalculator(params.fast());
-        this.slowEmaCalculator = new EmaCalculator(params.slow());
-    }
-
-    public Macd calculate(List<Candle> candles) {
+    public Macd calculate(MacdParams params, List<Candle> candles) {
         if (candles == null || candles.isEmpty()) {
             throw new IllegalArgumentException("Candles cannot be null or empty");
         }
@@ -49,8 +41,8 @@ public final class MacdCalculator {
             throw new IllegalArgumentException(msg);
         }
 
-        var fastEma = fastEmaCalculator.calculate(candles).value();
-        var slowEma = slowEmaCalculator.calculate(candles).value();
+        var fastEma = emaCalculator.calculate(params.fast(), candles).value();
+        var slowEma = emaCalculator.calculate(params.slow(), candles).value();
         var macdLine = fastEma.subtract(slowEma);
 
         // MACD Line의 EMA를 계산하기 위해 MACD Line들을 모아야 함
@@ -68,8 +60,8 @@ public final class MacdCalculator {
         // slowPeriod부터 MACD Line 계산 가능
         for (int i = params.slow() - 1; i < candles.size(); i++) {
             var subCandles = candles.subList(0, i + 1);
-            var fastEma = fastEmaCalculator.calculate(subCandles).value();
-            var slowEma = slowEmaCalculator.calculate(subCandles).value();
+            var fastEma = emaCalculator.calculate(params.fast(), subCandles).value();
+            var slowEma = emaCalculator.calculate(params.slow(), subCandles).value();
             macdLines.add(fastEma.subtract(slowEma));
         }
         return macdLines;

@@ -18,13 +18,8 @@ import java.util.List;
  */
 public final class EmaCalculator {
     private static final int SCALE = 8;
-    private final int period;
 
-    public EmaCalculator(int period) {
-        this.period = period;
-    }
-
-    public Ema calculate(List<Candle> candles) {
+    public Ema calculate(int period, List<Candle> candles) {
         if (candles == null || candles.isEmpty()) {
             throw new IllegalArgumentException("Candles cannot be null or empty");
         }

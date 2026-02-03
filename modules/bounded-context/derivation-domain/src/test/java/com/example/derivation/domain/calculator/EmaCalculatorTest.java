@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class EmaCalculatorTest {
 
-    private final EmaCalculator calculator = new EmaCalculator(9);
+    private final EmaCalculator calculator = new EmaCalculator();
 
     @Test
     @DisplayName("EMA(9) 정상 계산 - 지수 이동 평균이 정확히 계산")
@@ -27,7 +27,7 @@ class EmaCalculatorTest {
         var candles = createCandles(100.0, 110.0, 120.0, 130.0, 140.0, 150.0, 160.0, 170.0, 180.0);
 
         // when
-        var result = calculator.calculate(candles);
+        var result = calculator.calculate(9, candles);
 
         // then
         assertThat(result.value()).isEqualByComparingTo("140.00000000");
@@ -49,7 +49,7 @@ class EmaCalculatorTest {
         );
 
         // when & then
-        assertThat(calculator.calculate(candles).value()).isEqualByComparingTo("150.00000000");
+        assertThat(calculator.calculate(9, candles).value()).isEqualByComparingTo("150.00000000");
     }
 
     @Test
@@ -63,7 +63,7 @@ class EmaCalculatorTest {
         );
 
         // when
-        var ema = calculator.calculate(candles);
+        var ema = calculator.calculate(9, candles);
         var sma = candles.subList(candles.size() - 9, candles.size()).stream()
                 .map(candle -> candle.ohlcv().close().value())
                 .reduce(BigDecimal.ZERO, BigDecimal::add)
@@ -84,7 +84,7 @@ class EmaCalculatorTest {
         );
 
         // when & then
-        assertThat(calculator.calculate(candles).value()).isEqualByComparingTo("120.00000000");
+        assertThat(calculator.calculate(9, candles).value()).isEqualByComparingTo("120.00000000");
     }
 
     @Test
@@ -96,7 +96,7 @@ class EmaCalculatorTest {
         // when & then
         // 데이터가 period와 같으면 초기 SMA와 동일
         // SMA = (100 + 200 + ... + 900) / 9 = 500
-        assertThat(calculator.calculate(candles).value()).isEqualByComparingTo("500.00000000");
+        assertThat(calculator.calculate(9, candles).value()).isEqualByComparingTo("500.00000000");
     }
 
     @Test
@@ -109,7 +109,7 @@ class EmaCalculatorTest {
         );
 
         // when & then
-        assertThat(calculator.calculate(candles).value()).isEqualByComparingTo("100.12300000");
+        assertThat(calculator.calculate(9, candles).value()).isEqualByComparingTo("100.12300000");
     }
 
     @Test
@@ -129,14 +129,14 @@ class EmaCalculatorTest {
         );
 
         // when & then
-        assertThat(calculator.calculate(candles).timestamp().value()).isEqualTo(9000L);
+        assertThat(calculator.calculate(9, candles).timestamp().value()).isEqualTo(9000L);
     }
 
     @Test
     @DisplayName("candles가 null이면 예외 발생")
     void calculate_nullCandles_throwsException() {
         // when & then
-        assertThatThrownBy(() -> calculator.calculate(null))
+        assertThatThrownBy(() -> calculator.calculate(9, null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Candles cannot be null or empty");
     }
@@ -145,7 +145,7 @@ class EmaCalculatorTest {
     @DisplayName("candles가 empty면 예외 발생")
     void calculate_emptyCandles_throwsException() {
         // when & then
-        assertThatThrownBy(() -> calculator.calculate(List.of()))
+        assertThatThrownBy(() -> calculator.calculate(9, List.of()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Candles cannot be null or empty");
     }
@@ -157,7 +157,7 @@ class EmaCalculatorTest {
         var candles = createCandles(100.0, 110.0, 120.0, 130.0, 140.0, 150.0, 160.0, 170.0);  // 8개
 
         // when & then
-        assertThatThrownBy(() -> calculator.calculate(candles))
+        assertThatThrownBy(() -> calculator.calculate(9, candles))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("Not enough data")
                 .hasMessageContaining("Required: 9")
@@ -179,8 +179,8 @@ class EmaCalculatorTest {
         );
 
         // when
-        var ema1 = calculator.calculate(candles1);
-        var ema2 = calculator.calculate(candles2);
+        var ema1 = calculator.calculate(9, candles1);
+        var ema2 = calculator.calculate(9, candles2);
 
         // then
         // 최근 3개는 동일하지만, 초기 SMA가 다르므로 최종 EMA도 다름
