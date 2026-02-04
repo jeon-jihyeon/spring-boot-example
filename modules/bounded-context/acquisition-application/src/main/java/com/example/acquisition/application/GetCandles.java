@@ -9,11 +9,10 @@ import java.util.List;
 
 @Service
 public class GetCandles {
-    private final CandleAggregator candleAggregator;
+    private final CandleAggregator candleAggregator = new CandleAggregator();
     private final CandlesFinder candlesFinder;
 
-    public GetCandles(CandleAggregator candleAggregator, CandlesFinder candlesFinder) {
-        this.candleAggregator = candleAggregator;
+    public GetCandles(CandlesFinder candlesFinder) {
         this.candlesFinder = candlesFinder;
     }
 

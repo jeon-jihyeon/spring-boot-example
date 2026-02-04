@@ -1,13 +1,12 @@
 package com.example.acquisition.application;
 
 import com.example.acquisition.domain.Candle;
-import com.example.acquisition.domain.CandleAggregator;
 import com.example.core.enums.Timeframe;
 import com.example.core.values.*;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -16,24 +15,17 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class GetCandlesTest {
 
     @Mock
-    private CandleAggregator candleAggregator;
-
-    @Mock
     private CandlesFinder candlesFinder;
 
+    @InjectMocks
     private GetCandles getCandles;
-
-    @BeforeEach
-    void setUp() {
-        getCandles = new GetCandles(candleAggregator, candlesFinder);
-    }
 
     @Test
     @DisplayName("execute - CandlesFinder에서 캔들 조회 후 aggregator로 집계")
@@ -49,20 +41,15 @@ class GetCandlesTest {
                 createCandle(symbol, currency, 0L, Timeframe.MINUTES),
                 createCandle(symbol, currency, 60000L, Timeframe.MINUTES)
         );
-        var aggregatedCandles = List.of(
-                createCandle(symbol, currency, 0L, Timeframe.HOURS)
-        );
 
         when(candlesFinder.find(any())).thenReturn(foundCandles);
-        when(candleAggregator.aggregate(eq(foundCandles), eq(Timeframe.HOURS))).thenReturn(aggregatedCandles);
 
         // when
         var result = getCandles.execute(request);
 
         // then
-        assertThat(result).isEqualTo(aggregatedCandles);
+        assertThat(result).hasSize(1);
         verify(candlesFinder).find(request.toPeriodCandlesQuery());
-        verify(candleAggregator).aggregate(foundCandles, Timeframe.HOURS);
     }
 
     @Test
@@ -76,7 +63,6 @@ class GetCandlesTest {
         var request = new GetCandlesRequest(symbol, currency, start, end);
 
         when(candlesFinder.find(any())).thenReturn(List.of());
-        when(candleAggregator.aggregate(any(), any())).thenReturn(List.of());
 
         // when
         getCandles.execute(request);
