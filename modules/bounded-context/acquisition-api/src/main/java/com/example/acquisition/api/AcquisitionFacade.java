@@ -4,6 +4,7 @@ import com.example.acquisition.application.GetCandles;
 import com.example.acquisition.application.GetCandlesRequest;
 import com.example.acquisition.domain.Candle;
 import com.example.core.annotation.Facade;
+import com.example.core.enums.Timeframe;
 import com.example.contract.acquisition.AcquisitionCandleResponse;
 import com.example.contract.acquisition.AcquisitionCandlesRequest;
 import com.example.contract.acquisition.AcquisitionContract;
@@ -19,7 +20,7 @@ public class AcquisitionFacade implements AcquisitionContract {
     }
 
     private static GetCandlesRequest toCriteria(AcquisitionCandlesRequest request) {
-        return new GetCandlesRequest(request.symbol(), request.currency(), request.start(), request.end());
+        return new GetCandlesRequest(request.symbol(), request.currency(), request.start(), request.end(), Timeframe.HOURS);
     }
 
     private AcquisitionCandleResponse toResponse(Candle model) {

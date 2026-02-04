@@ -1,5 +1,6 @@
 package com.example.acquisition.application;
 
+import com.example.core.enums.Timeframe;
 import com.example.core.values.EpochMillis;
 import com.example.core.values.Symbol;
 import org.junit.jupiter.api.DisplayName;
@@ -21,13 +22,14 @@ class GetCandlesRequestTest {
         var end = EpochMillis.from(2000L);
 
         // when
-        var request = new GetCandlesRequest(symbol, currency, start, end);
+        var request = new GetCandlesRequest(symbol, currency, start, end, Timeframe.HOURS);
 
         // then
         assertThat(request.symbol()).isEqualTo(symbol);
         assertThat(request.currency()).isEqualTo(currency);
         assertThat(request.start()).isEqualTo(start);
         assertThat(request.end()).isEqualTo(end);
+        assertThat(request.timeframe()).isEqualTo(Timeframe.HOURS);
     }
 
     @Test
@@ -38,7 +40,7 @@ class GetCandlesRequestTest {
         var currency = Currency.getInstance("KRW");
         var start = EpochMillis.from(5000L);
         var end = EpochMillis.from(10000L);
-        var request = new GetCandlesRequest(symbol, currency, start, end);
+        var request = new GetCandlesRequest(symbol, currency, start, end, Timeframe.HOURS);
 
         // when
         var query = request.toPeriodCandlesQuery();

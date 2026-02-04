@@ -18,6 +18,6 @@ public class GetCandles {
 
     public List<Candle> execute(GetCandlesRequest criteria) {
         List<Candle> candles = candlesFinder.find(criteria.toPeriodCandlesQuery());
-        return candleAggregator.aggregate(candles, Timeframe.HOURS);
+        return candleAggregator.aggregate(candles, criteria.timeframe());
     }
 }

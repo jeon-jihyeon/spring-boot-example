@@ -35,7 +35,7 @@ class GetCandlesTest {
         var currency = Currency.getInstance("USD");
         var start = EpochMillis.from(0L);
         var end = EpochMillis.from(3600000L);
-        var request = new GetCandlesRequest(symbol, currency, start, end);
+        var request = new GetCandlesRequest(symbol, currency, start, end, Timeframe.HOURS);
 
         var foundCandles = List.of(
                 createCandle(symbol, currency, 0L, Timeframe.MINUTES),
@@ -60,7 +60,7 @@ class GetCandlesTest {
         var currency = Currency.getInstance("KRW");
         var start = EpochMillis.from(1000L);
         var end = EpochMillis.from(5000L);
-        var request = new GetCandlesRequest(symbol, currency, start, end);
+        var request = new GetCandlesRequest(symbol, currency, start, end, Timeframe.HOURS);
 
         when(candlesFinder.find(any())).thenReturn(List.of());
 
