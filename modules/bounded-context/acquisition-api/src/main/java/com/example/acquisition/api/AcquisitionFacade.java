@@ -20,7 +20,7 @@ public class AcquisitionFacade implements AcquisitionContract {
     }
 
     private static GetCandlesRequest toCriteria(AcquisitionCandlesRequest request) {
-        return new GetCandlesRequest(request.symbol(), request.currency(), request.start(), request.end(), Timeframe.HOURS);
+        return new GetCandlesRequest(request.symbol(), request.currency(), request.start(), request.end(), Timeframe.MINUTES);
     }
 
     private AcquisitionCandleResponse toResponse(Candle model) {

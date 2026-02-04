@@ -16,7 +16,10 @@ public final class CandleAggregator {
         }
 
         Timeframe first = candles.get(0).timeframe();
-        if (first.getSeconds() >= target.getSeconds()) {
+        if (first == target) {
+            return List.copyOf(candles);
+        }
+        if (first.getSeconds() > target.getSeconds()) {
             throw new TimeframeHierarchyException(target, first);
         }
 
