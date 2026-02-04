@@ -12,7 +12,7 @@ public class LogAdvice {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @ExceptionHandler(BaseException.class)
-    public ResponseEntity<Object> hanleBaseException(BaseException e) {
+    public ResponseEntity<Object> handleBaseException(BaseException e) {
         switch (e.getLogLevel()) {
             case INFO -> logger.info(e.getMessage());
             case DEBUG -> logger.debug(e.getMessage());

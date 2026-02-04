@@ -21,7 +21,7 @@ class LogAdviceTest {
         var exception = new TestException("Test message", logLevel);
 
         // when & then
-        assertThatThrownBy(() -> logAdvice.hanleBaseException(exception))
+        assertThatThrownBy(() -> logAdvice.handleBaseException(exception))
                 .isSameAs(exception);
     }
 
@@ -32,7 +32,7 @@ class LogAdviceTest {
         var exception = new TestException("Info message", LogLevel.INFO);
 
         // when & then
-        assertThatThrownBy(() -> logAdvice.hanleBaseException(exception))
+        assertThatThrownBy(() -> logAdvice.handleBaseException(exception))
                 .isInstanceOf(TestException.class)
                 .hasMessage("Info message");
     }
@@ -44,7 +44,7 @@ class LogAdviceTest {
         var exception = new TestException("Debug message", LogLevel.DEBUG);
 
         // when & then
-        assertThatThrownBy(() -> logAdvice.hanleBaseException(exception))
+        assertThatThrownBy(() -> logAdvice.handleBaseException(exception))
                 .isInstanceOf(TestException.class)
                 .hasMessage("Debug message");
     }
@@ -56,7 +56,7 @@ class LogAdviceTest {
         var exception = new TestException("Warn message", LogLevel.WARN);
 
         // when & then
-        assertThatThrownBy(() -> logAdvice.hanleBaseException(exception))
+        assertThatThrownBy(() -> logAdvice.handleBaseException(exception))
                 .isInstanceOf(TestException.class)
                 .hasMessage("Warn message");
     }
@@ -68,7 +68,7 @@ class LogAdviceTest {
         var exception = new TestException("Error message", LogLevel.ERROR);
 
         // when & then
-        assertThatThrownBy(() -> logAdvice.hanleBaseException(exception))
+        assertThatThrownBy(() -> logAdvice.handleBaseException(exception))
                 .isInstanceOf(TestException.class)
                 .hasMessage("Error message");
     }
