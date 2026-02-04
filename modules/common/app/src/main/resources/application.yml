@@ -26,7 +26,6 @@ server:
 
 logging:
   level:
-    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
     org.springframework.boot.autoconfigure: WARN
 
 ---
