@@ -1,5 +1,6 @@
 spring:
   config.activate.on-profile: local
+  sql.init.mode: embedded
   jpa:
     open-in-view: false
     hibernate.ddl-auto: validate
