@@ -1,5 +1,6 @@
 package com.example.derivation.application;
 
+import com.example.core.exception.InvalidValueException;
 import com.example.core.values.EpochMillis;
 import com.example.core.values.Symbol;
 import org.junit.jupiter.api.DisplayName;
@@ -32,7 +33,7 @@ class CandlesRequestTest {
     @DisplayName("symbol이 null이면 예외 발생")
     void create_nullSymbol_throwsException() {
         assertThatThrownBy(() -> new CandlesRequest(null, CURRENCY, START, END))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidValueException.class)
                 .hasMessage("symbol and range cannot be null");
     }
 
@@ -40,7 +41,7 @@ class CandlesRequestTest {
     @DisplayName("currency가 null이면 예외 발생")
     void create_nullCurrency_throwsException() {
         assertThatThrownBy(() -> new CandlesRequest(SYMBOL, null, START, END))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidValueException.class)
                 .hasMessage("symbol and range cannot be null");
     }
 
@@ -48,7 +49,7 @@ class CandlesRequestTest {
     @DisplayName("start가 null이면 예외 발생")
     void create_nullStart_throwsException() {
         assertThatThrownBy(() -> new CandlesRequest(SYMBOL, CURRENCY, null, END))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidValueException.class)
                 .hasMessage("symbol and range cannot be null");
     }
 
@@ -56,7 +57,7 @@ class CandlesRequestTest {
     @DisplayName("end가 null이면 예외 발생")
     void create_nullEnd_throwsException() {
         assertThatThrownBy(() -> new CandlesRequest(SYMBOL, CURRENCY, START, null))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidValueException.class)
                 .hasMessage("symbol and range cannot be null");
     }
 }

@@ -31,14 +31,14 @@ public final class MacdCalculator {
 
     public Macd calculate(MacdParams params, List<Candle> candles) {
         if (candles == null || candles.isEmpty()) {
-            throw new IllegalArgumentException("Candles cannot be null or empty");
+            throw new InsufficientDataException("Candles cannot be null or empty");
         }
 
         // MACD 계산을 위한 최소 데이터: slowPeriod + signalPeriod - 1
         var requiredData = params.slow() + params.signal() - 1;
         if (candles.size() < requiredData) {
             var msg = String.format("Not enough data. Required: %d, Provided: %d", requiredData, candles.size());
-            throw new IllegalArgumentException(msg);
+            throw new InsufficientDataException(msg);
         }
 
         var fastEma = emaCalculator.calculate(params.fast(), candles).value();

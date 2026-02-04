@@ -1,5 +1,6 @@
 package com.example.core.values;
 
+import com.example.core.exception.InvalidValueException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +33,7 @@ class SymbolTest {
     @DisplayName("생성 - null 값 시 예외 발생")
     void constructor_nullValue_throwsException() {
         assertThatThrownBy(() -> new Symbol(null))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidValueException.class)
                 .hasMessage("Symbol cannot be null or blank");
     }
 
@@ -40,7 +41,7 @@ class SymbolTest {
     @DisplayName("생성 - 빈 문자열 시 예외 발생")
     void constructor_emptyValue_throwsException() {
         assertThatThrownBy(() -> new Symbol(""))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidValueException.class)
                 .hasMessage("Symbol cannot be null or blank");
     }
 
@@ -48,7 +49,7 @@ class SymbolTest {
     @DisplayName("생성 - 공백 문자열 시 예외 발생")
     void constructor_blankValue_throwsException() {
         assertThatThrownBy(() -> new Symbol("   "))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidValueException.class)
                 .hasMessage("Symbol cannot be null or blank");
     }
 

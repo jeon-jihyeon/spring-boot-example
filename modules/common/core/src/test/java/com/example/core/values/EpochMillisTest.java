@@ -1,5 +1,6 @@
 package com.example.core.values;
 
+import com.example.core.exception.InvalidValueException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +29,7 @@ class EpochMillisTest {
     @DisplayName("생성 - null 값 시 예외 발생")
     void constructor_nullValue_throwsException() {
         assertThatThrownBy(() -> new EpochMillis(null))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidValueException.class)
                 .hasMessage("Timestamp cannot be null");
     }
 

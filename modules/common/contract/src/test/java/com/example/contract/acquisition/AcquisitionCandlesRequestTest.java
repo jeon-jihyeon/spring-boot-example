@@ -1,5 +1,6 @@
 package com.example.contract.acquisition;
 
+import com.example.core.exception.InvalidValueException;
 import com.example.core.values.EpochMillis;
 import com.example.core.values.Symbol;
 import org.junit.jupiter.api.DisplayName;
@@ -40,7 +41,7 @@ class AcquisitionCandlesRequestTest {
                 EpochMillis.from(1000L),
                 EpochMillis.from(2000L)
         ))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidValueException.class)
                 .hasMessage("symbol and range cannot be null");
     }
 
@@ -53,7 +54,7 @@ class AcquisitionCandlesRequestTest {
                 EpochMillis.from(1000L),
                 EpochMillis.from(2000L)
         ))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidValueException.class)
                 .hasMessage("symbol and range cannot be null");
     }
 
@@ -66,7 +67,7 @@ class AcquisitionCandlesRequestTest {
                 null,
                 EpochMillis.from(2000L)
         ))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidValueException.class)
                 .hasMessage("symbol and range cannot be null");
     }
 
@@ -79,7 +80,7 @@ class AcquisitionCandlesRequestTest {
                 EpochMillis.from(1000L),
                 null
         ))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidValueException.class)
                 .hasMessage("symbol and range cannot be null");
     }
 }

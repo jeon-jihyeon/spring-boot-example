@@ -1,5 +1,6 @@
 package com.example.core.values;
 
+import com.example.core.exception.InvalidValueException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -27,7 +28,7 @@ class AmountTest {
     @DisplayName("생성 - null 값 시 예외 발생")
     void constructor_nullValue_throwsException() {
         assertThatThrownBy(() -> new Amount(null))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidValueException.class)
                 .hasMessage("Amount cannot be null");
     }
 
@@ -35,7 +36,7 @@ class AmountTest {
     @DisplayName("생성 - 음수 값 시 예외 발생")
     void constructor_negativeValue_throwsException() {
         assertThatThrownBy(() -> new Amount(new BigDecimal("-1")))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidValueException.class)
                 .hasMessage("Amount cannot be negative");
     }
 

@@ -1,5 +1,6 @@
 package com.example.core.values;
 
+import com.example.core.exception.InvalidValueException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -42,7 +43,7 @@ class OHLCVTest {
                 Volume.from("1000"),
                 Price.from("5000")
         ))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidValueException.class)
                 .hasMessage("OHLCV values cannot be null");
     }
 
@@ -57,7 +58,7 @@ class OHLCVTest {
                 Volume.from("1000"),
                 Price.from("5000")
         ))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidValueException.class)
                 .hasMessage("OHLCV values cannot be null");
     }
 
@@ -72,7 +73,7 @@ class OHLCVTest {
                 Volume.from("1000"),
                 Price.from("5000")
         ))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidValueException.class)
                 .hasMessage("OHLCV values cannot be null");
     }
 
@@ -87,7 +88,7 @@ class OHLCVTest {
                 Volume.from("1000"),
                 Price.from("5000")
         ))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidValueException.class)
                 .hasMessage("OHLCV values cannot be null");
     }
 
@@ -102,7 +103,7 @@ class OHLCVTest {
                 null,
                 Price.from("5000")
         ))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidValueException.class)
                 .hasMessage("OHLCV values cannot be null");
     }
 
@@ -117,7 +118,7 @@ class OHLCVTest {
                 Volume.from("1000"),
                 null
         ))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidValueException.class)
                 .hasMessage("OHLCV values cannot be null");
     }
 
@@ -132,7 +133,7 @@ class OHLCVTest {
                 Volume.from("1000"),
                 Price.from("5000")
         ))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidValueException.class)
                 .hasMessage("High price must be greater than or equal to low price");
     }
 

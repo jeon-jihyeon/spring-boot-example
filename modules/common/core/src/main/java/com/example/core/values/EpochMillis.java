@@ -1,5 +1,7 @@
 package com.example.core.values;
 
+import com.example.core.exception.InvalidValueException;
+
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -11,7 +13,7 @@ import java.time.ZoneOffset;
 public record EpochMillis(Long value) {
     public EpochMillis {
         if (value == null) {
-            throw new IllegalArgumentException("Timestamp cannot be null");
+            throw new InvalidValueException("Timestamp cannot be null");
         }
     }
 

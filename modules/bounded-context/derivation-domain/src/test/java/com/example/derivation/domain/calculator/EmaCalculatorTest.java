@@ -137,7 +137,7 @@ class EmaCalculatorTest {
     void calculate_nullCandles_throwsException() {
         // when & then
         assertThatThrownBy(() -> calculator.calculate(9, null))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InsufficientDataException.class)
                 .hasMessage("Candles cannot be null or empty");
     }
 
@@ -146,7 +146,7 @@ class EmaCalculatorTest {
     void calculate_emptyCandles_throwsException() {
         // when & then
         assertThatThrownBy(() -> calculator.calculate(9, List.of()))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InsufficientDataException.class)
                 .hasMessage("Candles cannot be null or empty");
     }
 
@@ -158,7 +158,7 @@ class EmaCalculatorTest {
 
         // when & then
         assertThatThrownBy(() -> calculator.calculate(9, candles))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InsufficientDataException.class)
                 .hasMessageContaining("Not enough data")
                 .hasMessageContaining("Required: 9")
                 .hasMessageContaining("Provided: 8");

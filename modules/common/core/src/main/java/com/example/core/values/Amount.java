@@ -1,14 +1,16 @@
 package com.example.core.values;
 
+import com.example.core.exception.InvalidValueException;
+
 import java.math.BigDecimal;
 
 public record Amount(BigDecimal value) {
     public Amount {
         if (value == null) {
-            throw new IllegalArgumentException("Amount cannot be null");
+            throw new InvalidValueException("Amount cannot be null");
         }
         if (value.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("Amount cannot be negative");
+            throw new InvalidValueException("Amount cannot be negative");
         }
     }
 

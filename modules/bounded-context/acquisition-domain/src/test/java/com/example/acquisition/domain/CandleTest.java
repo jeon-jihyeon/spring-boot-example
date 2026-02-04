@@ -1,6 +1,7 @@
 package com.example.acquisition.domain;
 
 import com.example.core.enums.Timeframe;
+import com.example.core.exception.InvalidValueException;
 import com.example.core.values.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,7 +45,7 @@ class CandleTest {
                 createOHLCV("100", "150", "90", "120", "1000", "5000"),
                 TIMEFRAME
         ))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidValueException.class)
                 .hasMessage("Candle fields cannot be null");
     }
 
@@ -58,7 +59,7 @@ class CandleTest {
                 createOHLCV("100", "150", "90", "120", "1000", "5000"),
                 TIMEFRAME
         ))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidValueException.class)
                 .hasMessage("Candle fields cannot be null");
     }
 
@@ -72,7 +73,7 @@ class CandleTest {
                 createOHLCV("100", "150", "90", "120", "1000", "5000"),
                 TIMEFRAME
         ))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidValueException.class)
                 .hasMessage("Candle fields cannot be null");
     }
 
@@ -86,7 +87,7 @@ class CandleTest {
                 null,
                 TIMEFRAME
         ))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidValueException.class)
                 .hasMessage("Candle fields cannot be null");
     }
 
@@ -100,7 +101,7 @@ class CandleTest {
                 createOHLCV("100", "150", "90", "120", "1000", "5000"),
                 null
         ))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidValueException.class)
                 .hasMessage("Candle fields cannot be null");
     }
 

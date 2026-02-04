@@ -1,5 +1,6 @@
 package com.example.core.values;
 
+import com.example.core.exception.InvalidValueException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -27,7 +28,7 @@ class VolumeTest {
     @DisplayName("생성 - null 값 시 예외 발생")
     void constructor_nullValue_throwsException() {
         assertThatThrownBy(() -> new Volume(null))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidValueException.class)
                 .hasMessage("Volume cannot be null");
     }
 
@@ -35,7 +36,7 @@ class VolumeTest {
     @DisplayName("생성 - 음수 값 시 예외 발생")
     void constructor_negativeValue_throwsException() {
         assertThatThrownBy(() -> new Volume(new BigDecimal("-1")))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InvalidValueException.class)
                 .hasMessage("Volume cannot be negative");
     }
 

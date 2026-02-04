@@ -1,5 +1,7 @@
 package com.example.core.values;
 
+import com.example.core.exception.InvalidValueException;
+
 /**
  * OHLCV (Open, High, Low, Close, Volume) 값을 나타내는 불변 객체
  *
@@ -11,12 +13,13 @@ package com.example.core.values;
  * @param turnover 거래대금
  */
 public record OHLCV(Price open, Price high, Price low, Price close, Volume volume, Price turnover) {
+
     public OHLCV {
         if (open == null || high == null || low == null || close == null || volume == null || turnover == null) {
-            throw new IllegalArgumentException("OHLCV values cannot be null");
+            throw new InvalidValueException("OHLCV values cannot be null");
         }
         if (high.isLessThan(low)) {
-            throw new IllegalArgumentException("High price must be greater than or equal to low price");
+            throw new InvalidValueException("High price must be greater than or equal to low price");
         }
     }
 }

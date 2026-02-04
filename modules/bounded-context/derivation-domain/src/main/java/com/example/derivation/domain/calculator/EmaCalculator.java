@@ -21,12 +21,12 @@ public final class EmaCalculator {
 
     public Ema calculate(int period, List<Candle> candles) {
         if (candles == null || candles.isEmpty()) {
-            throw new IllegalArgumentException("Candles cannot be null or empty");
+            throw new InsufficientDataException("Candles cannot be null or empty");
         }
 
         if (candles.size() < period) {
             var msg = String.format("Not enough data. Required: %d, Provided: %d", period, candles.size());
-            throw new IllegalArgumentException(msg);
+            throw new InsufficientDataException(msg);
         }
 
         BigDecimal multiplier = BigDecimal.valueOf(2)

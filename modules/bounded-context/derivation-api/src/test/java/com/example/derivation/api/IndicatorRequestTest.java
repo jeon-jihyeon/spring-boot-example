@@ -1,5 +1,6 @@
 package com.example.derivation.api;
 
+import com.example.core.exception.InvalidValueException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -25,27 +26,27 @@ class IndicatorRequestTest {
     @DisplayName("생성 - symbol이 null이면 예외")
     void constructor_nullSymbol_throwsException() {
         assertThatThrownBy(() -> new IndicatorRequest(null, "USD", 1000L, 2000L))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(InvalidValueException.class);
     }
 
     @Test
     @DisplayName("생성 - symbol이 빈 문자열이면 예외")
     void constructor_blankSymbol_throwsException() {
         assertThatThrownBy(() -> new IndicatorRequest(" ", "USD", 1000L, 2000L))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(InvalidValueException.class);
     }
 
     @Test
     @DisplayName("생성 - currency가 null이면 예외")
     void constructor_nullCurrency_throwsException() {
         assertThatThrownBy(() -> new IndicatorRequest("BTC", null, 1000L, 2000L))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(InvalidValueException.class);
     }
 
     @Test
     @DisplayName("생성 - start가 end보다 크면 예외")
     void constructor_startAfterEnd_throwsException() {
         assertThatThrownBy(() -> new IndicatorRequest("BTC", "USD", 2000L, 1000L))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(InvalidValueException.class);
     }
 }

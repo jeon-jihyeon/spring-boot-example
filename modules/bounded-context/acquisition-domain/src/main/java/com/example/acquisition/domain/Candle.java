@@ -1,6 +1,7 @@
 package com.example.acquisition.domain;
 
 import com.example.core.enums.Timeframe;
+import com.example.core.exception.InvalidValueException;
 import com.example.core.values.EpochMillis;
 import com.example.core.values.OHLCV;
 import com.example.core.values.Symbol;
@@ -16,7 +17,7 @@ public record Candle(
 ) implements Comparable<Candle> {
     public Candle {
         if (symbol == null || currency == null || startTime == null || ohlcv == null || timeframe == null) {
-            throw new IllegalArgumentException("Candle fields cannot be null");
+            throw new InvalidValueException("Candle fields cannot be null");
         }
     }
 

@@ -179,7 +179,7 @@ class MacdCalculatorTest {
     @DisplayName("candles가 null이면 예외 발생")
     void calculate_nullCandles_throwsException() {
         assertThatThrownBy(() -> calculator.calculate(MacdParams.STANDARD, null))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InsufficientDataException.class)
                 .hasMessage("Candles cannot be null or empty");
     }
 
@@ -187,7 +187,7 @@ class MacdCalculatorTest {
     @DisplayName("candles가 empty면 예외 발생")
     void calculate_emptyCandles_throwsException() {
         assertThatThrownBy(() -> calculator.calculate(MacdParams.STANDARD, List.of()))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InsufficientDataException.class)
                 .hasMessage("Candles cannot be null or empty");
     }
 
@@ -199,7 +199,7 @@ class MacdCalculatorTest {
 
         // when & then
         assertThatThrownBy(() -> calculator.calculate(MacdParams.STANDARD, candles))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(InsufficientDataException.class)
                 .hasMessageContaining("Not enough data")
                 .hasMessageContaining("Required: 34")
                 .hasMessageContaining("Provided: 10");
